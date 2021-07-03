@@ -13,6 +13,7 @@ our powerfully backend
 #### Clases de platzi xD
 
 - [Validando parámetros con class-validator y mapped-types](https://platzi.com/clases/2272-nestjs/37089-validando-parametros-con-class-validator-y-mapped-/)
+- [Serializar](https://platzi.com/clases/2282-nestjs-typeorm/37326-serializar/)
 
 ### Environments Configuration
 
@@ -36,6 +37,25 @@ our powerfully backend
 
 - [Persistencia de Datos con TypeORM](https://platzi.com/clases/nestjs-typeorm/)
 
+## Migrations
+
+```bash
+# generate migration
+$ yarn migrations:generate -- migration-name
+
+# run migration
+$ yarn migrations:run
+
+# show all migrations run
+$ yarn migrations:show
+
+# delete all of database (❌🚨🚨USE IT WITH CAUTION🚨🚨❌)
+$ yarn migrations:drop
+
+# revert the last migration
+$ yarn migrations:revert
+```
+
 ## Description
 
 [Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
@@ -52,7 +72,7 @@ $ yarn install
 # development
 $ yarn run start
 
-# watch mode
+# watch mode (nodemon/live reload)
 $ yarn run start:dev
 
 # production mode
@@ -72,28 +92,13 @@ $ yarn run test:e2e
 $ yarn run test:cov
 ```
 
-## Migrations
-
-```bash
-# unit tests
-$ yarn run test
-
-# e2e tests
-$ yarn run test:e2e
-
-# test coverage
-$ yarn run test:cov
-```
-
 ## Support
 
 Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
 
 ## Stay in touch
 
-- Author - [Kamil Myśliwiec](https://kamilmysliwiec.com)
 - Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
 
 ## License
 

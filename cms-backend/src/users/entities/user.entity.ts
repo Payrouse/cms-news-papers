@@ -5,33 +5,47 @@ import {
   Column,
   Entity,
 } from 'typeorm';
+import { Exclude } from 'class-transformer';
 
-@Entity()
+// @Exclude: this decorator help to don't send the attribute in the http response
+
+@Entity({ name: 'users' })
 export class User {
-  @PrimaryGeneratedColumn()
-  user_id: string;
+  @PrimaryGeneratedColumn('uuid', { name: 'user_id' })
+  userId: string;
 
-  @Column({ type: 'varchar', length: 255 })
-  user_name: string;
+  @Column({ name: 'user_name', type: 'varchar', length: 32 })
+  userName: string;
 
-  @Column({ type: 'varchar', length: 255 })
-  first_name: string;
+  @Column({ name: 'first_name', type: 'varchar', length: 255 })
+  firstName: string;
 
-  @Column({ type: 'varchar', length: 255 })
-  last_name: string;
+  @Column({ name: 'last_name', type: 'varchar', length: 255 })
+  lastName: string;
 
-  @Column({ type: 'varchar', length: 255 })
+  @Column({ name: 'email', type: 'varchar', length: 255 })
   email: string;
 
-  @Column({ type: 'varchar', length: 255 })
+  @Exclude()
+  @Column({ name: 'password', type: 'text' })
   password: string;
 
-  @Column({ type: 'varchar', length: 255 })
+  @Column({ name: 'avatar', type: 'text', nullable: true })
   avatar: string;
 
-  @CreateDateColumn()
-  created_at: string;
+  @Exclude()
+  @CreateDateColumn({
+    name: 'created_at',
+    type: 'timestamptz',
+    default: () => 'CURRENT_TIMESTAMP',
+  })
+  createdAt: Date;
 
-  @UpdateDateColumn()
-  updated_at: string;
+  @Exclude()
+  @UpdateDateColumn({
+    name: 'updated_at',
+    type: 'timestamptz',
+    default: () => 'CURRENT_TIMESTAMP',
+  })
+  updatedAt: Date;
 }
