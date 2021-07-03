@@ -10,7 +10,7 @@ our powerfully backend
 - class-transformer
 - @nestjs/mapped-types
 
-#### Clase de platzi xD
+#### Clases de platzi xD
 
 - [Validando parámetros con class-validator y mapped-types](https://platzi.com/clases/2272-nestjs/37089-validando-parametros-con-class-validator-y-mapped-/)
 
@@ -19,7 +19,7 @@ our powerfully backend
 - @nestjs/config
 - joi
 
-#### Clase de platzi xD
+#### Clases de platzi xD
 
 - [Módulo de configuración](https://platzi.com/clases/2274-nestjs-modular/37253-modulo-de-configuracion/)
 - [Configuración por ambientes](https://platzi.com/clases/2274-nestjs-modular/37254-configuracion-por-ambientes/)
@@ -27,6 +27,14 @@ our powerfully backend
 - [Validación de esquemas en .envs con Joi](https://platzi.com/clases/2274-nestjs-modular/37256-validacion-de-esquemas-en-envs-con-joi/)
 
 ### TypeORM
+
+- pg
+- @nestjs/typeorm
+- typeorm
+
+#### Clases de platzi xD
+
+- [Persistencia de Datos con TypeORM](https://platzi.com/clases/nestjs-typeorm/)
 
 ## Description
 
