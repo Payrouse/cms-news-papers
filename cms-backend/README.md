@@ -98,11 +98,16 @@ $ yarn run test:cov
 ## Cli de nest comandos
 
 ```bash
-# generar ...
-$ yarn run test
+# generar service
+$ nest generate service /ruta donde se /crea el archivo /nombrearchivo --flat
+$ nest g s /ruta donde se /crea el archivo /nombrearchivo --flat
 
-# generar ...
-$ yarn run test:e2e
+# generar controller
+$ nest generate controller /ruta donde se /crea el archivo /nombrearchivo --flat
+$ nest g c /ruta donde se /crea el archivo /nombrearchivo --flat
+
+
+--flat -> no genera una caprteta solo el archivo 
 
 ```
 
