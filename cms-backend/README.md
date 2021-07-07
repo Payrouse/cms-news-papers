@@ -13,6 +13,7 @@ our powerfully backend
 #### Clases de platzi xD
 
 - [Validando parámetros con class-validator y mapped-types](https://platzi.com/clases/2272-nestjs/37089-validando-parametros-con-class-validator-y-mapped-/)
+
 ### Environments Configuration
 
 - @nestjs/config
@@ -35,7 +36,6 @@ our powerfully backend
 
 - [Persistencia de Datos con TypeORM](https://platzi.com/clases/nestjs-typeorm/)
 - [Serializar Entities](https://platzi.com/clases/2282-nestjs-typeorm/37326-serializar/)
-
 
 ## Migrations
 

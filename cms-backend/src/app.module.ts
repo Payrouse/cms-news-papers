@@ -9,6 +9,8 @@ import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { DatabaseModule } from './database/database.module';
 import { UsersModule } from './users/users.module';
+import { ArticlesModule } from './articles/articles.module';
+import { CommentsModule } from './comments/comments.module';
 
 @Module({
   imports: [
@@ -29,6 +31,8 @@ import { UsersModule } from './users/users.module';
         POSTGRES_PORT: Joi.number().required(),
       }),
     }),
+    ArticlesModule,
+    CommentsModule,
   ],
   controllers: [AppController],
   providers: [AppService],
