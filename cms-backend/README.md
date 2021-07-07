@@ -100,11 +100,11 @@ $ yarn run test:cov
 ```bash
 # generar service
 $ nest generate service /ruta donde se /crea el archivo /nombrearchivo --flat
-$ nest g s /ruta donde se /crea el archivo /nombrearchivo --flat
+$ nest g se /ruta donde se /crea el archivo /nombrearchivo --flat
 
 # generar controller
 $ nest generate controller /ruta donde se /crea el archivo /nombrearchivo --flat
-$ nest g c /ruta donde se /crea el archivo /nombrearchivo --flat
+$ nest g co /ruta donde se /crea el archivo /nombrearchivo --flat
 
 
 --flat -> no genera una caprteta solo el archivo 
