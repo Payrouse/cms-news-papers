@@ -95,6 +95,24 @@ $ yarn run test:e2e
 $ yarn run test:cov
 ```
 
+## Cli de nest comandos
+
+```bash
+# generar service
+$ nest generate service /ruta donde se /crea el archivo /nombrearchivo --flat
+$ nest g se /ruta donde se /crea el archivo /nombrearchivo --flat
+
+# generar controller
+$ nest generate controller /ruta donde se /crea el archivo /nombrearchivo --flat
+$ nest g co /ruta donde se /crea el archivo /nombrearchivo --flat
+
+
+--flat -> no genera una caprteta solo el archivo 
+
+```
+
+
+
 ## Support
 
 Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
