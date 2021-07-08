@@ -13,6 +13,10 @@ import { ComplaintsService } from './services/complaints.service';
 import { Streaming } from './entities/streaming.entity';
 import { StreamingsService } from './services/streamings.service';
 import { StreamingsController } from './controllers/streamings.controller';
+import { PublishersController } from './controllers/publishers.controller';
+import { PublishersService } from './services/publishers.service';
+import { AdministratorsService } from './services/administrators.service';
+import { AdministratorsController } from './controllers/administrators.controller';
 
 @Module({
   imports: [TypeOrmModule.forFeature([User, Journalist, Complaint, Streaming])],
@@ -21,12 +25,16 @@ import { StreamingsController } from './controllers/streamings.controller';
     JournalistsService,
     ComplaintsService,
     StreamingsService,
+    PublishersService,
+    AdministratorsService,
   ],
   controllers: [
     UsersController,
     JournalistsController,
     ComplaintsController,
     StreamingsController,
+    PublishersController,
+    AdministratorsController,
   ],
 })
 export class UsersModule {}
