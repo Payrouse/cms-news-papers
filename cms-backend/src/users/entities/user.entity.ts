@@ -4,8 +4,12 @@ import {
   UpdateDateColumn,
   Column,
   Entity,
+  OneToOne,
+  OneToMany,
 } from 'typeorm';
 import { Exclude } from 'class-transformer';
+import { Journalist } from './journalist.entity';
+import { Complaints } from './complaints.entity';
 
 // @Exclude: this decorator help to don't send the attribute in the http response
 
@@ -48,4 +52,10 @@ export class User {
     default: () => 'CURRENT_TIMESTAMP',
   })
   updatedAt: Date;
+
+  @OneToOne(() => Journalist, (journalist) => journalist.user)
+  journalist: Journalist;
+
+  @OneToMany(() => Complaints, (complaints) => complaints.user)
+  complaints: Complaints[];
 }
