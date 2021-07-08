@@ -1,13 +1,13 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import { Complaints } from '../entities/complaints.entity';
+import { Complaint } from '../entities/complaint.entity';
 
 @Injectable()
 export class ComplaintsService {
   constructor(
-    @InjectRepository(Complaints)
-    private complaintRepo: Repository<Complaints>,
+    @InjectRepository(Complaint)
+    private complaintRepo: Repository<Complaint>,
   ) {}
 
   findAll() {

@@ -4,9 +4,14 @@ import {
   UpdateDateColumn,
   Column,
   Entity,
+  OneToMany,
+  JoinColumn,
+  ManyToOne,
 } from 'typeorm';
-
 import { Exclude } from 'class-transformer';
+
+import { Comment } from 'src/comments/entities/comment.entity';
+import { Journalist } from './../../users/entities/journalist.entity';
 
 @Entity({ name: 'articles' })
 export class Article {
@@ -53,4 +58,13 @@ export class Article {
     default: () => 'CURRENT_TIMESTAMP',
   })
   publishedAt: Date;
+
+  // journalist -> article (FK)
+  @ManyToOne(() => Journalist, (journalist) => journalist.article)
+  @JoinColumn({ name: 'journalist_id' })
+  journalist: Journalist;
+
+  // article -> comment
+  @OneToMany(() => Comment, (comment) => comment.article)
+  comments: Comment[];
 }

@@ -8,12 +8,13 @@ import {
   JoinColumn,
 } from 'typeorm';
 import { Exclude } from 'class-transformer';
+
 import { User } from './user.entity';
 
 //@Exclude: this decorator help to don't send the attribute in the http response
 
 @Entity({ name: 'complaints' })
-export class Complaints {
+export class Complaint {
   @PrimaryGeneratedColumn('uuid', { name: 'complaint_id' })
   complaintId: string;
 

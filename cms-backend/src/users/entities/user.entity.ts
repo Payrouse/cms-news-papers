@@ -8,8 +8,10 @@ import {
   OneToMany,
 } from 'typeorm';
 import { Exclude } from 'class-transformer';
+
 import { Journalist } from './journalist.entity';
-import { Complaints } from './complaints.entity';
+import { Complaint } from './complaint.entity';
+import { Comment } from 'src/comments/entities/comment.entity';
 
 // @Exclude: this decorator help to don't send the attribute in the http response
 
@@ -56,6 +58,10 @@ export class User {
   @OneToOne(() => Journalist, (journalist) => journalist.user)
   journalist: Journalist;
 
-  @OneToMany(() => Complaints, (complaints) => complaints.user)
-  complaints: Complaints[];
+  @OneToMany(() => Complaint, (complaint) => complaint.user)
+  complaints: Complaint[];
+
+  // user -> comment
+  @OneToMany(() => Comment, (comment) => comment.user)
+  comments: Comment[];
 }

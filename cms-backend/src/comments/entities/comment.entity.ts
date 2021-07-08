@@ -3,9 +3,13 @@ import {
   CreateDateColumn,
   Column,
   Entity,
+  JoinColumn,
+  ManyToOne,
 } from 'typeorm';
+// import { Exclude } from 'class-transformer';
 
-import { Exclude } from 'class-transformer';
+import { User } from 'src/users/entities/user.entity';
+import { Article } from './../../articles/entities/article.entity';
 
 @Entity({ name: 'comments' })
 export class Comment {
@@ -21,4 +25,19 @@ export class Comment {
     default: () => 'CURRENT_TIMESTAMP',
   })
   createdAt: Date;
+
+  // redundant relation (FK)
+  @ManyToOne(() => Comment, (comment) => comment.commentRoot)
+  @JoinColumn({ name: 'comment_root_id' })
+  commentRoot: Comment;
+
+  // user -> comment (FK)
+  @ManyToOne(() => User, (user) => user.comments)
+  @JoinColumn({ name: 'user_id' })
+  user: User;
+
+  // article -> comment (FK)
+  @ManyToOne(() => Article, (article) => article.comments)
+  @JoinColumn({ name: 'article_id' })
+  article: Article;
 }

@@ -1,14 +1,16 @@
 import {
-  PrimaryGeneratedColumn,
   CreateDateColumn,
   UpdateDateColumn,
   Column,
   Entity,
   OneToOne,
   JoinColumn,
+  OneToMany,
 } from 'typeorm';
 import { Exclude } from 'class-transformer';
+
 import { User } from './user.entity';
+import { Article } from './../../articles/entities/article.entity';
 
 //@Exclude: this decorator help to don't send the attribute in the http response
 
@@ -48,4 +50,8 @@ export class Journalist {
   @OneToOne(() => User, (user) => user.journalist, { primary: true })
   @JoinColumn({ name: 'journalist_id' })
   user: User;
+
+  // journalist -> article
+  @OneToMany(() => Article, (article) => article.journalist)
+  article: Article[];
 }
