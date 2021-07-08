@@ -12,6 +12,7 @@ import { Exclude } from 'class-transformer';
 import { Journalist } from './journalist.entity';
 import { Complaint } from './complaint.entity';
 import { Comment } from 'src/comments/entities/comment.entity';
+import { UserToRole } from './userToRole.entity';
 
 // @Exclude: this decorator help to don't send the attribute in the http response
 
@@ -64,4 +65,7 @@ export class User {
   // user -> comment
   @OneToMany(() => Comment, (comment) => comment.user)
   comments: Comment[];
+
+  @OneToMany(() => UserToRole, (userToRole) => userToRole.user)
+  userToRoles: userToRole[];
 }
