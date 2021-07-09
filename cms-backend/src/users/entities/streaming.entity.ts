@@ -1,4 +1,10 @@
-import { PrimaryGeneratedColumn, Column, Entity, JoinColumn, ManyToOne } from 'typeorm';
+import {
+  PrimaryGeneratedColumn,
+  Column,
+  Entity,
+  JoinColumn,
+  ManyToOne,
+} from 'typeorm';
 import { Administrator } from './administrator.entity';
 
 // import { Exclude } from 'class-transformer';
@@ -19,9 +25,9 @@ export class Streaming {
 
   @Column({ name: 'status', type: 'smallint' })
   status: number;
-  
+
   // streaming -> administrator
   @ManyToOne(() => Administrator, (administrator) => administrator.streamings)
-  @JoinColumn({name: 'administrator_id'})
-  administrator: Administrator
+  @JoinColumn({ name: 'administrator_id' })
+  administrator: Administrator;
 }

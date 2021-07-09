@@ -9,7 +9,7 @@ import {
   ManyToOne,
 } from 'typeorm';
 import { Exclude } from 'class-transformer';
-import { Publisher } from "../../users/entities/publisher.entity";
+import { Publisher } from '../../users/entities/publisher.entity';
 import { Article } from './article.entity';
 
 @Entity({ name: 'categories' })
@@ -22,7 +22,7 @@ export class Category {
 
   @Column({ name: 'description', type: 'text' })
   description: string;
-  
+
   @Exclude()
   @CreateDateColumn({
     name: 'created_at',
@@ -41,9 +41,9 @@ export class Category {
 
   // category -> publisher
   @ManyToOne(() => Publisher, (publisher) => publisher.categories)
-  @JoinColumn({name: 'publisher_id'})
-  publisher: Publisher
-  
+  @JoinColumn({ name: 'publisher_id' })
+  publisher: Publisher;
+
   // category -> article
   @OneToMany(() => Article, (article) => article.category)
   articles: Article[];

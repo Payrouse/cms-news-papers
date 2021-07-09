@@ -9,7 +9,7 @@ import { CategoriesService } from './services/categories.service';
 
 @Module({
   imports: [TypeOrmModule.forFeature([Article])],
-  controllers: [ArticlesController, CategoriesController, ],
+  controllers: [ArticlesController, CategoriesController],
   providers: [ArticlesService, CategoriesService],
 })
 export class ArticlesModule {}
