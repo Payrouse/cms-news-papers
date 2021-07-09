@@ -17,9 +17,24 @@ import { PublishersController } from './controllers/publishers.controller';
 import { PublishersService } from './services/publishers.service';
 import { AdministratorsService } from './services/administrators.service';
 import { AdministratorsController } from './controllers/administrators.controller';
+import { Publisher } from './entities/publisher.entity';
+import { Administrator } from './entities/administrator.entity';
+import { Role } from './entities/role.entity';
+import { UserToRole } from './entities/userToRole.entity';
 
 @Module({
-  imports: [TypeOrmModule.forFeature([User, Journalist, Complaint, Streaming])],
+  imports: [
+    TypeOrmModule.forFeature([
+      User,
+      Journalist,
+      Administrator,
+      Publisher,
+      Complaint,
+      Streaming,
+      Role,
+      UserToRole,
+    ]),
+  ],
   providers: [
     UsersService,
     JournalistsService,

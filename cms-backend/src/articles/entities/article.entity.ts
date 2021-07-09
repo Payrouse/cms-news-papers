@@ -10,8 +10,8 @@ import {
 } from 'typeorm';
 import { Exclude } from 'class-transformer';
 
-import { Comment } from 'src/comments/entities/comment.entity';
-import { Journalist } from './../../users/entities/journalist.entity';
+import { Comment } from '../../comments/entities/comment.entity';
+import { Journalist } from '../../users/entities/journalist.entity';
 import { Publisher } from '../../users/entities/publisher.entity';
 import { Category } from './category.entity';
 
