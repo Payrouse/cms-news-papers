@@ -15,5 +15,6 @@ export default registerAs('config', () => {
       logging: process.env.TYPEORM_LOGGING == 'true',
     },
     apiKey: process.env.API_KEY,
+    jwtSecret: process.env.JWT_SECRET,
   };
 });
