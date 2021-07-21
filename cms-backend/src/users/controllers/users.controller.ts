@@ -1,6 +1,6 @@
 import { Body, Controller, Get, Post, UseGuards } from '@nestjs/common';
 
-import { Public } from '../../auth/decorators/public.decorator';
+// import { Public } from '../../auth/decorators/public.decorator';
 import { ApiKeyGuard } from 'src/auth/guards/api-key.guard';
 import { JwtAuthGuard } from './../../auth/guards/jwt-auth.guard';
 

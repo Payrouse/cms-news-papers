@@ -21,6 +21,7 @@ import config from 'src/config';
           database: name,
           synchronize,
           autoLoadEntities: true,
+          // logging: true,
         };
       },
     }),

@@ -4,7 +4,6 @@ import {
   UpdateDateColumn,
   Column,
   Entity,
-  OneToOne,
   OneToMany,
 } from 'typeorm';
 import { Exclude } from 'class-transformer';
@@ -13,11 +12,11 @@ import { UserToRole } from './userToRole.entity';
 
 @Entity({ name: 'roles' })
 export class Role {
-  @PrimaryGeneratedColumn('uuid', { name: 'role_id' })
-  roleId: string;
+  @PrimaryGeneratedColumn('increment', { name: 'role_id' })
+  roleId: number;
 
   @Column({ name: 'name', type: 'varchar', length: 16 })
-  userName: string;
+  name: string;
 
   @Column({ name: 'description', type: 'text', nullable: true })
   description: string;
