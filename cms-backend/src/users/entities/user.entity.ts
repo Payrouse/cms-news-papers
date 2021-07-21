@@ -11,7 +11,7 @@ import { Exclude } from 'class-transformer';
 
 import { Journalist } from './journalist.entity';
 import { Complaint } from './complaint.entity';
-import { Publisher } from "./publisher.entity";
+import { Publisher } from './publisher.entity';
 import { Comment } from 'src/comments/entities/comment.entity';
 import { UserToRole } from './userToRole.entity';
 import { Administrator } from './administrator.entity';
@@ -60,10 +60,10 @@ export class User {
 
   @OneToOne(() => Journalist, (journalist) => journalist.user)
   journalist: Journalist;
-  
+
   @OneToOne(() => Publisher, (publisher) => publisher.user)
   publisher: Publisher;
-  
+
   @OneToOne(() => Administrator, (administrator) => administrator.user)
   administrator: Administrator;
 
