@@ -1,18 +1,24 @@
-import { IsString, IsUrl, IsEmail, IsNotEmpty } from 'class-validator';
+import {
+  IsString,
+  IsUrl,
+  IsEmail,
+  IsNotEmpty,
+  IsOptional,
+} from 'class-validator';
 import { PartialType } from '@nestjs/mapped-types';
 
 export class CreateUserDto {
   @IsString()
   @IsNotEmpty()
-  readonly user_name: string;
+  readonly userName: string;
 
   @IsString()
   @IsNotEmpty()
-  readonly first_name: string;
+  readonly firstName: string;
 
   @IsString()
   @IsNotEmpty()
-  readonly last_name: string;
+  readonly lastName: string;
 
   @IsEmail()
   @IsNotEmpty()
@@ -23,6 +29,7 @@ export class CreateUserDto {
   readonly password: string;
 
   @IsUrl()
+  @IsOptional()
   readonly avatar: string;
 }
 

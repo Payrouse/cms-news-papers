@@ -10,9 +10,9 @@ import {
 } from 'typeorm';
 import { Exclude } from 'class-transformer';
 
-import { Comment } from 'src/comments/entities/comment.entity';
-import { Journalist } from './../../users/entities/journalist.entity';
-import { Publisher } from "../../users/entities/publisher.entity";
+import { Comment } from '../../comments/entities/comment.entity';
+import { Journalist } from '../../users/entities/journalist.entity';
+import { Publisher } from '../../users/entities/publisher.entity';
 import { Category } from './category.entity';
 
 @Entity({ name: 'articles' })
@@ -68,16 +68,15 @@ export class Article {
 
   // article -> publisher
   @ManyToOne(() => Publisher, (publisher) => publisher.articles)
-  @JoinColumn({name: 'publisher_id'})
-  publisher: Publisher
-  
+  @JoinColumn({ name: 'publisher_id' })
+  publisher: Publisher;
+
   // article -> comment
   @OneToMany(() => Comment, (comment) => comment.article)
   comments: Comment[];
 
   // article -> category
   @ManyToOne(() => Category, (category) => category.articles)
-  @JoinColumn({name: 'category_id'})
-  category: Category
-  
+  @JoinColumn({ name: 'category_id' })
+  category: Category;
 }

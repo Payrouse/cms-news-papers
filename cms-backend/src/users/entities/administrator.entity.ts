@@ -12,7 +12,6 @@ import { User } from './user.entity';
 
 @Entity({ name: 'administrators' })
 export class Administrator {
-
   @Column({ name: 'phone_number', type: 'varchar', length: 10 })
   phoneNumber: string;
 
@@ -23,6 +22,4 @@ export class Administrator {
   // admin -> streaming
   @OneToMany(() => Streaming, (stream) => stream.administrator)
   streamings: Streaming[];
-
 }
-
