@@ -52,6 +52,6 @@ export class Journalist {
   user: User;
 
   // journalist -> article
-  @OneToMany(() => Article, (article) => article.journalist)
+  @OneToMany(() => Article, (article) => article.journalistId)
   article: Article[];
 }

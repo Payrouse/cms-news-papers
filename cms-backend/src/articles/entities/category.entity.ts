@@ -42,9 +42,9 @@ export class Category {
   // category -> publisher
   @ManyToOne(() => Publisher, (publisher) => publisher.categories)
   @JoinColumn({ name: 'publisher_id' })
-  publisher: Publisher;
+  publisherId: Publisher;
 
   // category -> article
-  @OneToMany(() => Article, (article) => article.category)
+  @OneToMany(() => Article, (article) => article.categoryId)
   articles: Article[];
 }

@@ -14,10 +14,10 @@ export class Publisher {
   user: User;
 
   // publisher -> article
-  @OneToMany(() => Category, (category) => category.publisher)
+  @OneToMany(() => Category, (category) => category.publisherId)
   categories: Category[];
 
   // publisher -> article
-  @OneToMany(() => Article, (article) => article.publisher)
+  @OneToMany(() => Article, (article) => article.publisherId)
   articles: Article[];
 }

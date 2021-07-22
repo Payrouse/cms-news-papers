@@ -64,12 +64,12 @@ export class Article {
   // journalist -> article (FK)
   @ManyToOne(() => Journalist, (journalist) => journalist.article)
   @JoinColumn({ name: 'journalist_id' })
-  journalist: Journalist;
+  journalistId: string;
 
   // article -> publisher
   @ManyToOne(() => Publisher, (publisher) => publisher.articles)
   @JoinColumn({ name: 'publisher_id' })
-  publisher: Publisher;
+  publisherId: string;
 
   // article -> comment
   @OneToMany(() => Comment, (comment) => comment.article)
@@ -78,5 +78,5 @@ export class Article {
   // article -> category
   @ManyToOne(() => Category, (category) => category.articles)
   @JoinColumn({ name: 'category_id' })
-  category: Category;
+  categoryId: string;
 }
