@@ -55,7 +55,7 @@ export class UsersService {
 
       // get id role
       const role = await this.roleRepo.findOne({
-        where: { name: RoleEnum.USER },
+        where: { roleId: RoleEnum.USER },
       });
 
       // create userToRole
@@ -71,6 +71,7 @@ export class UsersService {
     } catch (error) {
       // since we have errors lets rollback the changes we made
       await transaction.rollbackTransaction();
+      console.log(error);
       return { error };
     } finally {
       // you need to release a queryRunner which was manually instantiated
