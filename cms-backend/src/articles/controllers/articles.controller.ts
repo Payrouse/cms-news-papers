@@ -1,3 +1,4 @@
+import { StatusArticleDto } from './../dtos/articles.dto';
 import {
   Controller,
   Get,
@@ -21,6 +22,11 @@ export class ArticlesController {
     return this.articleService.create(payload);
   }
 
+  @Get('highlighted')
+  getHighlighted() {
+    return this.articleService.findArticleHighlighted();
+  }
+
   @Get()
   getArticles(@Query('limit') limit = 100, @Query('offset') offset = 0) {
     return this.articleService.findAll();
@@ -28,8 +34,16 @@ export class ArticlesController {
 
   @Post('related')
   getArticlesRelated(@Body() payload: any) {
-    console.log('aca el error de payload:', payload);
+    //console.log('aca el error de payload:', payload);
     return this.articleService.findArticlesRelated(payload.categoryId);
+  }
+
+  @Put(':articleId/status')
+  updateStatus(
+    @Param('articleId') id: string,
+    @Body() payload: StatusArticleDto,
+  ) {
+    return this.articleService.changeStatus(id, payload);
   }
 
   @Put(':articleId')

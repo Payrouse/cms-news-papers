@@ -1,3 +1,4 @@
+import { StatusArticleDto } from './../dtos/articles.dto';
 import {
   Injectable,
   HttpException,
@@ -5,10 +6,12 @@ import {
   NotFoundException,
 } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
+import { Between, Repository } from 'typeorm';
 import { CreateArticleDto, UpdateArticleDto } from '../dtos/articles.dto';
 import { Article } from './../entities/article.entity';
 import { ArticleStatus } from '../models/articleStatus.model';
+import { timeStamp } from 'console';
+import { date } from 'joi';
 
 @Injectable()
 export class ArticlesService {
@@ -39,6 +42,40 @@ export class ArticlesService {
       throw new NotFoundException(`Articulos no encontrados`);
     }
     return articlesRelated;
+  }
+
+  async findArticleHighlighted() {
+    const datenow = new Date();
+    const date24hAgo = datenow.getTime() - 86400000; // Número de días a restar
+
+    const startDate = new Date(datenow);
+    const endDate = new Date(date24hAgo);
+    console.log('hoy', startDate);
+    console.log('ayer ', endDate);
+    const articleHighlighted = await this.articleRepo.find({
+      where: {
+        status: ArticleStatus.HIGHLIGHTED,
+        publishedAt: Between(endDate, startDate),
+      },
+      order: { publishedAt: 'DESC' },
+    });
+    if (!articleHighlighted) {
+      throw new NotFoundException(`Articulos no encontrados`);
+    }
+    return articleHighlighted;
+  }
+
+  async changeStatus(articleId: string, change: StatusArticleDto) {
+    const article = await this.articleRepo.findOne(articleId);
+    this.articleRepo.merge(article, change);
+    try {
+      return this.articleRepo.save(article);
+    } catch (error) {
+      throw new HttpException(
+        'Error al actualizar el articulo',
+        HttpStatus.BAD_REQUEST,
+      );
+    }
   }
 
   async create(data: CreateArticleDto) {

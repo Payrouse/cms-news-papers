@@ -37,4 +37,10 @@ export class CreateArticleDto {
   readonly categoryId: string;
 }
 
+export class StatusArticleDto {
+  @IsNotEmpty()
+  @IsNumber()
+  readonly status: number;
+}
+
 export class UpdateArticleDto extends PartialType(CreateArticleDto) {}
