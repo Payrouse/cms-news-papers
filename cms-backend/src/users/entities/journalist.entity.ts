@@ -19,13 +19,18 @@ export class Journalist {
   /* @PrimaryGeneratedColumn('uuid', { name: 'journalist_id' })
   journalistId: string;*/
 
-  @Column({ name: 'dni', type: 'varchar', length: 10 })
+  @Column({ name: 'dni', type: 'varchar', length: 10, unique: true })
   dni: string;
 
-  @Column({ name: 'social_security_number', type: 'varchar', length: 10 })
+  @Column({
+    name: 'social_security_number',
+    type: 'varchar',
+    length: 10,
+    unique: true,
+  })
   socialSecurityNumber: string;
 
-  @Column({ name: 'public_email', type: 'varchar', length: 255 })
+  @Column({ name: 'public_email', type: 'varchar', length: 255, unique: true })
   publicEmail: string;
 
   @Column({ name: 'branch', type: 'varchar', length: 64 })

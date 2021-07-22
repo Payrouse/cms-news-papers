@@ -11,6 +11,7 @@ import { DatabaseModule } from './database/database.module';
 import { UsersModule } from './users/users.module';
 import { ArticlesModule } from './articles/articles.module';
 import { CommentsModule } from './comments/comments.module';
+import { AuthModule } from './auth/auth.module';
 
 @Module({
   imports: [
@@ -24,6 +25,7 @@ import { CommentsModule } from './comments/comments.module';
       isGlobal: true,
       validationSchema: Joi.object({
         API_KEY: Joi.string().required(),
+        JWT_SECRET: Joi.string().required(),
         POSTGRES_DB_NAME: Joi.string().required(),
         POSTGRES_USER: Joi.string().required(),
         POSTGRES_PASSWORD: Joi.string().required(),
@@ -33,6 +35,7 @@ import { CommentsModule } from './comments/comments.module';
     }),
     ArticlesModule,
     CommentsModule,
+    AuthModule,
   ],
   controllers: [AppController],
   providers: [AppService],
