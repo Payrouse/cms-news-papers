@@ -46,7 +46,6 @@ export class ArticlesController {
   @Public()
   @Post('related')
   getArticlesRelated(@Body() payload: any) {
-    //console.log('aca el error de payload:', payload);
     return this.articleService.findArticlesRelated(payload.categoryId);
   }
 

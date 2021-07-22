@@ -28,26 +28,18 @@ export class CategoriesController {
   @Roles(RoleEnum.ADMIN, RoleEnum.PUBLISHER)
   @Post()
   create(@Body() payload: CreateCategorieDto) {
-    //return { message: 'Mensaje de crear', payload };
     return this.categoriesService.create(payload);
   }
 
   @Public()
   @Get()
   getCategories(@Query('limit') limit = 100, @Query('offset') offset = 0) {
-    //deconstruccion
-    //const { limit, offset } = params;
-    //return `categories: limit => ${limit} offset => ${offset}`;
     return this.categoriesService.findAll();
   }
 
   @Roles(RoleEnum.ADMIN, RoleEnum.PUBLISHER)
   @Put(':categoryId')
   update(@Param('categoryId') id: string, @Body() payload: UpdateCategorieDto) {
-    /*return {
-      id,
-      payload,
-    };*/
     return this.categoriesService.update(id, payload);
   }
 
@@ -60,7 +52,6 @@ export class CategoriesController {
   @Public()
   @Get(':categoryId')
   getCategorie(@Param('categoryId') id: string) {
-    //return `categorie ${id}`;
     return this.categoriesService.findOne(id);
   }
 }
