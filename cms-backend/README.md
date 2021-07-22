@@ -2,6 +2,34 @@
 
 our powerfully backend
 
+## Validación de Roles
+
+Los roles se validad con el decorador `@Roles`\
+
+por ejemplo: se quiere validar que el endpoint getUser solo de acceso a los administradores
+
+```ts
+  // en los paréntesis se pasan los roles que tienen acceso al endpoint
+  // en este ejemplo solo el rol de administrador tiene acceso
+  @Roles(RoleEnum.ADMIN)
+  @Get()
+  getUsers() {
+    return this.usersService.findAll();
+  }
+```
+
+por ejemplo: se quiere validar que el endpoint getUser solo de acceso a los administradores y jefes de publicación
+
+```ts
+  // en los paréntesis se pasan los roles que tienen acceso al endpoint (si es más de un rol se pasan con una coma)
+  // en este ejemplo el rol de administrador y journalist tiene acceso
+  @Roles(RoleEnum.ADMIN, RoleEnum.JOURNALIST)
+  @Get()
+  getUsers() {
+    return this.usersService.findAll();
+  }
+```
+
 ## Libraries
 
 ### DTO validations
@@ -106,12 +134,9 @@ $ nest g se /ruta donde se /crea el archivo /nombrearchivo --flat
 $ nest generate controller /ruta donde se /crea el archivo /nombrearchivo --flat
 $ nest g co /ruta donde se /crea el archivo /nombrearchivo --flat
 
-
---flat -> no genera una caprteta solo el archivo 
+--flat -> no genera una carpeta solo el archivo
 
 ```
-
-
 
 ## Support
 

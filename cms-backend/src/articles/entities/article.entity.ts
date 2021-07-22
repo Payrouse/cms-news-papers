@@ -35,7 +35,7 @@ export class Article {
   @Column({ name: 'body', type: 'text' })
   body: string;
 
-  @Column({ name: 'status', type: 'smallint' })
+  @Column({ name: 'status', type: 'smallint', default: 0 })
   status: number;
 
   @Exclude()

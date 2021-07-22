@@ -1,10 +1,10 @@
 import {
   Entity,
-  Column,
   ManyToOne,
   PrimaryColumn,
   CreateDateColumn,
   UpdateDateColumn,
+  JoinColumn,
 } from 'typeorm';
 import { Exclude } from 'class-transformer';
 
@@ -13,11 +13,11 @@ import { Role } from './role.entity';
 
 @Entity({ name: 'user_roles' })
 export class UserToRole {
-  @PrimaryColumn({ name: 'user_id' })
+  @PrimaryColumn({ name: 'user_id', type: 'uuid' })
   userId: string;
 
-  @PrimaryColumn({ name: 'role_id' })
-  roleId: string;
+  @PrimaryColumn({ name: 'role_id', type: 'int' })
+  roleId: number;
 
   @Exclude()
   @CreateDateColumn({
@@ -35,9 +35,11 @@ export class UserToRole {
   })
   updatedAt: Date;
 
-  @ManyToOne(() => User, (user) => user.userToRoles)
+  @ManyToOne(() => User)
+  @JoinColumn({ name: 'user_id' })
   user: User;
 
-  @ManyToOne(() => Role, (role) => role.userToRoles)
+  @ManyToOne(() => Role)
+  @JoinColumn({ name: 'role_id' })
   role: Role;
 }

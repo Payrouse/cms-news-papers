@@ -51,5 +51,6 @@ import { UserToRole } from './entities/userToRole.entity';
     PublishersController,
     AdministratorsController,
   ],
+  exports: [UsersService],
 })
 export class UsersModule {}

@@ -32,14 +32,19 @@ export class User {
   @Column({ name: 'last_name', type: 'varchar', length: 255 })
   lastName: string;
 
-  @Column({ name: 'email', type: 'varchar', length: 255 })
+  @Column({ name: 'email', type: 'varchar', length: 255, unique: true })
   email: string;
 
   @Exclude()
   @Column({ name: 'password', type: 'text' })
   password: string;
 
-  @Column({ name: 'avatar', type: 'text', nullable: true })
+  @Column({
+    name: 'avatar',
+    type: 'text',
+    nullable: true,
+    default: 'https://image.flaticon.com/icons/png/512/234/234635.png',
+  })
   avatar: string;
 
   @Exclude()
@@ -75,5 +80,5 @@ export class User {
   comments: Comment[];
 
   @OneToMany(() => UserToRole, (userToRole) => userToRole.user)
-  userToRoles: UserToRole[];
+  userToRoles: Promise<UserToRole[]>;
 }
