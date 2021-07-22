@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { HttpStatus, Injectable, HttpException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Connection, Repository } from 'typeorm';
 import * as bcrypt from 'bcrypt';
@@ -55,7 +55,7 @@ export class UsersService {
 
       // get id role
       const role = await this.roleRepo.findOne({
-        where: { name: RoleEnum.USER },
+        where: { roleId: RoleEnum.USER },
       });
 
       // create userToRole
@@ -71,7 +71,7 @@ export class UsersService {
     } catch (error) {
       // since we have errors lets rollback the changes we made
       await transaction.rollbackTransaction();
-      return { error };
+      throw new HttpException(error.message, HttpStatus.BAD_REQUEST);
     } finally {
       // you need to release a queryRunner which was manually instantiated
       await transaction.release();

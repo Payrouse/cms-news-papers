@@ -13,7 +13,7 @@ export class Publisher {
   @JoinColumn({ name: 'publisher_id' })
   user: User;
 
-  // publisher -> article
+  // publisher -> category
   @OneToMany(() => Category, (category) => category.publisherId)
   categories: Category[];
 

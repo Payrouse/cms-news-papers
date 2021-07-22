@@ -27,17 +27,21 @@ export class Comment {
   createdAt: Date;
 
   // redundant relation (FK)
-  @ManyToOne(() => Comment, (comment) => comment.commentRoot)
+  @ManyToOne(() => Comment, (comment) => comment.commentRoot, {
+    nullable: true,
+  })
   @JoinColumn({ name: 'comment_root_id' })
   commentRoot: Comment;
 
   // user -> comment (FK)
-  @ManyToOne(() => User, (user) => user.comments)
+  @ManyToOne(() => User, (user) => user.comments, {
+    nullable: false,
+  })
   @JoinColumn({ name: 'user_id' })
-  user: User;
+  userId: User;
 
   // article -> comment (FK)
   @ManyToOne(() => Article, (article) => article.comments)
   @JoinColumn({ name: 'article_id' })
-  article: Article;
+  articleId: Article;
 }
