@@ -8,7 +8,7 @@ import {
   Put,
   Delete,
 } from '@nestjs/common';
-import { CreateCategorieDto, UpdateCategorieDto } from '../dtos/categories.dto';
+import { CreateCategoryDto, UpdateCategoryDto } from '../dtos/categories.dto';
 import { CategoriesService } from '../services/categories.service';
 
 @Controller('categories')
@@ -16,7 +16,7 @@ export class CategoriesController {
   constructor(private categoriesService: CategoriesService) {}
 
   @Post()
-  create(@Body() payload: CreateCategorieDto) {
+  create(@Body() payload: CreateCategoryDto) {
     //return { message: 'Mensaje de crear', payload };
     return this.categoriesService.create(payload);
   }
@@ -30,7 +30,7 @@ export class CategoriesController {
   }
 
   @Put(':categoryId')
-  update(@Param('categoryId') id: string, @Body() payload: UpdateCategorieDto) {
+  update(@Param('categoryId') id: string, @Body() payload: UpdateCategoryDto) {
     /*return {
       id,
       payload,
@@ -44,7 +44,7 @@ export class CategoriesController {
   }
 
   @Get(':categoryId')
-  getCategorie(@Param('categoryId') id: string) {
+  getCategory(@Param('categoryId') id: string) {
     //return `categorie ${id}`;
     return this.categoriesService.findOne(id);
   }

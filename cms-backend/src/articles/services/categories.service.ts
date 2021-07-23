@@ -7,7 +7,7 @@ import {
   HttpStatus,
   NotFoundException,
 } from '@nestjs/common';
-import { CreateCategorieDto, UpdateCategorieDto } from '../dtos/categories.dto';
+import { CreateCategoryDto, UpdateCategoryDto } from '../dtos/categories.dto';
 
 @Injectable()
 export class CategoriesService {
@@ -23,31 +23,31 @@ export class CategoriesService {
   async findOne(categoryId: string) {
     const category = await this.categoryRepo.findOne(categoryId);
     if (!category) {
-      throw new NotFoundException(`Categoria #${categoryId} no encontrado`);
+      throw new NotFoundException(`Categoría #${categoryId} no encontrado`);
     }
     return category;
   }
 
-  async create(data: CreateCategorieDto) {
+  async create(data: CreateCategoryDto) {
     const newCategory = this.categoryRepo.create(data);
     try {
       return await this.categoryRepo.save(newCategory);
     } catch (error) {
       throw new HttpException(
-        'Error al crear la categoria',
+        'Error al crear la categoría',
         HttpStatus.BAD_REQUEST,
       );
     }
   }
 
-  async update(categoryId: string, change: UpdateCategorieDto) {
+  async update(categoryId: string, change: UpdateCategoryDto) {
     const category = await this.categoryRepo.findOne(categoryId);
     this.categoryRepo.merge(category, change);
     try {
       return this.categoryRepo.save(category);
     } catch (error) {
       throw new HttpException(
-        'Error al crear la categoria',
+        'Error al crear la categoría',
         HttpStatus.BAD_REQUEST,
       );
     }
@@ -56,7 +56,7 @@ export class CategoriesService {
   async delete(categoryId: string) {
     const category = await this.categoryRepo.findOne(categoryId);
     if (!category) {
-      throw new NotFoundException(`Categoria no encontrado`);
+      throw new NotFoundException(`Categoría no encontrado`);
     }
     return await this.categoryRepo.delete(categoryId);
   }
