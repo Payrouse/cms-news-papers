@@ -4,6 +4,7 @@ import { NotificationsController } from './controllers/notifications.controller'
 
 import { MailerModule } from '@nestjs-modules/mailer';
 import { HandlebarsAdapter } from '@nestjs-modules/mailer/dist/adapters/handlebars.adapter';
+import { join } from 'path';
 
 @Module({
   imports: [
@@ -13,7 +14,7 @@ import { HandlebarsAdapter } from '@nestjs-modules/mailer/dist/adapters/handleba
         from: '"No Reply" <noreply@example.com>'
       },
       template: {
-        dir: 'templates',
+        dir: join(__dirname, 'templates'),
         adapter: new HandlebarsAdapter(), // To modify ours templates
         options: {
           strict: true,
