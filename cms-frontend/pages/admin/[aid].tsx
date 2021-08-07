@@ -3,7 +3,7 @@ import { useRouter } from 'next/router';
 import LayoutAdmin from '../../components/layouts/AdminLayout';
 import Settings from '../../components/views/admin/Settings';
 
-const Admin = (props: any) => {
+const Admin = () => {
   const router = useRouter();
   const { aid } = router.query;
   console.log('route', aid);
