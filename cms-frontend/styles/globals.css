@@ -1,3 +1,8 @@
+/* ./styles/globals.css */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
 html,
 body {
   padding: 0;
@@ -14,7 +19,6 @@ a {
 * {
   box-sizing: border-box;
 }
-
 
 .container-views {
   padding: 0px 30px 0px 30px;
