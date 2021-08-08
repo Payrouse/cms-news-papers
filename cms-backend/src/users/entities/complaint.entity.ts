@@ -40,7 +40,9 @@ export class Complaint {
   })
   updatedAt: Date;
 
-  @ManyToOne(() => User, (user) => user.complaints)
+  @ManyToOne(() => User, (user) => user.complaints, {
+    nullable: false,
+  })
   @JoinColumn({ name: 'user_id' })
-  user: User;
+  userId: User;
 }

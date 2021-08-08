@@ -1,11 +1,4 @@
-import {
-  Column,
-  Entity,
-  OneToOne,
-  JoinColumn,
-  OneToMany,
-  ManyToOne,
-} from 'typeorm';
+import { Column, Entity, OneToOne, JoinColumn, OneToMany } from 'typeorm';
 import { Streaming } from './streaming.entity';
 
 import { User } from './user.entity';
@@ -17,9 +10,9 @@ export class Administrator {
 
   @OneToOne(() => User, (user) => user.administrator, { primary: true })
   @JoinColumn({ name: 'administrator_id' })
-  user: User;
+  adminId: User;
 
   // admin -> streaming
-  @OneToMany(() => Streaming, (stream) => stream.administrator)
+  @OneToMany(() => Streaming, (streaming) => streaming.administratorId)
   streamings: Streaming[];
 }

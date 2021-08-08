@@ -9,7 +9,7 @@ import {
   Delete,
   UseGuards,
 } from '@nestjs/common';
-import { CreateCategorieDto, UpdateCategorieDto } from '../dtos/categories.dto';
+import { CreateCategoryDto, UpdateCategoryDto } from '../dtos/categories.dto';
 import { CategoriesService } from '../services/categories.service';
 
 import { ApiKeyGuard } from 'src/auth/guards/api-key.guard';
@@ -27,7 +27,7 @@ export class CategoriesController {
 
   @Roles(RoleEnum.ADMIN, RoleEnum.PUBLISHER)
   @Post()
-  create(@Body() payload: CreateCategorieDto) {
+  create(@Body() payload: CreateCategoryDto) {
     return this.categoriesService.create(payload);
   }
 
@@ -39,7 +39,11 @@ export class CategoriesController {
 
   @Roles(RoleEnum.ADMIN, RoleEnum.PUBLISHER)
   @Put(':categoryId')
-  update(@Param('categoryId') id: string, @Body() payload: UpdateCategorieDto) {
+  update(@Param('categoryId') id: string, @Body() payload: UpdateCategoryDto) {
+    /*return {
+      id,
+      payload,
+    };*/
     return this.categoriesService.update(id, payload);
   }
 
@@ -51,7 +55,8 @@ export class CategoriesController {
 
   @Public()
   @Get(':categoryId')
-  getCategorie(@Param('categoryId') id: string) {
+  getCategory(@Param('categoryId') id: string) {
+    //return `categorie ${id}`;
     return this.categoriesService.findOne(id);
   }
 }

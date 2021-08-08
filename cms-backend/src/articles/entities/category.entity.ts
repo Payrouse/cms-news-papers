@@ -9,15 +9,16 @@ import {
   ManyToOne,
 } from 'typeorm';
 import { Exclude } from 'class-transformer';
-import { Publisher } from '../../users/entities/publisher.entity';
+
 import { Article } from './article.entity';
+import { Publisher } from '../../users/entities/publisher.entity';
 
 @Entity({ name: 'categories' })
 export class Category {
   @PrimaryGeneratedColumn('uuid', { name: 'category_id' })
   categoryId: string;
 
-  @Column({ name: 'name', type: 'varchar', length: 64 })
+  @Column({ name: 'name', type: 'varchar', length: 64, unique: true })
   name: string;
 
   @Column({ name: 'description', type: 'text' })
@@ -40,7 +41,10 @@ export class Category {
   updatedAt: Date;
 
   // category -> publisher
-  @ManyToOne(() => Publisher, (publisher) => publisher.categories)
+  @ManyToOne(() => Publisher, (publisher) => publisher.categories, {
+    nullable: false,
+  })
+  @Column({ name: 'publisher_id', type: 'uuid' })
   @JoinColumn({ name: 'publisher_id' })
   publisherId: Publisher;
 
