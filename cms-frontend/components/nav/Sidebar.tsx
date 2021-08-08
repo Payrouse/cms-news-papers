@@ -8,7 +8,11 @@ const SideBar = ({ option }: any) => {
     <>
       <div className={styles.container}>
         <header className={styles.header}>
-          <img className={styles.header_img} src={'/img/burger.svg'} alt="sidebar" />
+          <img
+            className={styles.header_img}
+            src={'/img/burger.svg'}
+            alt="sidebar"
+          />
           <h2 className={styles.header_title}>Admin</h2>
         </header>
         <div>
@@ -32,7 +36,14 @@ const SideBar = ({ option }: any) => {
   );
 };
 
-const NavItem = ({ active, name, icon, toUrl }: any) => {
+interface NavItemProps {
+  active: boolean;
+  icon: string;
+  toUrl: string;
+  name: string;
+}
+
+const NavItem = ({ active, name, icon, toUrl }: NavItemProps) => {
   return (
     <li>
       <Link href={`/admin${toUrl}`}>
