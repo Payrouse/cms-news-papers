@@ -1,4 +1,5 @@
 import Head from 'next/head';
+import AppToolbar from '../toolbar/AppToolbar';
 
 const AppLayout = ({ children }: any) => {
   return (
@@ -6,7 +7,10 @@ const AppLayout = ({ children }: any) => {
       <Head>
         <title>Diario El Mundo 🌎🌎</title>
       </Head>
-      <div>{children}</div>
+      <div className="bg-white">
+        <AppToolbar />
+        <div className="mt-7">{children}</div>
+      </div>
     </>
   );
 };
