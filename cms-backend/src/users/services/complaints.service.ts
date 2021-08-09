@@ -32,7 +32,7 @@ export class ComplaintsService {
       title: data.title,
       description: data.description,
       status: ComplaintStatus.SUBMITTED,
-      user: User,
+      userId: User,
     });
 
     const transaction = this.connection.createQueryRunner();

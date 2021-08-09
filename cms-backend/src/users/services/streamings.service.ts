@@ -33,7 +33,7 @@ export class StreamingsService {
       description: data.description,
       videoUrl: data.videoUrl,
       status: StreamStatus.CREATED,
-      administrator: admin,
+      administratorId: admin,
     });
 
     const transaction = this.connection.createQueryRunner();
