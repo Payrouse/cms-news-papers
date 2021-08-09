@@ -24,7 +24,7 @@ const HomeCarousel = () => {
         title="Lorem, ipsum dolor sit amet consectetur adipisicing elit. Nisi atque quis distinctio voluptatibus repudiandae, vero eius illum vel excepturi at ea exercitationem praesentium nulla ad veniam a accusamus id."
       />
       <ItemCarousel
-        img="https://estaticos.muyinteresante.es/media/cache/400x300_thumb/uploads/images/gallery/5971d8bb5bafe86c385a6625/gatito-atigrado-redes.jpg"
+        img="https://previews.123rf.com/images/andreykuzmin/andreykuzmin1312/andreykuzmin131200031/24449912-3-semanas-durmiendo-gatito-beb%C3%A9.jpg"
         title="Lorem, ipsum dolor sit amet consectetur adipisicing elit. Nisi atque quis distinctio voluptatibus repudiandae, vero eius illum vel excepturi at ea exercitationem praesentium nulla ad veniam a accusamus id."
       />
       <ItemCarousel

@@ -1,8 +1,20 @@
+import Head from 'next/head';
+import AppLayout from '../../components/layouts/AppLayout';
+import Article from '../../components/views/article';
+
 const News = (props: any) => {
   return (
-    <div>
-      <h1>I am News</h1>
-    </div>
+    <>
+      <Head>
+        <meta
+          name="description"
+          content="Diario El Mundo, donde encuentras las verdades más verdaderas de las verdades"
+        />
+      </Head>
+      <AppLayout>
+        <Article />
+      </AppLayout>
+    </>
   );
 };
 

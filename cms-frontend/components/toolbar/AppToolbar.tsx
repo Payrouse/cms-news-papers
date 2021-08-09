@@ -1,6 +1,7 @@
 import Router from 'next/router';
 import React, { useEffect, useState } from 'react';
 import { Menu, MenuItem } from '@material-ui/core';
+import Link from 'next/link';
 
 const AppToolbar = () => {
   const [isLogin, setIsLogin] = useState(false);
@@ -15,7 +16,11 @@ const AppToolbar = () => {
     <header className="bg-white border-b shadow flex justify-center">
       <div className="md:w-4/5 w-full px-2 py-2">
         <div className="flex justify-between">
-          <h1 className="text-4xl font-bold text-blue-600">El Mundo</h1>
+          <Link href="/">
+            <a>
+              <h1 className="text-4xl font-bold text-blue-600">El Mundo</h1>
+            </a>
+          </Link>
           <div className="h-10 w-10">
             {!isLogin ? (
               <div className="bg-gray-200 border h-10 w-10 rounded-full animate-pulse" />
