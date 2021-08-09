@@ -1,4 +1,4 @@
-import { Column, Entity, OneToOne, JoinColumn, OneToMany } from 'typeorm';
+import { Column, Entity, OneToOne, JoinColumn, OneToMany, PrimaryGeneratedColumn, PrimaryColumn } from 'typeorm';
 
 import { User } from './user.entity';
 import { Article } from '../../articles/entities/article.entity';
@@ -6,6 +6,9 @@ import { Category } from '../../articles/entities/category.entity';
 
 @Entity({ name: 'publishers' })
 export class Publisher {
+  @PrimaryColumn('uuid', { name: 'publisher_id' })
+  publisherId: string;
+
   @Column({ name: 'section', type: 'varchar', length: 64 })
   section: string;
 

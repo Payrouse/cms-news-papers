@@ -40,6 +40,9 @@ export class Complaint {
   })
   updatedAt: Date;
 
+  @Column({ name: 'status', type: 'smallint' })
+  status: number;
+
   @ManyToOne(() => User, (user) => user.complaints)
   @JoinColumn({ name: 'user_id' })
   user: User;
