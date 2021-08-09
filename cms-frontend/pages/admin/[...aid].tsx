@@ -1,6 +1,9 @@
 import { useRouter } from 'next/router';
 
 import LayoutAdmin from '../../components/layouts/AdminLayout';
+import Editor from '../../components/views/admin/editor';
+import NewArticle from '../../components/views/admin/editor/NewArticle';
+import Publish from '../../components/views/admin/publish';
 import Settings from '../../components/views/admin/Settings';
 
 const Admin = () => {
@@ -16,11 +19,22 @@ const Admin = () => {
 };
 
 const View = ({ route }: any) => {
-  switch (route) {
+  let parsedRoute = undefined;
+  if (route) {
+    parsedRoute = route.join('/');
+  }
+
+  switch (parsedRoute) {
     case undefined:
       return <div>loading...</div>;
     case 'settings':
       return <Settings titleToolbar="Configuraciones" />;
+    case 'editor':
+      return <Editor titleToolbar="Redacción" />;
+    case 'editor/new':
+      return <NewArticle titleToolbar="Nuevo articulo" />;
+    case 'publish':
+      return <Publish titleToolbar="Revisión" />;
     default:
       return <div>404</div>;
   }
