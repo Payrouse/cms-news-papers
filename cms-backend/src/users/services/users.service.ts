@@ -29,6 +29,19 @@ export class UsersService {
     });
   }
 
+  findById(id: string) {
+    return this.userRepo.findOne({
+      where: { userId: id },
+    });
+  }
+
+  isRegistered(id: string) {
+    if (!this.findById(id)) {
+      throw new Error('User Not Found');
+    }
+    return true;
+  }
+
   async create(data: CreateUserDto) {
     const newUser = this.userRepo.create(data);
     // hash the password
