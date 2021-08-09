@@ -1,5 +1,5 @@
 import AddComment from '../../comments/AddComment';
-import Comments from '../../comments/comments';
+import Comments from '../../comments/Comments';
 import News from '../../comments/News';
 import NewsRelated from '../../comments/NewsRelated';
 
@@ -15,12 +15,11 @@ const Article = () => {
         <div className=" flex justify-center bg-gray-100 font-bold text-3xl">
           Noticias Relacionadas
         </div>
-        <div className="grid grid-cols-2 gap-1" >
-        <NewsRelated />
-        <NewsRelated />
-        <NewsRelated />
+        <div className="grid grid-cols-2 gap-1">
+          <NewsRelated />
+          <NewsRelated />
+          <NewsRelated />
         </div>
-        
       </div>
     </div>
   );
