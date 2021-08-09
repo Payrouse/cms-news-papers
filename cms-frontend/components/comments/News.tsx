@@ -1,18 +1,18 @@
 const News = () => {
   return (
       <div>
-          <div className="items-start font-bold text-3xl">
+          <h2 className="items-start font-bold text-3xl">
             Tokio despide los Olímpicos más importantes para Ecuador
-          </div>
-          <div className="items-start font-semibold text-2xl">
+          </h2>
+          <p className="items-start font-semibold text-2xl">
             El deporte ecuatoriano jamás olvidará los Juegos Olímpicos de Tokio
             2020
-          </div>
+          </p>
 
           <div className="flex flex-row my-5">
             <div className="flex items-center px-2">
               <img
-                className="flex w-10 h-10 rounded-full items-stretch"
+                className="w-12 h-12 rounded-full items-stretch"
                 src={
                   'https://www.nombresdeperros.eu/wp-content/uploads/2020/12/cachorro-blanco-de-nombre-Toby.jpg'
                 }
@@ -22,21 +22,19 @@ const News = () => {
 
             <div className="flex flex-col">
               <div className="px-2">Juan Palomino Editor</div>
-              <div className="px-2">Foto tomada el 07/08/2021</div>
+              <div className="px-2">07/08/2021</div>
             </div>
           </div>
 
-          <div>
-            <div className=" font-extralight my-5">
-              <img
-                src={
-                  'https://www.elcomercio.com/wp-content/uploads/2021/08/JJOO_.jpg'
-                }
-                alt="imagen de la noticia"
-              />
-            </div>
+          <div className="my-5">
+            <img
+              src={
+                'https://www.elcomercio.com/wp-content/uploads/2021/08/JJOO_.jpg'
+              }
+              alt="imagen de la noticia"
+            />
           </div>
-
+          
           <div className="flex flex-col text-justify">
             <p>
               El deporte ecuatoriano jamás olvidará los Juegos Olímpicos de
