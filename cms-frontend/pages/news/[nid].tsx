@@ -1,7 +1,9 @@
+import Article from "../../components/views/article";
+
 const News = (props: any) => {
   return (
     <div>
-      <h1>I am News</h1>
+      <Article/>
     </div>
   );
 };
