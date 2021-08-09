@@ -1,5 +1,6 @@
-import { Menu, MenuItem } from '@material-ui/core';
+import Router from 'next/router';
 import React, { useEffect, useState } from 'react';
+import { Menu, MenuItem } from '@material-ui/core';
 
 const AppToolbar = () => {
   const [isLogin, setIsLogin] = useState(false);
@@ -39,6 +40,11 @@ const ProfileMenu = () => {
     setAnchorEl(null);
   };
 
+  const goTo = (url: string) => {
+    handleClose();
+    Router.push(url);
+  };
+
   return (
     <>
       <button
@@ -48,7 +54,9 @@ const ProfileMenu = () => {
       >
         <img
           className="h-10 w-10 rounded-full object-cover"
-          src={'https://imagenes.milenio.com/YONeZ5-2cQu0TH_W2iPiQ_FkzbM=/958x596/https://www.milenio.com/uploads/media/2018/12/25/quieran-comprar-cachorro-acudir-criaderos.jpg'}
+          src={
+            'https://imagenes.milenio.com/YONeZ5-2cQu0TH_W2iPiQ_FkzbM=/958x596/https://www.milenio.com/uploads/media/2018/12/25/quieran-comprar-cachorro-acudir-criaderos.jpg'
+          }
           alt="profile"
         />
       </button>
@@ -59,8 +67,27 @@ const ProfileMenu = () => {
         open={Boolean(anchorEl)}
         onClose={handleClose}
       >
-        <MenuItem onClick={handleClose}>Perfil</MenuItem>
-        <MenuItem onClick={handleClose}>Denuncia ciudadana</MenuItem>
+        <MenuItem
+          onClick={() => {
+            goTo('/user');
+          }}
+        >
+          Perfil
+        </MenuItem>
+        <MenuItem
+          onClick={() => {
+            goTo('/admin');
+          }}
+        >
+          Admin
+        </MenuItem>
+        <MenuItem
+          onClick={() => {
+            goTo('/complaint');
+          }}
+        >
+          Denuncia ciudadana
+        </MenuItem>
         <MenuItem onClick={handleClose}>Cerrar sesión</MenuItem>
       </Menu>
     </>

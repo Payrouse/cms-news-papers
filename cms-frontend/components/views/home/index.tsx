@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+
 import HomeCarousel from '../../carousel/HomeCarousel';
 import HomeCategory from '../../categories/HomeCategory';
 import HomeNews from '../../news/HomeNews';
