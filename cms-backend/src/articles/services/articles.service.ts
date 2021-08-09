@@ -45,11 +45,8 @@ export class ArticlesService {
   async findArticleHighlighted() {
     const datenow = new Date();
     const date24hAgo = datenow.getTime() - 86400000; // Número de días a restar
-
     const startDate = new Date(datenow);
     const endDate = new Date(date24hAgo);
-    console.log('hoy', startDate);
-    console.log('ayer ', endDate);
     const articleHighlighted = await this.articleRepo.find({
       where: {
         status: ArticleStatus.HIGHLIGHTED,
