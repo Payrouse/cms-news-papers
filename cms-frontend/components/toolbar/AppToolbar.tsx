@@ -17,7 +17,7 @@ const AppToolbar = () => {
           <h1 className="text-4xl font-bold text-blue-600">El Mundo</h1>
           <div className="h-10 w-10">
             {!isLogin ? (
-              <div className="bg-gray-400 border h-10 w-10 rounded-full animate-pulse" />
+              <div className="bg-gray-200 border h-10 w-10 rounded-full animate-pulse" />
             ) : (
               <ProfileMenu />
             )}

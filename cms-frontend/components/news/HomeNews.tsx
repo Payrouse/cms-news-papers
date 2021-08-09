@@ -26,7 +26,7 @@ const HomeNews = () => {
         </div>
       </div>
       <img
-        className="ml-1 w-52 h-32 object-contain"
+        className="ml-1 w-24 h-24 md:w-52 md:h-32 object-contain"
         src="https://i1.wp.com/hipertextual.com/wp-content/uploads/2021/02/apple_macos-bigsur-1.jpg"
         alt="img"
       />

@@ -1,4 +1,6 @@
 import Head from 'next/head';
+
+import Footer from '../footer/Footer';
 import AppToolbar from '../toolbar/AppToolbar';
 
 const AppLayout = ({ children }: any) => {
@@ -10,6 +12,7 @@ const AppLayout = ({ children }: any) => {
       <div className="bg-white">
         <AppToolbar />
         <div className="mt-7">{children}</div>
+        <Footer/>
       </div>
     </>
   );
