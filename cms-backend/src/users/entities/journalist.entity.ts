@@ -6,6 +6,7 @@ import {
   OneToOne,
   JoinColumn,
   OneToMany,
+  PrimaryColumn,
 } from 'typeorm';
 import { Exclude } from 'class-transformer';
 
@@ -16,8 +17,8 @@ import { Article } from './../../articles/entities/article.entity';
 
 @Entity({ name: 'journalist' })
 export class Journalist {
-  /* @PrimaryGeneratedColumn('uuid', { name: 'journalist_id' })
-  journalistId: string;*/
+  @PrimaryColumn('uuid', { name: 'journalist_id' })
+  journalistId: string;
 
   @Column({ name: 'dni', type: 'varchar', length: 10, unique: true })
   dni: string;
