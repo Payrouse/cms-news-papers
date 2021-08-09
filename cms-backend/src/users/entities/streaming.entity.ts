@@ -43,7 +43,12 @@ export class Streaming {
   status: number;
 
   // streaming -> administrator
-  @ManyToOne(() => Administrator, (administrator) => administrator.streamings)
-  @JoinColumn({ name: 'administrator_id' })
-  administrator: Administrator;
+  @ManyToOne(() => Administrator, (administrator) => administrator.streamings, {
+    nullable: false,
+  })
+  @Column({ name: 'administrator_id', type: 'uuid' })
+  @JoinColumn({
+    name: 'administrator_id',
+  })
+  administratorId: Administrator;
 }

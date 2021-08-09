@@ -69,14 +69,14 @@ export class User {
   @OneToOne(() => Publisher, (publisher) => publisher.user)
   publisher: Publisher;
 
-  @OneToOne(() => Administrator, (administrator) => administrator.user)
+  @OneToOne(() => Administrator, (administrator) => administrator.adminId)
   administrator: Administrator;
 
-  @OneToMany(() => Complaint, (complaint) => complaint.user)
+  @OneToMany(() => Complaint, (complaint) => complaint.userId)
   complaints: Complaint[];
 
   // user -> comment
-  @OneToMany(() => Comment, (comment) => comment.user)
+  @OneToMany(() => Comment, (comment) => comment.userId)
   comments: Comment[];
 
   @OneToMany(() => UserToRole, (userToRole) => userToRole.user)

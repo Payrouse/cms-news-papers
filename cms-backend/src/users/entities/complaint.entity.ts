@@ -45,5 +45,5 @@ export class Complaint {
 
   @ManyToOne(() => User, (user) => user.complaints)
   @JoinColumn({ name: 'user_id' })
-  user: User;
+  userId: User;
 }

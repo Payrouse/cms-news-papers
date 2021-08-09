@@ -21,9 +21,9 @@ export class Administrator {
 
   @OneToOne(() => User, (user) => user.administrator, { primary: true })
   @JoinColumn({ name: 'administrator_id' })
-  user: User;
+  adminId: User;
 
   // admin -> streaming
-  @OneToMany(() => Streaming, (stream) => stream.administrator)
+  @OneToMany(() => Streaming, (streaming) => streaming.administratorId)
   streamings: Streaming[];
 }

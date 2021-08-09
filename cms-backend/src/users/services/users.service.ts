@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { HttpStatus, Injectable, HttpException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Connection, Repository } from 'typeorm';
 import * as bcrypt from 'bcrypt';
@@ -29,17 +29,17 @@ export class UsersService {
     });
   }
 
-  findById(id: string){
+  findById(id: string) {
     return this.userRepo.findOne({
-      where:{userId: id}
-    })
+      where: { userId: id },
+    });
   }
 
-  isRegistered(id: string){
-    if(!this.findById(id)){
-      throw new Error("User Not Found")
+  isRegistered(id: string) {
+    if (!this.findById(id)) {
+      throw new Error('User Not Found');
     }
-    return true
+    return true;
   }
 
   async create(data: CreateUserDto) {
@@ -84,8 +84,7 @@ export class UsersService {
     } catch (error) {
       // since we have errors lets rollback the changes we made
       await transaction.rollbackTransaction();
-      console.log(error);
-      return { error };
+      throw new HttpException(error.message, HttpStatus.BAD_REQUEST);
     } finally {
       // you need to release a queryRunner which was manually instantiated
       await transaction.release();

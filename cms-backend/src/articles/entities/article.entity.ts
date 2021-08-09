@@ -14,6 +14,7 @@ import { Comment } from '../../comments/entities/comment.entity';
 import { Journalist } from '../../users/entities/journalist.entity';
 import { Publisher } from '../../users/entities/publisher.entity';
 import { Category } from './category.entity';
+import { Max, Min } from 'class-validator';
 
 @Entity({ name: 'articles' })
 export class Article {
@@ -36,6 +37,8 @@ export class Article {
   body: string;
 
   @Column({ name: 'status', type: 'smallint', default: 0 })
+  @Min(0)
+  @Max(4)
   status: number;
 
   @Exclude()
@@ -54,15 +57,16 @@ export class Article {
   })
   updatedAt: Date;
 
-  @UpdateDateColumn({
+  @Column({
     name: 'published_at',
     type: 'timestamptz',
-    default: () => 'CURRENT_TIMESTAMP',
   })
   publishedAt: Date;
 
   // journalist -> article (FK)
-  @ManyToOne(() => Journalist, (journalist) => journalist.article)
+  @ManyToOne(() => Journalist, (journalist) => journalist.article, {
+    nullable: false,
+  })
   @JoinColumn({ name: 'journalist_id' })
   journalistId: string;
 
@@ -72,11 +76,13 @@ export class Article {
   publisherId: string;
 
   // article -> comment
-  @OneToMany(() => Comment, (comment) => comment.article)
+  @OneToMany(() => Comment, (comment) => comment.articleId)
   comments: Comment[];
 
   // article -> category
-  @ManyToOne(() => Category, (category) => category.articles)
+  @ManyToOne(() => Category, (category) => category.articles, {
+    nullable: false,
+  })
   @JoinColumn({ name: 'category_id' })
   categoryId: string;
 }
