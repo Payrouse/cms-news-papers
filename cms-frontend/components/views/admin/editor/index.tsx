@@ -1,7 +1,6 @@
 import Link from 'next/link';
 
 import Toolbar from '../../../toolbar/AdminToolbar';
-import Button, { ButtonType } from '../../../buttons/Button';
 import ArticleEditorTable from '../../../tables/ArticleEditorTable';
 
 const Editor = ({ titleToolbar }: any) => {

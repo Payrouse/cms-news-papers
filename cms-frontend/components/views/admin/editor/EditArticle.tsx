@@ -18,7 +18,7 @@ type ArticleValues = {
   category_id: string;
 };
 
-const NewArticle = ({ titleToolbar }: any) => {
+const EditArticle = ({ titleToolbar }: any) => {
   const {
     register,
     handleSubmit,
@@ -42,8 +42,14 @@ const NewArticle = ({ titleToolbar }: any) => {
           </Link>
         </div>
         <div className="mt-4 rounded shadow bg-white px-4 py-4 mb-4">
-          <h2 className="text-lg font-bold">Redacción del articulo:</h2>
+          <h2 className="text-lg font-bold">Corrección del articulo:</h2>
           <form onSubmit={handleSubmit(handleArticle)}>
+            <p>
+              Lorem ipsum dolor sit amet consectetur adipisicing elit. Quis
+              dolore consequuntur minus quos corrupti quo, magnam accusantium
+              vero tempore doloremque aliquid minima iste, ipsa laudantium! Ipsa
+              facilis ullam voluptas enim.
+            </p>
             <Input
               name="title"
               label="Titular"
@@ -103,10 +109,10 @@ const NewArticle = ({ titleToolbar }: any) => {
 
             <div className="flex justify-between mx-4 mt-4">
               <button
-                className="bg-gray-500 hover:bg-gray-600 text-white rounded shadow text-center font-medium px-4 py-2"
+                className="bg-red-500 hover:bg-red-600 text-white rounded shadow text-center font-medium px-4 py-2"
                 type="button"
               >
-                Guardar como borrador
+                Eliminar
               </button>
               <button
                 className="bg-blue-500 hover:bg-blue-600 text-white rounded shadow text-center font-medium px-4 py-2"
@@ -137,4 +143,4 @@ const CATEGORIES = [
   },
 ];
 
-export default NewArticle;
+export default EditArticle;

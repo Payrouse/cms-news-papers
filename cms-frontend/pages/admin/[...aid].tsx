@@ -2,6 +2,7 @@ import { useRouter } from 'next/router';
 
 import LayoutAdmin from '../../components/layouts/AdminLayout';
 import Editor from '../../components/views/admin/editor';
+import EditArticle from '../../components/views/admin/editor/EditArticle';
 import NewArticle from '../../components/views/admin/editor/NewArticle';
 import Publish from '../../components/views/admin/publish';
 import Settings from '../../components/views/admin/Settings';
@@ -33,6 +34,8 @@ const View = ({ route }: any) => {
       return <Editor titleToolbar="Redacción" />;
     case 'editor/new':
       return <NewArticle titleToolbar="Nuevo articulo" />;
+    case 'editor/1':
+      return <EditArticle titleToolbar="Editar articulo" />;
     case 'publish':
       return <Publish titleToolbar="Revisión" />;
     default:

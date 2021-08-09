@@ -1,4 +1,4 @@
-import React from 'react';
+import Router from 'next/router';
 
 const ArticleEditorTable = () => {
   return (
@@ -13,21 +13,21 @@ const ArticleEditorTable = () => {
           </tr>
         </thead>
         <tbody className="text-gray-600 text-sm font-light">
-            <ArticleEditorRow state={0} />
-            <ArticleEditorRow state={1} />
-            <ArticleEditorRow state={2} />
-            <ArticleEditorRow state={3} />
-            <ArticleEditorRow state={4} />
-            <ArticleEditorRow state={0} />
-            <ArticleEditorRow state={1} />
-            <ArticleEditorRow state={2} />
-            <ArticleEditorRow state={3} />
-            <ArticleEditorRow state={4} />
-            <ArticleEditorRow state={0} />
-            <ArticleEditorRow state={1} />
-            <ArticleEditorRow state={2} />
-            <ArticleEditorRow state={3} />
-            <ArticleEditorRow state={4} />
+          <ArticleEditorRow state={0} />
+          <ArticleEditorRow state={1} />
+          <ArticleEditorRow state={2} />
+          <ArticleEditorRow state={3} />
+          <ArticleEditorRow state={4} />
+          <ArticleEditorRow state={0} />
+          <ArticleEditorRow state={1} />
+          <ArticleEditorRow state={2} />
+          <ArticleEditorRow state={3} />
+          <ArticleEditorRow state={4} />
+          <ArticleEditorRow state={0} />
+          <ArticleEditorRow state={1} />
+          <ArticleEditorRow state={2} />
+          <ArticleEditorRow state={3} />
+          <ArticleEditorRow state={4} />
         </tbody>
       </table>
     </div>
@@ -63,7 +63,12 @@ const ArticleEditorRow = ({ state }: ArticleEditorProps) => {
   };
 
   return (
-    <tr className="border-b border-gray-200 hover:bg-gray-100 cursor-pointer">
+    <tr
+      className="border-b border-gray-200 hover:bg-gray-100 cursor-pointer"
+      onClick={() => {
+        Router.push('/admin/editor/1');
+      }}
+    >
       <td className="py-3 px-3 text-left whitespace-nowrap">
         <div className="flex items-center">
           <span className="font-medium">Algo soy titulo</span>
@@ -80,7 +85,9 @@ const ArticleEditorRow = ({ state }: ArticleEditorProps) => {
         </div>
       </td>
       <td className="py-3 px-3 text-center">
-        <span className={`${colorState[state].color} py-1 px-3 rounded-full text-xs`}>
+        <span
+          className={`${colorState[state].color} py-1 px-3 rounded-full text-xs`}
+        >
           {colorState[state].title}
         </span>
       </td>
