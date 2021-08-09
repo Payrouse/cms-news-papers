@@ -1,5 +1,6 @@
 import Link from 'next/link';
 import { SubmitHandler, useForm } from 'react-hook-form';
+import GalleryPhotos from '../../../gallery/GalleryPhoto';
 
 import Input from '../../../inputs/Input';
 import SelectInput from '../../../inputs/SelectInput';
@@ -21,6 +22,7 @@ const NewArticle = ({ titleToolbar }: any) => {
     register,
     handleSubmit,
     formState: { errors },
+    setValue,
   } = useForm<ArticleValues>();
 
   const handleArticle: SubmitHandler<ArticleValues> = async (data) => {
@@ -79,12 +81,12 @@ const NewArticle = ({ titleToolbar }: any) => {
               required={true}
               error={errors.keywords}
             />
-            <Input
+            <GalleryPhotos
               name="picture"
-              label="Imagen destacada"
-              placeholder="Soy la imagen"
+              defaultImg=""
               register={register}
               validations={{}}
+              setValue={setValue}
               required={true}
               error={errors.picture}
             />
