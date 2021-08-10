@@ -22,7 +22,7 @@ const News = () => {
 
             <div className="flex flex-col">
               <div className="px-2">Juan Palomino Editor</div>
-              <div className="px-2">Foto tomada el 07/08/2021</div>
+              <div className="px-2">Creado el 07/08/2021</div>
             </div>
           </div>
 

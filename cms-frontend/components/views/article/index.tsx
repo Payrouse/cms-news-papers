@@ -1,7 +1,7 @@
-import AddComment from '../../comments/AddComment';
-import Comments from '../../comments/comments';
-import News from '../../comments/News';
-import NewsRelated from '../../comments/NewsRelated';
+import AddComment from '../../article/AddComment';
+import Comments from '../../article/Comments';
+import News from '../../article/News';
+import NewsRelated from '../../article/NewsRelated';
 
 const Article = () => {
   return (
