@@ -18,13 +18,31 @@ const SideBar = ({ option }: any) => {
         <div>
           <ul className={styles.nav}>
             <NavItem
-              active={option === '/'}
+              active={option && option[0] === '/'}
               icon={IconPath.dashboard}
               toUrl="/"
               name="Inicio"
             />
             <NavItem
-              active={option === 'settings'}
+              active={option && option[0] === 'editor'}
+              icon={IconPath.typeWriter}
+              toUrl="/editor"
+              name="Redacción"
+            />
+            <NavItem
+              active={option && option[0] === 'publish'}
+              icon={IconPath.publish}
+              toUrl="/publish"
+              name="Revisión"
+            />
+            <NavItem
+              active={option && option[0]=== 'users'}
+              icon={IconPath.users}
+              toUrl="/users"
+              name="Usuarios"
+            />
+            <NavItem
+              active={option && option[0] === 'settings'}
               icon={IconPath.settings}
               toUrl="/settings"
               name="Configuración"

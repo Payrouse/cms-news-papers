@@ -1,8 +1,14 @@
+import Head from 'next/head';
+import RegisterForm from '../components/views/register';
+
 const Register = (props: any) => {
   return (
-    <div>
-      <h1>I am Register</h1>
-    </div>
+    <>
+      <Head>
+        <title>Registrarse | Diario El Mundo 🌎🌎🌎</title>
+      </Head>
+      <RegisterForm />
+    </>
   );
 };
 

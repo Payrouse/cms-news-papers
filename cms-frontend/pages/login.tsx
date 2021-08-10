@@ -1,8 +1,14 @@
+import Head from 'next/head';
+import LoginForm from '../components/views/login';
+
 const Login = (props: any) => {
   return (
-    <div>
-      <h1>I am login</h1>
-    </div>
+    <>
+      <Head>
+        <title>Iniciar Sesión | Diario El Mundo 🌎🌎🌎</title>
+      </Head>
+      <LoginForm />
+    </>
   );
 };
 
