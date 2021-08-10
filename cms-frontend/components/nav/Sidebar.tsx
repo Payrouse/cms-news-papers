@@ -36,7 +36,14 @@ const SideBar = ({ option }: any) => {
               name="Revisión"
             />
             <NavItem
+              active={option === 'users'}
+              icon={IconPath.users}
+              toUrl="/users"
+              name="Usuarios"
+            />
+            <NavItem
               active={option && option[0] === 'settings'}
+              //active={option === 'settings'}
               icon={IconPath.settings}
               toUrl="/settings"
               name="Configuración"
