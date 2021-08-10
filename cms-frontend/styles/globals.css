@@ -10,6 +10,7 @@ body {
   font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
     Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
   background: #fafafa;
+  /* overflow-y: hidden; */
 }
 
 a {
@@ -32,6 +33,7 @@ a {
 
 /* custom scroll table*/
 .custom-scroll {
+  max-height: 90vh;
   overflow-x: hidden;
   overflow-y: scroll;
   /* firefox */

@@ -6,19 +6,23 @@ import NewsRelated from '../../comments/NewsRelated';
 const Article = () => {
   return (
     <div className="flex justify-center">
-      <div className="md:w-8/12 w-screen px-10 my-10 ">
-        <div className="flex flex-col w-full"></div>
+      <div className="md:w-8/12 w-screen px-10 mb-10 ">
         <News />
-        <AddComment />
-        <Comments />
-        <Comments />
-        <div className=" flex justify-center bg-gray-100 font-bold text-3xl">
-          Noticias Relacionadas
+        <div className="mt-5">
+          <p className="font-bold">Comentarios:</p>
+          <AddComment />
         </div>
-        <div className="grid grid-cols-2 gap-1">
-          <NewsRelated />
-          <NewsRelated />
-          <NewsRelated />
+        <div className="px-2">
+          <Comments />
+          <Comments />
+        </div>
+        <div className="mt-5">
+          <h3 className="font-bold text-3xl">Noticias Relacionadas</h3>
+          <div className="flex flex-col md:grid md:grid-cols-2 gap-1">
+            <NewsRelated />
+            <NewsRelated />
+            <NewsRelated />
+          </div>
         </div>
       </div>
     </div>

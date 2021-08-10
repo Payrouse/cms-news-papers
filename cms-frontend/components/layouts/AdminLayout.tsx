@@ -9,7 +9,6 @@ const LayoutAdmin = ({ children, route }: any) => {
       <Head>
         <title>Administrador | El mundo 🌎🌎</title>
       </Head>
-
       <div className={styles.container}>
         <div className={styles.sidebar}>
           <SideBar option={route} />

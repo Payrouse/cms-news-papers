@@ -19,3 +19,5 @@ const LastNews = ({ time, title }: LastNewsProps) => {
 };
 
 export default LastNews;
+
+

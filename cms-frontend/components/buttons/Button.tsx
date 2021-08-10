@@ -8,12 +8,24 @@ interface ButtonProps {
   text: string;
   type: ButtonType;
   onClick?(): any;
+  color?: string;
+  textColor?: string;
+  height?: string;
+  width?: string;
 }
 
-const Button = ({ text, type, onClick = () => {} }: ButtonProps) => {
+const Button = ({
+  text,
+  type,
+  color = 'bg-blue-500 hover:bg-blue-600',
+  textColor = 'text-white',
+  height = 'h-12',
+  width = 'w-full',
+  onClick = () => {},
+}: ButtonProps) => {
   return (
     <button
-      className="bg-blue-500 hover:bg-blue-600 text-white rounded shadow text-center font-bold w-full h-12"
+      className={`${color} ${textColor} ${height} ${width} rounded shadow text-center font-bold px-1 py-2`}
       type={type}
       onClick={onClick}
     >
