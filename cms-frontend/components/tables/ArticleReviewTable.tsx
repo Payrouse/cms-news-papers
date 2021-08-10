@@ -71,7 +71,7 @@ const ArticleReviewRow = ({ state }: ArticleEditorProps) => {
     >
       <td className="py-3 px-3 text-left whitespace-nowrap">
         <div className="flex items-center">
-          <span className="font-medium">Algo soy titulo...</span>
+          <span className="font-medium">Messi se van del Barcelona..</span>
         </div>
       </td>
       <td className="py-3 px-3 text-left">

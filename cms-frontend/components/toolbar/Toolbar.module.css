@@ -26,3 +26,20 @@
   width: 45px;
   cursor: pointer;
 }
+
+.burger_menu {
+  display: none;
+}
+
+/* breakpoints 975px */
+@media (max-width: 975px) {
+  .burger_menu {
+    display: block;
+  }
+  .toolbar {
+    padding: 8px 26px 8px 0px;
+  }
+  .toolbar_title {
+   margin-left: 1.5rem;
+  }
+}
