@@ -5,8 +5,6 @@ import 'react-responsive-carousel/lib/styles/carousel.min.css';
 
 const HomeCarousel = () => {
   const handleItem = (index: number, item: ReactNode) => {
-    console.log(item);
-    console.log(index);
     Router.push(`/news/${'comida-gratis'}`);
   };
 
@@ -20,20 +18,16 @@ const HomeCarousel = () => {
       showThumbs={false}
     >
       <ItemCarousel
-        img="https://cf.ltkcdn.net/gatos/images/std/236641-800x515r1-etapas-desarrollo-gatitos.jpg"
-        title="Lorem, ipsum dolor sit amet consectetur adipisicing elit. Nisi atque quis distinctio voluptatibus repudiandae, vero eius illum vel excepturi at ea exercitationem praesentium nulla ad veniam a accusamus id."
+        img="https://www.elcomercio.com/wp-content/uploads/2021/08/E7t4CSgXoAgC1OF-scaled.jpg"
+        title="FIA mantiene la descalificación de Vettel en Hungría durante el Mundial de F1"
       />
       <ItemCarousel
-        img="https://previews.123rf.com/images/andreykuzmin/andreykuzmin1312/andreykuzmin131200031/24449912-3-semanas-durmiendo-gatito-beb%C3%A9.jpg"
-        title="Lorem, ipsum dolor sit amet consectetur adipisicing elit. Nisi atque quis distinctio voluptatibus repudiandae, vero eius illum vel excepturi at ea exercitationem praesentium nulla ad veniam a accusamus id."
+        img="https://www.elcomercio.com/wp-content/uploads/2021/08/obama.jpg"
+        title="Filtran fotos de la lujosa y multitudinaria fiesta que celebró Barack Obama por su 60 cumpleaños"
       />
       <ItemCarousel
-        img="https://cf.ltkcdn.net/gatos/images/std/236641-800x515r1-etapas-desarrollo-gatitos.jpg"
-        title="Lorem, ipsum dolor sit amet consectetur adipisicing elit. Nisi atque quis distinctio voluptatibus repudiandae, vero eius illum vel excepturi at ea exercitationem praesentium nulla ad veniam a accusamus id."
-      />
-      <ItemCarousel
-        img="https://estaticos.muyinteresante.es/media/cache/400x300_thumb/uploads/images/gallery/5971d8bb5bafe86c385a6625/gatito-atigrado-redes.jpg"
-        title="Lorem, ipsum dolor sit amet consectetur adipisicing elit. Nisi atque quis distinctio voluptatibus repudiandae, vero eius illum vel excepturi at ea exercitationem praesentium nulla ad veniam a accusamus id."
+        img="https://www.elcomercio.com/wp-content/uploads/2021/08/pasesfalsos.jpg"
+        title="La policía italiana desbarata una trama de pases sanitarios falsos en grupos de Telegram"
       />
     </Carousel>
   );

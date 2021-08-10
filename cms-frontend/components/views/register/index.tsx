@@ -20,11 +20,9 @@ const RegisterForm = () => {
     handleSubmit,
     formState: { errors },
   } = useForm<RegisterValues>();
-
   const handleRegister: SubmitHandler<RegisterValues> = async (data) => {
     console.log(data);
   };
-
   return (
     <div className="h-screen flex items-center justify-center">
       <div

@@ -16,11 +16,9 @@ const LoginForm = () => {
     handleSubmit,
     formState: { errors },
   } = useForm<LoginValues>();
-
   const handleLogin: SubmitHandler<LoginValues> = async (data) => {
     console.log(data);
   };
-
   return (
     <div className="h-screen flex items-center justify-center">
       <div

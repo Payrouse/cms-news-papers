@@ -120,20 +120,14 @@ const CATEGORIES_LIST = [
 ];
 
 const LAST_NEWS_LIST = [
-  { time: '10:00', title: 'Hola' },
-  { time: '10:05', title: 'Buenas a todos' },
+  { time: '10:00', title: 'Conaie, Secretaría de Pueblos y Asamblea conmemoran el Día Internacional de los Pueblos Indígenas' },
+  { time: '10:05', title: 'Filtran fotos de la lujosa y multitudinaria fiesta que celebró Barack Obama por su 60 cumpleaños' },
   {
     time: '10:30',
     title:
-      'Soy un titulo largo para ver como funca esto con un texto largo jejeje',
+      'FIA mantiene la descalificación de Vettel en Hungría durante el Mundial de F1',
   },
-  { time: '10:00', title: 'Hola' },
-  { time: '10:05', title: 'Buenas a todos' },
-  {
-    time: '10:30',
-    title:
-      'Soy un titulo largo para ver como funca esto con un texto largo jejeje',
-  },
+  { time: '10:31', title: 'La policía italiana desbarata una trama de pases sanitarios falsos en grupos de Telegram' },
 ];
 
 export default Home;
