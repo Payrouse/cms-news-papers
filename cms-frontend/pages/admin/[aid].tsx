@@ -2,6 +2,7 @@ import { useRouter } from 'next/router';
 
 import LayoutAdmin from '../../components/layouts/AdminLayout';
 import Settings from '../../components/views/admin/Settings';
+import Users from '../../components/views/admin/Users';
 
 const Admin = () => {
   const router = useRouter();
@@ -21,6 +22,8 @@ const View = ({ route }: any) => {
       return <div>loading...</div>;
     case 'settings':
       return <Settings titleToolbar="Configuraciones" />;
+    case 'users':
+      return <Users titleToolbar="Usuarios" />;
     default:
       return <div>404</div>;
   }
