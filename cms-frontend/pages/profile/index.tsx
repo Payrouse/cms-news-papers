@@ -1,7 +1,9 @@
 import Head from 'next/head';
 import AppLayout from '../../components/layouts/AppLayout';
+import ProfileDetails from '../../components/profile/ProfileDetails';
+import UpdateProfileForm from '../../components/profile/UpdateProfileForm';
 
-const Category = (props: any) => {
+const Profile = (props: any) => {
   return (
     <>
       <Head>
@@ -11,12 +13,13 @@ const Category = (props: any) => {
         />
       </Head>
       <AppLayout>
-        <div>
-          <h1>I am Category</h1>
+        <div className="flex mx-32 p-4">
+          <ProfileDetails></ProfileDetails>
+          <UpdateProfileForm></UpdateProfileForm>
         </div>
       </AppLayout>
     </>
   );
 };
 
-export default Category;
+export default Profile;
