@@ -35,7 +35,7 @@ const View = ({ route }: any) => {
       return <Editor titleToolbar="Redacción" />;
     case 'editor/new':
       return <NewArticle titleToolbar="Nuevo articulo" />;
-    case ('editor/1'):
+    case 'editor/1':
       return <EditArticle titleToolbar="Editar articulo" />;
     case 'publish':
       return <Publish titleToolbar="Revisión" />;

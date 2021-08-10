@@ -8,7 +8,7 @@ const Footer = () => {
         <div className={styles.footer_logo_container}>
           <img
             className={styles.footer_img}
-            src={'/img/dragon.svg'}
+            src={'/worldwide.svg'}
             alt="img"
           />
           <p className={styles.footer_title}>El Mundo</p>

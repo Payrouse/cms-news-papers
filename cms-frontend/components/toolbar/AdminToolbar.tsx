@@ -22,7 +22,6 @@ const Toolbar = ({ title }: ToolbarProps) => {
 };
 
 const AdminMenu = () => {
-
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
 
   const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
@@ -67,7 +66,13 @@ const AdminMenu = () => {
         >
           Admin
         </MenuItem>
-        <MenuItem onClick={handleClose}>Cerrar sesión</MenuItem>
+        <MenuItem
+          onClick={() => {
+            goTo('/');
+          }}
+        >
+          Cerrar sesión
+        </MenuItem>
       </Menu>
     </>
   );

@@ -5,6 +5,7 @@ import GalleryPhotos from '../../../gallery/GalleryPhoto';
 import Input from '../../../inputs/Input';
 import MultilineInput from '../../../inputs/MultilineInput';
 import SelectInput from '../../../inputs/SelectInput';
+import MarkDownEditor from '../../../textEditor/MarkDownEditor';
 import Toolbar from '../../../toolbar/AdminToolbar';
 
 type ArticleValues = {
@@ -91,15 +92,16 @@ const NewArticle = ({ titleToolbar }: any) => {
               required={true}
               error={errors.picture}
             />
-            <MultilineInput
+            <MarkDownEditor />
+            {/* <MultilineInput
               name="body"
-              label="Cuerpo"
-              placeholder="Soy el cuerpo"
+              label="Contenido"
+              placeholder="Soy el contenido"
               register={register}
               validations={{}}
               required={true}
               error={errors.body}
-            />
+            /> */}
 
             <div className="flex justify-between mx-4 mt-4">
               <button

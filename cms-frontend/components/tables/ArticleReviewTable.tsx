@@ -13,21 +13,21 @@ const ArticleReviewTable = () => {
           </tr>
         </thead>
         <tbody className="text-gray-600 text-sm font-light">
-          <ArticleReviewRow state={0} />
           <ArticleReviewRow state={1} />
-          <ArticleReviewRow state={2} />
-          <ArticleReviewRow state={3} />
-          <ArticleReviewRow state={4} />
-          <ArticleReviewRow state={0} />
           <ArticleReviewRow state={1} />
-          <ArticleReviewRow state={2} />
-          <ArticleReviewRow state={3} />
-          <ArticleReviewRow state={4} />
-          <ArticleReviewRow state={0} />
           <ArticleReviewRow state={1} />
-          <ArticleReviewRow state={2} />
-          <ArticleReviewRow state={3} />
-          <ArticleReviewRow state={4} />
+          <ArticleReviewRow state={1} />
+          <ArticleReviewRow state={1} />
+          <ArticleReviewRow state={1} />
+          <ArticleReviewRow state={1} />
+          <ArticleReviewRow state={1} />
+          <ArticleReviewRow state={1} />
+          <ArticleReviewRow state={1} />
+          <ArticleReviewRow state={1} />
+          <ArticleReviewRow state={1} />
+          <ArticleReviewRow state={1} />
+          <ArticleReviewRow state={1} />
+          <ArticleReviewRow state={1} />
         </tbody>
       </table>
     </div>
@@ -71,12 +71,12 @@ const ArticleReviewRow = ({ state }: ArticleEditorProps) => {
     >
       <td className="py-3 px-3 text-left whitespace-nowrap">
         <div className="flex items-center">
-          <span className="font-medium">Algo soy titulo</span>
+          <span className="font-medium">Algo soy titulo...</span>
         </div>
       </td>
       <td className="py-3 px-3 text-left">
         <div className="flex items-center">
-          <span>Soy categoria</span>
+          <span>Deporte</span>
         </div>
       </td>
       <td className="hidden sm:block py-3 px-3 text-center">

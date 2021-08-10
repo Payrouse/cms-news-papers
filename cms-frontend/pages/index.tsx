@@ -8,7 +8,7 @@ const Index = () => {
     <>
       <Head>
         <meta name="description" content="Diario El Mundo, donde encuentras las verdades más verdaderas de las verdades" />
-        <link rel="icon" href="/favicon.ico" />
+        <link rel="icon" href="/worldwide.svg" />
       </Head>
       <AppLayout>
         <Home />

@@ -32,7 +32,7 @@ const GalleryPhotos = ({
   // data
   const [listImages, setListImages] = useState<any[]>([]);
   const [stateRequest, setStateRequest] = useState({
-    loading: true,
+    loading: false,
     error: false,
   });
   const [query, setQuery] = useState('');
@@ -59,7 +59,7 @@ const GalleryPhotos = ({
   };
 
   return (
-    <div className={container || 'pt-3 px-3 mb-6 md:mb-0'}>
+    <div className={container || 'pt-3 px-4 mb-6 md:mb-0'}>
       <label className="uppercase tracking-wide text-xs font-bold mb-2 ml-2">
         Galería
       </label>

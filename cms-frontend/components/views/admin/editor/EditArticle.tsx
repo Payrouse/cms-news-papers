@@ -5,6 +5,7 @@ import GalleryPhotos from '../../../gallery/GalleryPhoto';
 import Input from '../../../inputs/Input';
 import MultilineInput from '../../../inputs/MultilineInput';
 import SelectInput from '../../../inputs/SelectInput';
+import MarkDownEditor from '../../../textEditor/MarkDownEditor';
 import Toolbar from '../../../toolbar/AdminToolbar';
 
 type ArticleValues = {
@@ -97,7 +98,9 @@ const EditArticle = ({ titleToolbar }: any) => {
               required={true}
               error={errors.picture}
             />
-            <MultilineInput
+            <MarkDownEditor />
+
+            {/* <MultilineInput
               name="body"
               label="Cuerpo"
               placeholder="Soy el cuerpo"
@@ -105,7 +108,7 @@ const EditArticle = ({ titleToolbar }: any) => {
               validations={{}}
               required={true}
               error={errors.body}
-            />
+            /> */}
 
             <div className="flex justify-between mx-4 mt-4">
               <button

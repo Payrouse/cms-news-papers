@@ -11,7 +11,9 @@
   "dependencies": {
     "@material-ui/core": "^4.12.3",
     "@material-ui/icons": "^4.11.2",
+    "@uiw/react-md-editor": "^3.4.11",
     "next": "11.0.1",
+    "next-remove-imports": "^1.0.5",
     "react": "17.0.2",
     "react-dom": "17.0.2",
     "react-hook-form": "^7.12.2",

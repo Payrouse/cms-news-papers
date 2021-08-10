@@ -38,7 +38,9 @@ const ReviewArticle = ({ titleToolbar }: any) => {
         </div>
         <div className="mt-4 rounded shadow bg-white px-4 py-4 mb-4">
           <h2 className="text-lg font-bold">Revisión del articulo:</h2>
-          <News />
+          <div className="mx-4">
+            <News />
+          </div>
           <form onSubmit={handleSubmit(handleArticle)}>
             <MultilineInput
               name="feedback"
