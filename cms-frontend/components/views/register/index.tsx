@@ -1,5 +1,7 @@
 import Link from 'next/link';
 import { SubmitHandler, useForm } from 'react-hook-form';
+import { FetchApi } from '../../../library/Http';
+import { AuthValidation } from '../../../library/Validations';
 
 import Button, { ButtonType } from '../../buttons/Button';
 import Input from '../../inputs/Input';
@@ -20,9 +22,18 @@ const RegisterForm = () => {
     handleSubmit,
     formState: { errors },
   } = useForm<RegisterValues>();
+
   const handleRegister: SubmitHandler<RegisterValues> = async (data) => {
     console.log(data);
+    const r = await FetchApi({
+      url: '/auth/register',
+      method: 'POST',
+      body: data,
+    });
+    console.log('response', r);
+    console.log('response', await r.json());
   };
+
   return (
     <div className="h-screen flex items-center justify-center">
       <div
@@ -37,7 +48,7 @@ const RegisterForm = () => {
             label="Nombre de usuario"
             placeholder="jochoa"
             register={register}
-            validations={{}}
+            validations={AuthValidation.userName}
             required={true}
             error={errors.userName}
           />
@@ -46,17 +57,17 @@ const RegisterForm = () => {
             label="Correo Electrónico"
             placeholder="ejemplo@gmail.com"
             register={register}
-            validations={{}}
+            validations={AuthValidation.email}
             required={true}
             error={errors.email}
           />
-          <div className="flex">
+          <div className="flex flex-col md:flex-row">
             <Input
               name="firstName"
               label="Nombre"
               placeholder="José"
               register={register}
-              validations={{}}
+              validations={AuthValidation.firstName}
               required={true}
               error={errors.firstName}
             />
@@ -65,7 +76,7 @@ const RegisterForm = () => {
               label="Apellido"
               placeholder="Ochoa"
               register={register}
-              validations={{}}
+              validations={AuthValidation.lastName}
               required={true}
               error={errors.lastName}
             />
@@ -74,18 +85,18 @@ const RegisterForm = () => {
             name="password"
             label="Contraseña"
             register={register}
-            validations={{}}
+            validations={AuthValidation.password}
             required={true}
             error={errors.password}
           />
-          <InputPassword
+          {/* <InputPassword
             name="cPassword"
             label="Confirmar contraseña"
             register={register}
             validations={{}}
             required={true}
             error={errors.cPassword}
-          />
+          /> */}
           <div className="mx-4 mt-4">
             <Button type={ButtonType.Submit} text="Registrarse" />
           </div>

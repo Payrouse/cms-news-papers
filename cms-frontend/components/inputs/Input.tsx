@@ -45,6 +45,8 @@ const Input = ({
         required={required}
         disabled={disabled}
         {...register(name, validations)}
+        error={error}
+        helperText={error?.message || ''}
       />
     </div>
   </>

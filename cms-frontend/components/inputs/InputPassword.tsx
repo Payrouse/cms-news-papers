@@ -1,6 +1,7 @@
 import {
   createStyles,
   FormControl,
+  FormHelperText,
   IconButton,
   InputAdornment,
   InputLabel,
@@ -45,9 +46,11 @@ const InputPassword = ({
         required={required}
         disabled={disabled}
         fullWidth
+        error={error}
       >
         <InputLabel htmlFor={name}>{label}</InputLabel>
         <OutlinedInput
+          label={label}
           id={name}
           type={showPassword ? 'text' : 'password'}
           {...register(name, validations)}
@@ -61,8 +64,9 @@ const InputPassword = ({
               </IconButton>
             </InputAdornment>
           }
-          labelWidth={70}
+          labelWidth={100}
         />
+        <FormHelperText>{error?.message || ''}</FormHelperText>
       </FormControl>
     </div>
   );

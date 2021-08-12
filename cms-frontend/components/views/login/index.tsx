@@ -4,6 +4,8 @@ import { SubmitHandler, useForm } from 'react-hook-form';
 import Input from '../../inputs/Input';
 import InputPassword from '../../inputs/InputPassword';
 import Button, { ButtonType } from '../../buttons/Button';
+import { AuthValidation } from '../../../library/Validations';
+import { FetchApi } from '../../../library/Http';
 
 type LoginValues = {
   email: string;
@@ -16,9 +18,18 @@ const LoginForm = () => {
     handleSubmit,
     formState: { errors },
   } = useForm<LoginValues>();
+
   const handleLogin: SubmitHandler<LoginValues> = async (data) => {
     console.log(data);
+    const r = await FetchApi({
+      url: '/auth/login',
+      method: 'POST',
+      body: data,
+    });
+    console.log('response', r);
+    console.log('response', await r.json());
   };
+
   return (
     <div className="h-screen flex items-center justify-center">
       <div
@@ -33,7 +44,7 @@ const LoginForm = () => {
             label="Correo Electrónico"
             placeholder="ejemplo@gmail.com"
             register={register}
-            validations={{}}
+            validations={AuthValidation.email}
             required={true}
             error={errors.email}
           />
@@ -41,7 +52,7 @@ const LoginForm = () => {
             name="password"
             label="Contraseña"
             register={register}
-            validations={{}}
+            validations={{ required: 'Ingrese una contraseña' }}
             required={true}
             error={errors.password}
           />
