@@ -40,7 +40,7 @@ export class ComplaintsController {
   @Roles(RoleEnum.ADMIN, RoleEnum.PUBLISHER)
   @Put(':complaintId/status')
   changeStreamStatus(
-    @Param('complaintd') id: string,
+    @Param('complaintId') id: string,
     @Body() payload: ChangeComplaintStatusDto,
   ) {
     return this.complaintsService.changeComplaintStatus(id, payload)
