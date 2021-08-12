@@ -66,7 +66,7 @@ const ArticleEditorRow = ({ state }: ArticleEditorProps) => {
     <tr
       className="border-b border-gray-200 hover:bg-gray-100 cursor-pointer"
       onClick={() => {
-        Router.push('/admin/editor/1');
+        Router.push('/admin/editor/article/1');
       }}
     >
       <td className="py-3 px-3 text-left whitespace-nowrap">

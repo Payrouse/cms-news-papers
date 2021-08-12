@@ -37,7 +37,7 @@ const NewArticle = ({ titleToolbar }: any) => {
       <div className="container-views custom-scroll">
         <div className="flex mt-6">
           <Link href="/admin/editor">
-            <a className="bg-gray-500 hover:bg-gray-700 text-white rounded shadow text-center font-bold px-4 py-2">
+            <a className="bg-gray-700 hover:bg-gray-800 text-white rounded shadow text-center font-bold px-4 py-2">
               Volver
             </a>
           </Link>
