@@ -32,7 +32,7 @@ export class AuthService {
 
     const { email, firstName, lastName, avatar } = user;
     return {
-      access_token: this.jwtService.sign(payload),
+      accessToken: this.jwtService.sign(payload),
       user: {
         email,
         firstName,
