@@ -1,4 +1,6 @@
 import Link from 'next/link';
+import Router from 'next/router';
+import { useSnackbar } from 'notistack';
 import { SubmitHandler, useForm } from 'react-hook-form';
 
 import Input from '../../inputs/Input';
@@ -13,6 +15,8 @@ type LoginValues = {
 };
 
 const LoginForm = () => {
+  const { enqueueSnackbar } = useSnackbar();
+
   const {
     register,
     handleSubmit,
@@ -27,7 +31,14 @@ const LoginForm = () => {
       body: data,
     });
     console.log('response', r);
-    console.log('response', await r.json());
+    if (r.ok) {
+      localStorage.setItem('token', r.data.accessToken);
+      // Router.replace('/profile');
+    } else {
+      enqueueSnackbar(r.error.message, {
+        variant: 'error',
+      });
+    }
   };
 
   return (

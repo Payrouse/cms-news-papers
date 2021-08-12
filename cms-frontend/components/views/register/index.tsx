@@ -1,8 +1,10 @@
 import Link from 'next/link';
+import Router from 'next/router';
+import { useSnackbar } from 'notistack';
 import { SubmitHandler, useForm } from 'react-hook-form';
+
 import { FetchApi } from '../../../library/Http';
 import { AuthValidation } from '../../../library/Validations';
-
 import Button, { ButtonType } from '../../buttons/Button';
 import Input from '../../inputs/Input';
 import InputPassword from '../../inputs/InputPassword';
@@ -17,21 +19,33 @@ type RegisterValues = {
 };
 
 const RegisterForm = () => {
+  const { enqueueSnackbar } = useSnackbar();
+
   const {
     register,
     handleSubmit,
     formState: { errors },
+    reset,
   } = useForm<RegisterValues>();
 
   const handleRegister: SubmitHandler<RegisterValues> = async (data) => {
-    console.log(data);
     const r = await FetchApi({
       url: '/auth/register',
       method: 'POST',
       body: data,
     });
     console.log('response', r);
-    console.log('response', await r.json());
+    if (r.ok) {
+      enqueueSnackbar('Se ha registrado exitosamente', {
+        variant: 'success',
+      });
+      reset();
+      Router.replace('/login');
+    } else {
+      enqueueSnackbar(r.error.message, {
+        variant: 'error',
+      });
+    }
   };
 
   return (
