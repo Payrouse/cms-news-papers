@@ -34,7 +34,7 @@ const RegisterForm = () => {
       method: 'POST',
       body: data,
     });
-    console.log('response', r);
+
     if (r.ok) {
       enqueueSnackbar('Se ha registrado exitosamente', {
         variant: 'success',
@@ -49,7 +49,7 @@ const RegisterForm = () => {
   };
 
   return (
-    <div className="h-screen flex items-center justify-center">
+    <div className="h-screen flex items-center justify-center bg-white">
       <div
         className={`bg-white h-full w-full max-w-lg px-4 
         flex flex-col justify-center 
@@ -115,14 +115,14 @@ const RegisterForm = () => {
             <Button type={ButtonType.Submit} text="Registrarse" />
           </div>
         </form>
-        <div className="mt-4 flex justify-center">
+        <div className="mt-4 flex flex-col sm:flex-row justify-center">
           <Link href="/login">
-            <a className="mr-4 text-blue-500 hover:underline hover:text-blue-600">
+            <a className="sm:mr-4 text-blue-500 hover:underline hover:text-blue-600">
               Iniciar sesión
             </a>
           </Link>
           <Link href="/">
-            <a className="ml-4 text-blue-500 hover:underline hover:text-blue-600">
+            <a className="sm:ml-4 text-blue-500 hover:underline hover:text-blue-600">
               Ir al inicio
             </a>
           </Link>

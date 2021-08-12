@@ -1,5 +1,6 @@
 import Link from 'next/link';
 import Router from 'next/router';
+import Cookies from 'js-cookie';
 import { useSnackbar } from 'notistack';
 import { SubmitHandler, useForm } from 'react-hook-form';
 
@@ -30,10 +31,13 @@ const LoginForm = () => {
       method: 'POST',
       body: data,
     });
-    console.log('response', r);
+
     if (r.ok) {
-      localStorage.setItem('token', r.data.accessToken);
-      // Router.replace('/profile');
+      Cookies.set('_mtn', r.data.accessToken, {
+        sameSite: 'strict',
+        expires: 7, // expires in 7 days
+      });
+      Router.replace('/profile');
     } else {
       enqueueSnackbar(r.error.message, {
         variant: 'error',
@@ -42,7 +46,7 @@ const LoginForm = () => {
   };
 
   return (
-    <div className="h-screen flex items-center justify-center">
+    <div className="h-screen flex items-center justify-center bg-white">
       <div
         className={`bg-white h-full w-full max-w-lg px-4 
         flex flex-col justify-center 
@@ -71,14 +75,14 @@ const LoginForm = () => {
             <Button type={ButtonType.Submit} text="Iniciar Sesión" />
           </div>
         </form>
-        <div className="mt-4 flex justify-center">
+        <div className="mt-4 flex flex-col items-center sm:flex-row sm:justify-center">
           <Link href="/register">
-            <a className="mr-4 text-blue-500 hover:underline hover:text-blue-600">
+            <a className="sm:mr-4 text-blue-500 hover:underline hover:text-blue-600">
               Registrarse ahora
             </a>
           </Link>
           <Link href="/">
-            <a className="ml-4 text-blue-500 hover:underline hover:text-blue-600">
+            <a className="sm:ml-4 text-blue-500 hover:underline hover:text-blue-600">
               Ir al inicio
             </a>
           </Link>

@@ -1,3 +1,5 @@
+import Cookies from 'js-cookie';
+
 export class Http {
   instance = new Http();
   post(url: string) {}
@@ -16,6 +18,7 @@ export const FetchApi = async ({
     headers: {
       ...headers,
       Auth: process.env.NEXT_PUBLIC_API_KEY || 'unauthenticated',
+      access_token: Cookies.get('_mnt'),
       'Content-type': 'application/json',
     },
   };
