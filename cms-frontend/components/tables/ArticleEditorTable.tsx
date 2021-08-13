@@ -66,17 +66,17 @@ const ArticleEditorRow = ({ state }: ArticleEditorProps) => {
     <tr
       className="border-b border-gray-200 hover:bg-gray-100 cursor-pointer"
       onClick={() => {
-        Router.push('/admin/editor/1');
+        Router.push('/admin/editor/article/1');
       }}
     >
       <td className="py-3 px-3 text-left whitespace-nowrap">
         <div className="flex items-center">
-          <span className="font-medium">Algo soy titulo</span>
+          <span className="font-medium">El encebollado más grande...</span>
         </div>
       </td>
       <td className="py-3 px-3 text-left">
         <div className="flex items-center">
-          <span>Soy categoria</span>
+          <span>Comida</span>
         </div>
       </td>
       <td className="hidden sm:block py-3 px-3 text-center">

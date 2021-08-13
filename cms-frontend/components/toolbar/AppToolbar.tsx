@@ -1,16 +1,17 @@
-import Router from 'next/router';
-import React, { useEffect, useState } from 'react';
-import { Menu, MenuItem } from '@material-ui/core';
 import Link from 'next/link';
+import Router from 'next/router';
+import Cookies from 'js-cookie';
+import { useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { Menu, MenuItem } from '@material-ui/core';
+
+import { StoreType } from '../../redux/types';
+import { clearUser } from '../../redux/actions/userAction';
 
 const AppToolbar = () => {
-  const [isLogin, setIsLogin] = useState(false);
-
-  useEffect(() => {
-    setTimeout(() => {
-      setIsLogin(true);
-    }, 5000);
-  }, []);
+  const { isLogin, loading, user } = useSelector(
+    (state: StoreType) => state.user,
+  );
 
   return (
     <header className="bg-white border-b shadow flex justify-center">
@@ -22,10 +23,18 @@ const AppToolbar = () => {
             </a>
           </Link>
           <div className="h-10 w-10">
-            {!isLogin ? (
+            {loading ? (
               <div className="bg-gray-200 border h-10 w-10 rounded-full animate-pulse" />
+            ) : isLogin ? (
+              <ProfileMenu user={user} />
             ) : (
-              <ProfileMenu />
+              <div
+                onClick={() => {
+                  Router.push('/login');
+                }}
+              >
+                Iniciar sesión
+              </div>
             )}
           </div>
         </div>
@@ -34,7 +43,9 @@ const AppToolbar = () => {
   );
 };
 
-const ProfileMenu = () => {
+const ProfileMenu = ({ user }: any) => {
+  const dispatch = useDispatch();
+
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
 
   const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
@@ -50,6 +61,12 @@ const ProfileMenu = () => {
     Router.push(url);
   };
 
+  const logout = () => {
+    handleClose();
+    Cookies.remove('_mtn');
+    dispatch(clearUser());
+  };
+
   return (
     <>
       <button
@@ -59,9 +76,7 @@ const ProfileMenu = () => {
       >
         <img
           className="h-10 w-10 rounded-full object-cover"
-          src={
-            'https://imagenes.milenio.com/YONeZ5-2cQu0TH_W2iPiQ_FkzbM=/958x596/https://www.milenio.com/uploads/media/2018/12/25/quieran-comprar-cachorro-acudir-criaderos.jpg'
-          }
+          src={user.avatar}
           alt="profile"
         />
       </button>
@@ -93,7 +108,7 @@ const ProfileMenu = () => {
         >
           Denuncia ciudadana
         </MenuItem>
-        <MenuItem onClick={handleClose}>Cerrar sesión</MenuItem>
+        <MenuItem onClick={logout}>Cerrar sesión</MenuItem>
       </Menu>
     </>
   );

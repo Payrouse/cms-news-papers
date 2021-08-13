@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
-import { EditorState, convertToRaw } from 'draft-js';
-import { Editor } from 'react-draft-wysiwyg';
-import draftToHtml from 'draftjs-to-html';
-import htmlToDraft from 'html-to-draftjs';
+// import { EditorState, convertToRaw } from 'draft-js';
+// import { Editor } from 'react-draft-wysiwyg';
+// import draftToHtml from 'draftjs-to-html';
+// import htmlToDraft from 'html-to-draftjs';
 
-class TextEditor extends Component {
-  state = {
+const TextEditor =()=> {
+  /* state = {
     editorState: EditorState.createEmpty(),
   };
 
@@ -16,10 +16,10 @@ class TextEditor extends Component {
   };
 
   render() {
-    const { editorState } = this.state;
+    const { editorState } = this.state; */
     return (
       <div>
-        <Editor
+        {/* <Editor
           editorState={editorState}
           wrapperClassName="demo-wrapper"
           editorClassName="demo-editor"
@@ -28,10 +28,10 @@ class TextEditor extends Component {
         <textarea
           disabled
           value={draftToHtml(convertToRaw(editorState.getCurrentContent()))}
-        />
+        /> */}
       </div>
     );
-  }
+  
 }
 
 export default TextEditor;
