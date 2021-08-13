@@ -8,6 +8,15 @@ import ReplyComment from './ReplyComment';
 const Comments = () => {
   const [canReply, setCanReply] = useState(false);
   const [showComments, setShowComments] = useState(false);
+  const [isLogin, setIsLogin] = useState(false);
+
+  const showReplyComment = () => {
+    if (isLogin) {
+      setCanReply(!canReply);
+    } else {
+      alert('Por favor ingrese a su cuenta ');
+    }
+  };
 
   return (
     <div className="font-extralight my-2 flex flex-col py-3 border-b">
@@ -45,7 +54,7 @@ const Comments = () => {
         <button
           className="cursor-pointer flex items-center mr-10"
           onClick={() => {
-            setCanReply(!canReply);
+            showReplyComment();
           }}
         >
           <ReplyIcon className="mr-1" />

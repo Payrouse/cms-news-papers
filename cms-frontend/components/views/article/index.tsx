@@ -2,15 +2,17 @@ import AddComment from '../../article/AddComment';
 import Comments from '../../article/Comments';
 import News from '../../article/News';
 import NewsRelated from '../../article/NewsRelated';
+import { useState } from 'react';
 
 const Article = () => {
+  const [isLogin, setIsLogin] = useState(false);
   return (
     <div className="flex justify-center">
       <div className="md:w-8/12 w-screen px-10 mb-10 ">
         <News />
         <div className="mt-5">
           <p className="font-bold">Comentarios:</p>
-          <AddComment />
+          {isLogin ? <AddComment /> : null}
         </div>
         <div className="px-2">
           <Comments />
