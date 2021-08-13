@@ -1,20 +1,50 @@
+import Cookies from 'js-cookie';
+import { useEffect } from 'react';
 import { useRouter } from 'next/router';
+import { useDispatch, useSelector } from 'react-redux';
 
+import { StoreType } from '../../redux/types';
+import { endUserLoading, getMe } from '../../redux/actions/userAction';
 import LayoutAdmin from '../../components/layouts/AdminLayout';
 import Editor from '../../components/views/admin/editor';
 import Publish from '../../components/views/admin/publish';
 import Settings from '../../components/views/admin/Settings';
 import Users from '../../components/views/admin/Users';
+import LoadingAdmin from '../../components/views/loading/LoadingAdmin';
 
 const Admin = () => {
   const router = useRouter();
+  const dispatch = useDispatch();
+
   const { aid } = router.query;
 
-  return (
-    <LayoutAdmin route={aid}>
-      <View route={aid} />
-    </LayoutAdmin>
+  const { isLogin, loading, user } = useSelector(
+    (state: StoreType) => state.user,
   );
+
+  useEffect(() => {
+    if (Cookies.get('_mtn')) {
+      dispatch(getMe());
+    } else {
+      dispatch(endUserLoading());
+    }
+  }, []);
+
+  if (loading) {
+    return <LoadingAdmin />;
+  } else if (!isLogin) {
+    router.replace('/login');
+    return <div>redirect...</div>;
+  } else if (!user.isAdministrative) {
+    router.replace('/');
+    return <LoadingAdmin />;
+  } else {
+    return (
+      <LayoutAdmin route={aid}>
+        <View route={aid} />
+      </LayoutAdmin>
+    );
+  }
 };
 
 const View = ({ route }: any) => {

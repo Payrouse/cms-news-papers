@@ -1,5 +1,5 @@
 import Router from 'next/router';
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { Menu, MenuItem } from '@material-ui/core';
 
 import styles from './Toolbar.module.css';

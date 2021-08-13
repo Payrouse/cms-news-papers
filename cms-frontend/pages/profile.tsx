@@ -1,16 +1,39 @@
-import React from 'react';
+import Cookies from 'js-cookie';
+import Router from 'next/router';
+import { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 
-const profile = () => {
-  return (
-    <div className="h-screen w-screen flex flex-col items-center justify-center bg-white">
-      <div className="flex">
-        <h1 className="text-4xl font-bold text-blue-600">El Mundo</h1>
-        <img className="ml-2 h-11 w-11" src={'/worldwide.svg'} alt="img" />
-        {/* <img className="ml-2 h-11 w-11" src={'/world.gif'} alt="img" /> */}
-      </div>
-      <p>Cargando...</p>
-    </div>
+import { endUserLoading, getMe } from '../redux/actions/userAction';
+import { StoreType } from '../redux/types';
+import LoadingAdmin from '../components/views/loading/LoadingAdmin';
+
+const Profile = () => {
+  const dispatch = useDispatch();
+
+  const { isLogin, loading, user } = useSelector(
+    (state: StoreType) => state.user,
   );
+
+  useEffect(() => {
+    if (Cookies.get('_mtn')) {
+      dispatch(getMe());
+    } else {
+      dispatch(endUserLoading());
+    }
+  }, []);
+
+  if (loading) {
+    return <LoadingAdmin />;
+  } else if (!isLogin) {
+    Router.replace('/login');
+    return <div>redirect...</div>;
+  } else if (!user.isAdministrative) {
+    Router.replace('/');
+    return <LoadingAdmin />;
+  } else {
+    Router.replace('/admin');
+    return <LoadingAdmin />;
+  }
 };
 
-export default profile;
+export default Profile;
