@@ -1,7 +1,11 @@
 import Head from 'next/head';
+import { useRouter } from 'next/router';
 import AppLayout from '../../components/layouts/AppLayout';
 
 const Category = (props: any) => {
+  const router = useRouter();
+  const { cid } = router.query;
+  const categoryName = cid?.toString().trim().replace(/^\w/, (c) => c.toUpperCase());
   const news = [
     {
       title: 'Laptos de nueva generacion',
@@ -10,7 +14,7 @@ const Category = (props: any) => {
       Earum qui dolores, aperiam, rem natus nobis magni repellat
       minus tempore eaque dolore.`,
       date: 'Agosto 6',
-      category: 'Tecnología',
+      category: categoryName,
       url_img:
         'https://i1.wp.com/hipertextual.com/wp-content/uploads/2021/02/apple_macos-bigsur-1.jpg',
     },
@@ -21,7 +25,7 @@ const Category = (props: any) => {
       Earum qui dolores, aperiam, rem natus nobis magni repellat
       minus tempore eaque dolore.`,
       date: 'Agosto 7',
-      category: 'Tecnología',
+      category: categoryName,
       url_img:
         'https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Ftse1.mm.bing.net%2Fth%3Fid%3DOIP.XFsXiFSXMBqC1wHmyWlsqQHaEH%26pid%3DApi&f=1',
     },
@@ -36,7 +40,9 @@ const Category = (props: any) => {
       </Head>
       <AppLayout>
         <div className="mx-32">
-          <h1 className="font-bold mb-4">Noticias Recientes de Tecnologia</h1>
+          <h1 className="font-bold mb-4">
+            Noticias Recientes de {categoryName}
+          </h1>
           <div className="divide-y-2">
             {news.map((item) => {
               return (

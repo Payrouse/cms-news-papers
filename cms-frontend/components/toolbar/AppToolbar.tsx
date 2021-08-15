@@ -74,7 +74,7 @@ const ProfileMenu = () => {
       >
         <MenuItem
           onClick={() => {
-            goTo('/user');
+            goTo('/profile');
           }}
         >
           Perfil
