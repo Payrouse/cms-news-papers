@@ -30,6 +30,14 @@ export class ArticlesService {
     return articles;
   }
 
+  async findOneByTitle(title: string) {
+    const articles = await this.articleRepo.findOne(title);
+    if (!articles) {
+      throw new NotFoundException(`Articulo #${title} no encontrado`);
+    }
+    return articles;
+  }
+
   async findArticlesRelated(categoryId: string) {
     const articlesRelated = await this.articleRepo.find({
       where: { categoryId, status: ArticleStatus.POSTED },

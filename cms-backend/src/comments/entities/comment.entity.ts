@@ -43,5 +43,5 @@ export class Comment {
   // article -> comment (FK)
   @ManyToOne(() => Article, (article) => article.comments)
   @JoinColumn({ name: 'article_id' })
-  articleId: Article;
+  articleId: string;
 }

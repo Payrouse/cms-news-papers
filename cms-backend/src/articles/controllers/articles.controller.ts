@@ -75,4 +75,10 @@ export class ArticlesController {
   getCategorie(@Param('articleId') id: string) {
     return this.articleService.findOne(id);
   }
+
+  @Public()
+  @Get('/title/:title')
+  getArticleTitle(@Param('title') id: string) {
+    return this.articleService.findOneByTitle(id);
+  }
 }

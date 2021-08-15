@@ -33,7 +33,7 @@ export class Article {
   @Column({ name: 'picture', type: 'text' })
   picture: string;
 
-  @Column({ name: 'feedback', type: 'text' })
+  @Column({ name: 'feedback', type: 'text', nullable: true })
   feedback: string;
 
   @Column({ name: 'body', type: 'text' })

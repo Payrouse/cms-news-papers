@@ -1,3 +1,4 @@
+import { NotFoundException } from '@nestjs/common';
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
@@ -12,5 +13,15 @@ export class CommentsService {
 
   findAll() {
     return this.commentRepo.find();
+  }
+
+  async findAllByArticle(articleId: string) {
+    const comment = await this.commentRepo.find({
+      where: { articleId },
+    });
+    if (!comment) {
+      throw new NotFoundException(`Comentario #${articleId} no encontrado`);
+    }
+    return comment;
   }
 }
