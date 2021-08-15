@@ -1,4 +1,5 @@
 import Cookies from 'js-cookie';
+import { Config } from '../../config';
 
 export class Http {
   instance = new Http();
@@ -18,7 +19,7 @@ export const FetchApi = async ({
     headers: {
       ...headers,
       Auth: process.env.NEXT_PUBLIC_API_KEY || 'unauthenticated',
-      access_token: Cookies.get('_mnt'),
+      access_token: Cookies.get(Config.cookieName),
       'Content-type': 'application/json',
     },
   };
@@ -27,7 +28,7 @@ export const FetchApi = async ({
 
   console.log('payload', payload);
 
-  const _r = fetch(`${process.env.NEXT_PUBLIC_HOST}${url}`, payload)
+  const _r: any = fetch(`${process.env.NEXT_PUBLIC_HOST}${url}`, payload)
     .then(async (r) => {
       const data = await r.json();
       if (r.ok) {
@@ -36,7 +37,15 @@ export const FetchApi = async ({
         return { ok: r.ok, error: data };
       }
     })
-    .catch((e) => e);
+    .catch((e) => {
+      return {
+        ok: false,
+        error: {
+          statusCode: 500,
+          message: 'Fallo al conectar al servidor, intente más tarde',
+        },
+      };
+    });
   // console.log(_r);
   return _r;
 };

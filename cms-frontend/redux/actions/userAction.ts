@@ -1,11 +1,12 @@
 import Cookies from 'js-cookie';
+import { Config } from '../../config';
 import * as types from '../types';
 
 export const getMe = () => async (dispatch: any) => {
   const user = await fetch(`${process.env.NEXT_PUBLIC_HOST}/users/me`, {
     method: 'GET',
     headers: {
-      access_token: Cookies.get('_mtn') || '',
+      access_token: Cookies.get(Config.cookieName) || '',
       Auth: process.env.NEXT_PUBLIC_API_KEY || 'unauthenticated',
     },
   });

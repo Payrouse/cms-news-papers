@@ -6,12 +6,13 @@ import { useDispatch } from 'react-redux';
 import { endUserLoading, getMe } from '../../redux/actions/userAction';
 import Footer from '../footer/Footer';
 import AppToolbar from '../toolbar/AppToolbar';
+import { Config } from '../../config';
 
 const AppLayout = ({ children }: any) => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    if (Cookies.get('_mtn')) {
+    if (Cookies.get(Config.cookieName)) {
       dispatch(getMe());
     } else {
       dispatch(endUserLoading());
