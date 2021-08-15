@@ -7,6 +7,7 @@ import { Menu, MenuItem } from '@material-ui/core';
 
 import { StoreType } from '../../redux/types';
 import { clearUser } from '../../redux/actions/userAction';
+import { Config } from '../../config';
 
 const AppToolbar = () => {
   const { isLogin, loading, user } = useSelector(
@@ -28,13 +29,7 @@ const AppToolbar = () => {
             ) : isLogin ? (
               <ProfileMenu user={user} />
             ) : (
-              <div
-                onClick={() => {
-                  Router.push('/login');
-                }}
-              >
-                Iniciar sesión
-              </div>
+              <NotUserMenu />
             )}
           </div>
         </div>
@@ -63,7 +58,7 @@ const ProfileMenu = ({ user }: any) => {
 
   const logout = () => {
     handleClose();
-    Cookies.remove('_mtn');
+    Cookies.remove(Config.cookieName);
     dispatch(clearUser());
   };
 
@@ -109,6 +104,61 @@ const ProfileMenu = ({ user }: any) => {
           Denuncia ciudadana
         </MenuItem>
         <MenuItem onClick={logout}>Cerrar sesión</MenuItem>
+      </Menu>
+    </>
+  );
+};
+
+const NotUserMenu = () => {
+  const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
+
+  const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
+    setAnchorEl(event.currentTarget);
+  };
+
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
+
+  const goTo = (url: string) => {
+    handleClose();
+    Router.push(url);
+  };
+
+  return (
+    <>
+      <button
+        aria-controls="not-user-menu"
+        aria-haspopup="true"
+        onClick={handleClick}
+      >
+        <img
+          className="h-10 w-10 rounded-full object-cover"
+          src={'/img/user.svg'}
+          alt="profile"
+        />
+      </button>
+      <Menu
+        id="not-user-menu"
+        anchorEl={anchorEl}
+        keepMounted
+        open={Boolean(anchorEl)}
+        onClose={handleClose}
+      >
+        <MenuItem
+          onClick={() => {
+            goTo('/login');
+          }}
+        >
+          Iniciar sesión
+        </MenuItem>
+        <MenuItem
+          onClick={() => {
+            goTo('/register');
+          }}
+        >
+          Registrarse
+        </MenuItem>
       </Menu>
     </>
   );

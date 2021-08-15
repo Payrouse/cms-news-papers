@@ -21,6 +21,9 @@ export class Category {
   @Column({ name: 'name', type: 'varchar', length: 64, unique: true })
   name: string;
 
+  @Column({ name: 'url', type: 'varchar', length: 64, unique: true })
+  url: string;
+
   @Column({ name: 'description', type: 'text' })
   description: string;
 

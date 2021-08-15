@@ -11,6 +11,7 @@ import Publish from '../../components/views/admin/publish';
 import Settings from '../../components/views/admin/Settings';
 import Users from '../../components/views/admin/Users';
 import LoadingAdmin from '../../components/views/loading/LoadingAdmin';
+import { Config } from '../../config';
 
 const Admin = () => {
   const router = useRouter();
@@ -23,18 +24,18 @@ const Admin = () => {
   );
 
   useEffect(() => {
-    if (Cookies.get('_mtn')) {
+    if (Cookies.get(Config.cookieName)) {
       dispatch(getMe());
     } else {
       dispatch(endUserLoading());
     }
-  }, []);
+  }, [dispatch]);
 
   if (loading) {
     return <LoadingAdmin />;
   } else if (!isLogin) {
     router.replace('/login');
-    return <div>redirect...</div>;
+    return <LoadingAdmin message="Redirigiendo..." />;
   } else if (!user.isAdministrative) {
     router.replace('/');
     return <LoadingAdmin />;
