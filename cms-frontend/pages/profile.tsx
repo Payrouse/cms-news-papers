@@ -3,13 +3,11 @@ import Router from 'next/router';
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
-import { StoreType } from '../../redux/types';
-import { endUserLoading, getMe } from '../../redux/actions/userAction';
-import LayoutAdmin from '../../components/layouts/AdminLayout';
-import Dashboard from '../../components/views/admin/Dashboard';
-import LoadingAdmin from '../../components/views/loading/LoadingAdmin';
+import { endUserLoading, getMe } from '../redux/actions/userAction';
+import { StoreType } from '../redux/types';
+import LoadingAdmin from '../components/views/loading/LoadingAdmin';
 
-const Admin = () => {
+const Profile = () => {
   const dispatch = useDispatch();
 
   const { isLogin, loading, user } = useSelector(
@@ -33,12 +31,9 @@ const Admin = () => {
     Router.replace('/');
     return <LoadingAdmin />;
   } else {
-    return (
-      <LayoutAdmin route="/">
-        <Dashboard titleToolbar="Inicio" />
-      </LayoutAdmin>
-    );
+    Router.replace('/admin');
+    return <LoadingAdmin />;
   }
 };
 
-export default Admin;
+export default Profile;

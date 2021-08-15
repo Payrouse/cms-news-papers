@@ -1,9 +1,14 @@
 import Link from 'next/link';
+import Router from 'next/router';
+import Cookies from 'js-cookie';
+import { useSnackbar } from 'notistack';
 import { SubmitHandler, useForm } from 'react-hook-form';
 
 import Input from '../../inputs/Input';
 import InputPassword from '../../inputs/InputPassword';
 import Button, { ButtonType } from '../../buttons/Button';
+import { AuthValidation } from '../../../library/Validations';
+import { FetchApi } from '../../../library/Http';
 
 type LoginValues = {
   email: string;
@@ -11,16 +16,37 @@ type LoginValues = {
 };
 
 const LoginForm = () => {
+  const { enqueueSnackbar } = useSnackbar();
+
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm<LoginValues>();
+
   const handleLogin: SubmitHandler<LoginValues> = async (data) => {
     console.log(data);
+    const r = await FetchApi({
+      url: '/auth/login',
+      method: 'POST',
+      body: data,
+    });
+
+    if (r.ok) {
+      Cookies.set('_mtn', r.data.accessToken, {
+        sameSite: 'strict',
+        expires: 7, // expires in 7 days
+      });
+      Router.replace('/profile');
+    } else {
+      enqueueSnackbar(r.error.message, {
+        variant: 'error',
+      });
+    }
   };
+
   return (
-    <div className="h-screen flex items-center justify-center">
+    <div className="h-screen flex items-center justify-center bg-white">
       <div
         className={`bg-white h-full w-full max-w-lg px-4 
         flex flex-col justify-center 
@@ -33,7 +59,7 @@ const LoginForm = () => {
             label="Correo Electrónico"
             placeholder="ejemplo@gmail.com"
             register={register}
-            validations={{}}
+            validations={AuthValidation.email}
             required={true}
             error={errors.email}
           />
@@ -41,7 +67,7 @@ const LoginForm = () => {
             name="password"
             label="Contraseña"
             register={register}
-            validations={{}}
+            validations={{ required: 'Ingrese una contraseña' }}
             required={true}
             error={errors.password}
           />
@@ -49,14 +75,14 @@ const LoginForm = () => {
             <Button type={ButtonType.Submit} text="Iniciar Sesión" />
           </div>
         </form>
-        <div className="mt-4 flex justify-center">
+        <div className="mt-4 flex flex-col items-center sm:flex-row sm:justify-center">
           <Link href="/register">
-            <a className="mr-4 text-blue-500 hover:underline hover:text-blue-600">
+            <a className="sm:mr-4 text-blue-500 hover:underline hover:text-blue-600">
               Registrarse ahora
             </a>
           </Link>
           <Link href="/">
-            <a className="ml-4 text-blue-500 hover:underline hover:text-blue-600">
+            <a className="sm:ml-4 text-blue-500 hover:underline hover:text-blue-600">
               Ir al inicio
             </a>
           </Link>

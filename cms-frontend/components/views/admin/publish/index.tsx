@@ -1,19 +1,16 @@
-import React from 'react';
+import ListReviewArticles from './ListReviewArticles';
+import ReviewArticle from './ReviewArticle';
 
-import ArticleReviewTable from '../../../tables/ArticleReviewTable';
-import Toolbar from '../../../toolbar/AdminToolbar';
+const Publish = ({ childRoute }: any) => {
+  console.log('childRoute', childRoute);
 
-const Publish = ({ titleToolbar }: any) => {
-  return (
-    <>
-      <Toolbar title={titleToolbar} />
-      <div className="container-views custom-scroll">
-        <div className="mt-6">
-          <ArticleReviewTable />
-        </div>
-      </div>
-    </>
-  );
+  if ('publish' === childRoute) {
+    return <ListReviewArticles titleToolbar="Revisión" />;
+  } else if (/^(publish\/article\/)/.test(childRoute)) {
+    return <ReviewArticle titleToolbar="Revisar articulo" />;
+  } else {
+    return <div>No route found</div>;
+  }
 };
 
 export default Publish;

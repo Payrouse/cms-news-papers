@@ -1,30 +1,58 @@
+import Cookies from 'js-cookie';
+import { useEffect } from 'react';
 import { useRouter } from 'next/router';
+import { useDispatch, useSelector } from 'react-redux';
 
+import { StoreType } from '../../redux/types';
+import { endUserLoading, getMe } from '../../redux/actions/userAction';
 import LayoutAdmin from '../../components/layouts/AdminLayout';
 import Editor from '../../components/views/admin/editor';
-import EditArticle from '../../components/views/admin/editor/EditArticle';
-import NewArticle from '../../components/views/admin/editor/NewArticle';
 import Publish from '../../components/views/admin/publish';
-import ReviewArticle from '../../components/views/admin/publish/ReviewArticle';
 import Settings from '../../components/views/admin/Settings';
 import Users from '../../components/views/admin/Users';
+import LoadingAdmin from '../../components/views/loading/LoadingAdmin';
 
 const Admin = () => {
   const router = useRouter();
-  const { aid } = router.query;
-  console.log('route', aid);
+  const dispatch = useDispatch();
 
-  return (
-    <LayoutAdmin route={aid}>
-      <View route={aid} />
-    </LayoutAdmin>
+  const { aid } = router.query;
+
+  const { isLogin, loading, user } = useSelector(
+    (state: StoreType) => state.user,
   );
+
+  useEffect(() => {
+    if (Cookies.get('_mtn')) {
+      dispatch(getMe());
+    } else {
+      dispatch(endUserLoading());
+    }
+  }, []);
+
+  if (loading) {
+    return <LoadingAdmin />;
+  } else if (!isLogin) {
+    router.replace('/login');
+    return <div>redirect...</div>;
+  } else if (!user.isAdministrative) {
+    router.replace('/');
+    return <LoadingAdmin />;
+  } else {
+    return (
+      <LayoutAdmin route={aid}>
+        <View route={aid} />
+      </LayoutAdmin>
+    );
+  }
 };
 
 const View = ({ route }: any) => {
   let parsedRoute = undefined;
+  let childRoute = undefined;
   if (route) {
-    parsedRoute = route.join('/');
+    parsedRoute = route[0];
+    childRoute = route.join('/');
   }
 
   switch (parsedRoute) {
@@ -33,15 +61,9 @@ const View = ({ route }: any) => {
     case 'settings':
       return <Settings titleToolbar="Configuraciones" />;
     case 'editor':
-      return <Editor titleToolbar="Redacción" />;
-    case 'editor/new':
-      return <NewArticle titleToolbar="Nuevo articulo" />;
-    case 'editor/1':
-      return <EditArticle titleToolbar="Editar articulo" />;
+      return <Editor childRoute={childRoute} />;
     case 'publish':
-      return <Publish titleToolbar="Revisión" />;
-    case 'publish/1':
-      return <ReviewArticle titleToolbar="Revisar articulo" />;
+      return <Publish childRoute={childRoute} />;
     case 'users':
       return <Users titleToolbar="Usuarios" />;
     default:

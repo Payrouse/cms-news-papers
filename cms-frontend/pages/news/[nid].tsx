@@ -1,4 +1,5 @@
 import Head from 'next/head';
+
 import AppLayout from '../../components/layouts/AppLayout';
 import Article from '../../components/views/article';
 

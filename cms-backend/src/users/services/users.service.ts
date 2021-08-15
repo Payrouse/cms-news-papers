@@ -92,4 +92,42 @@ export class UsersService {
 
     return newUser;
   }
+
+  async getUserByToken(id: string) {
+    const user = await this.userRepo.findOne({
+      where: { userId: id },
+    });
+    const { email, firstName, lastName, avatar } = user;
+    const roles = await user.userToRoles;
+    // TODO: change roles to array string
+    const listRoles = roles.map((role) => role.roleId);
+    const isAdministrative = isAdministrativeUser(listRoles);
+
+    return {
+      user: {
+        email,
+        firstName,
+        lastName,
+        avatar,
+        roles: listRoles,
+        isAdministrative,
+      },
+    };
+  }
 }
+
+const isAdministrativeUser = (roles: number[]) => {
+  let i = 0;
+  let found = false;
+  while (i < roles.length && !found) {
+    if (
+      roles[i] === RoleEnum.ADMIN ||
+      roles[i] === RoleEnum.PUBLISHER ||
+      roles[i] === RoleEnum.JOURNALIST
+    ) {
+      found = true;
+    }
+    i++;
+  }
+  return found;
+};

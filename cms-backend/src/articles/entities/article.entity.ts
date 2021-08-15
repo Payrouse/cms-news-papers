@@ -33,6 +33,9 @@ export class Article {
   @Column({ name: 'picture', type: 'text' })
   picture: string;
 
+  @Column({ name: 'feedback', type: 'text' })
+  feedback: string;
+
   @Column({ name: 'body', type: 'text' })
   body: string;
 

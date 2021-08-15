@@ -1,8 +1,9 @@
 import Router from 'next/router';
-import React, { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { Menu, MenuItem } from '@material-ui/core';
 
 import styles from './Toolbar.module.css';
+import Slidebar from '../nav/SlideBar';
 
 interface ToolbarProps {
   title: string;
@@ -11,7 +12,10 @@ interface ToolbarProps {
 const Toolbar = ({ title }: ToolbarProps) => {
   return (
     <header className={styles.toolbar}>
-      <div>
+      <div className="flex items-center relative">
+        <div className={styles.burger_menu}>
+          <Slidebar />
+        </div>
         <p className={styles.toolbar_title}>{title}</p>
       </div>
       <div className="flex items-center">
