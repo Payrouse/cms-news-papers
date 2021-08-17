@@ -1,15 +1,22 @@
 import Router from 'next/router';
 import { useState } from 'react';
 import { Menu, MenuItem } from '@material-ui/core';
+import { useDispatch, useSelector } from 'react-redux';
 
+import { StoreType } from '../../redux/types';
 import styles from './Toolbar.module.css';
 import Slidebar from '../nav/SlideBar';
+import { Config } from '../../config';
+import Cookies from 'js-cookie';
+import { clearUser } from '../../redux/actions/userAction';
 
 interface ToolbarProps {
   title: string;
 }
 
 const Toolbar = ({ title }: ToolbarProps) => {
+  const { loading, user } = useSelector((state: StoreType) => state.user);
+
   return (
     <header className={styles.toolbar}>
       <div className="flex items-center relative">
@@ -19,13 +26,15 @@ const Toolbar = ({ title }: ToolbarProps) => {
         <p className={styles.toolbar_title}>{title}</p>
       </div>
       <div className="flex items-center">
-        <AdminMenu />
+        <AdminMenu user={user} loading={loading} />
       </div>
     </header>
   );
 };
 
-const AdminMenu = () => {
+const AdminMenu = ({ user, loading }: any) => {
+  const dispatch = useDispatch();
+
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
 
   const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
@@ -41,6 +50,12 @@ const AdminMenu = () => {
     Router.push(url);
   };
 
+  const logout = () => {
+    handleClose();
+    Cookies.remove(Config.cookieName);
+    dispatch(clearUser());
+  };
+
   return (
     <>
       <button
@@ -49,10 +64,10 @@ const AdminMenu = () => {
         onClick={handleClick}
       >
         <img
-          className="h-10 w-10 rounded-full object-cover"
-          src={
-            'https://imagenes.milenio.com/YONeZ5-2cQu0TH_W2iPiQ_FkzbM=/958x596/https://www.milenio.com/uploads/media/2018/12/25/quieran-comprar-cachorro-acudir-criaderos.jpg'
-          }
+          className={`${
+            loading ? 'animate-pulse' : ''
+          } h-10 w-10 rounded-full object-cover`}
+          src={user && user.avatar}
           alt="profile"
         />
       </button>
@@ -70,13 +85,7 @@ const AdminMenu = () => {
         >
           Admin
         </MenuItem>
-        <MenuItem
-          onClick={() => {
-            goTo('/');
-          }}
-        >
-          Cerrar sesión
-        </MenuItem>
+        <MenuItem onClick={logout}>Cerrar sesión</MenuItem>
       </Menu>
     </>
   );

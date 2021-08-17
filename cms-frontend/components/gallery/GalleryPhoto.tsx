@@ -2,8 +2,6 @@ import { TextField } from '@material-ui/core';
 import { useEffect, useState } from 'react';
 import { UseFormRegister } from 'react-hook-form';
 
-import AddPhoto from './AddPhoto';
-
 const API_KEY_PIXABAY = '17449699-11f01ceaece73a51d8b58564b';
 
 interface GalleryPhotoProps {
@@ -19,7 +17,7 @@ interface GalleryPhotoProps {
 }
 
 const GalleryPhotos = ({
-  defaultImg,
+  defaultImg = '',
   name,
   error,
   register,
@@ -28,13 +26,14 @@ const GalleryPhotos = ({
   required = false,
   setValue,
 }: GalleryPhotoProps) => {
-  const [imgSelected, setImgSelected] = useState('');
+  const [imgSelected, setImgSelected] = useState(defaultImg);
   // data
   const [listImages, setListImages] = useState<any[]>([]);
   const [stateRequest, setStateRequest] = useState({
     loading: false,
     error: false,
   });
+  const [showGallery, setShowGallery] = useState(false);
   const [query, setQuery] = useState('');
 
   const handleSelect = (url: string) => {
@@ -60,41 +59,60 @@ const GalleryPhotos = ({
 
   return (
     <div className={container || 'pt-3 px-4 mb-6 md:mb-0'}>
-      <label className="uppercase tracking-wide text-xs font-bold mb-2 ml-2">
-        Galería
-      </label>
-      <TextField
-        id="query-input"
-        placeholder="Buscar foto..."
-        variant="outlined"
-        value={query}
-        onChange={onChange}
-        size="small"
-        fullWidth
-      />
-      <div className="border-2 border-gray-300 rounded-md max-h-60 overflow-y-auto py-1">
-        <div className="w-full flex flex-wrap">
-          {stateRequest.loading ? (
-            <div className="h-60 w-full flex justify-center items-center">
-              loading...
-            </div>
-          ) : listImages.length > 0 ? (
-            listImages.map((photo, index) => {
-              return (
-                <Photo
-                  key={index}
-                  index={index}
-                  photo={photo}
-                  selected={imgSelected}
-                  handleSelect={handleSelect}
-                />
-              );
-            })
-          ) : (
-            <div className="h-60 w-full flex justify-center items-center">
-              Lista vacía
-            </div>
-          )}
+      <label className=" font-bold mb-2">Foto del articulo</label>
+      <div className="w-full flex justify-center">
+        <img
+          className="h-60 w-auto rounded object-contain"
+          src={imgSelected}
+          alt="imagen de la noticia"
+        />
+      </div>
+      <div className="flex justify-between mt-2">
+        <label className="font-bold mb-2">Galería</label>
+        <button
+          type="button"
+          className="ml-2 mb-2 border rounded px-1"
+          onClick={() => {
+            setShowGallery(!showGallery);
+          }}
+        >
+          {showGallery ? 'Ocultar galería' : 'Mostrar galería'}
+        </button>
+      </div>
+      <div className={`${showGallery ? '' : 'hidden'}`}>
+        <TextField
+          id="query-input"
+          placeholder="Buscar foto..."
+          variant="outlined"
+          value={query}
+          onChange={onChange}
+          size="small"
+          fullWidth
+        />
+        <div className="border-2 border-gray-300 rounded-md max-h-60 overflow-y-auto py-1">
+          <div className="w-full flex flex-wrap">
+            {stateRequest.loading ? (
+              <div className="h-60 w-full flex justify-center items-center">
+                loading...
+              </div>
+            ) : listImages.length > 0 ? (
+              listImages.map((photo, index) => {
+                return (
+                  <Photo
+                    key={index}
+                    index={index}
+                    photo={photo}
+                    selected={imgSelected}
+                    handleSelect={handleSelect}
+                  />
+                );
+              })
+            ) : (
+              <div className="h-60 w-full flex justify-center items-center">
+                Lista vacía
+              </div>
+            )}
+          </div>
         </div>
       </div>
       <input className="hidden" type="url" {...register(name, validations)} />
@@ -117,7 +135,7 @@ const Photo = ({ photo, index, selected, handleSelect }: any) => {
     if (photo.name !== name) {
       setUrl(null);
       setName(photo.tags);
-      setUrl(photo.previewURL);
+      setUrl(photo.largeImageURL);
     }
   }, [photo]);
 

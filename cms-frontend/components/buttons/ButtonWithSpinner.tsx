@@ -7,17 +7,16 @@ const ButtonWithSpinner = ({
   type,
   height = 'h-12',
   width = 'w-full',
+  normalColor = 'bg-blue-500 text-white hover:bg-blue-600 border-blue-500',
+  waitingColor = 'bg-blue-400 text-white border-blue-400 cursor-default',
   onClick = () => {},
 }: any) => {
   return (
     <button
+      onClick={onClick}
       type={type}
       className={`${height} ${width} rounded shadow text-center font-bold px-1 py-2
-      ${
-        waiting
-          ? 'bg-blue-400  text-white border-blue-400 cursor-default'
-          : 'bg-blue-500  text-white hover:bg-blue-600 border-blue-500'
-      }`}
+      ${waiting ? waitingColor : normalColor}`}
     >
       <div className="flex justify-center">
         {waiting ? (

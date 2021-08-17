@@ -1,10 +1,10 @@
 export interface User {
   userName: string;
   photoUrl: string;
-  name: string;
+  firstName: string;
   lastName: string;
-  role: string[];
-  status: string;
+  role: number[];
   email: string;
-  createdAt: string;
+  createdAt: Date;
+  updatedAt: Date;
 }

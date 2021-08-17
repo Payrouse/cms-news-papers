@@ -1,6 +1,12 @@
 import Router from 'next/router';
+import { useSnackbar } from 'notistack';
+import useArticlesByJournalist from '../../hooks/data/useArticlesByJournalist';
+import { ControllerDate } from '../../library/Time';
+import { Article, ArticleStatus } from '../../models/article.model';
 
 const ArticleEditorTable = () => {
+  const { articles, isError, isLoading } = useArticlesByJournalist();
+
   return (
     <div className="bg-white shadow-md rounded my-6 sm:w-full md:w-full">
       <table className={'min-w-max w-full table-auto'}>
@@ -13,32 +19,84 @@ const ArticleEditorTable = () => {
           </tr>
         </thead>
         <tbody className="text-gray-600 text-sm font-light">
-          <ArticleEditorRow state={0} />
-          <ArticleEditorRow state={1} />
-          <ArticleEditorRow state={2} />
-          <ArticleEditorRow state={3} />
-          <ArticleEditorRow state={4} />
-          <ArticleEditorRow state={0} />
-          <ArticleEditorRow state={1} />
-          <ArticleEditorRow state={2} />
-          <ArticleEditorRow state={3} />
-          <ArticleEditorRow state={4} />
-          <ArticleEditorRow state={0} />
-          <ArticleEditorRow state={1} />
-          <ArticleEditorRow state={2} />
-          <ArticleEditorRow state={3} />
-          <ArticleEditorRow state={4} />
+          {isLoading ? (
+            <PlaceholderRow />
+          ) : !isError && articles.length > 0 ? (
+            articles.map((article: Article, index: number) => {
+              return <ArticleEditorRow key={index} article={article} />;
+            })
+          ) : (
+            <tr className="border-b border-gray-200">
+              <td className="py-3 px-3 text-left whitespace-nowrap">
+                <div className="flex items-center">
+                  <span className="font-medium">
+                    {articles.length
+                      ? articles.length === 0
+                        ? 'No se encontraron artículos'
+                        : ''
+                      : 'Hubo un error, intente más tarde'}
+                  </span>
+                </div>
+              </td>
+              <td className="py-3 px-3 text-left">
+                <div className="flex items-center">
+                  <span className="bg-gray-200 px-12 py-2 rounded"></span>
+                </div>
+              </td>
+              <td className="hidden sm:block py-3 px-3 text-center">
+                <div className="flex justify-center">
+                  <span className="bg-gray-200 px-12 py-2 rounded"></span>
+                </div>
+              </td>
+              <td className="py-3 px-3 text-center">
+                <div className="flex justify-center">
+                  <span className={`bg-gray-200 px-12 py-2 rounded`}></span>
+                </div>
+              </td>
+            </tr>
+          )}
         </tbody>
       </table>
     </div>
   );
 };
 
+const PlaceholderRow = () => {
+  return (
+    <tr className="border-b border-gray-200">
+      <td className="py-3 px-3 text-left whitespace-nowrap">
+        <div className="flex items-center">
+          <span className="font-medium bg-gray-200 animate-pulse px-20 py-2 rounded"></span>
+        </div>
+      </td>
+      <td className="py-3 px-3 text-left">
+        <div className="flex items-center">
+          <span className="bg-gray-200 animate-pulse px-12 py-2 rounded"></span>
+        </div>
+      </td>
+      <td className="hidden sm:block py-3 px-3 text-center">
+        <div className="flex justify-center">
+          <span className="bg-gray-200 animate-pulse px-12 py-2 rounded"></span>
+        </div>
+      </td>
+      <td className="py-3 px-3 text-center">
+        <div className="flex justify-center">
+          <span
+            className={` bg-gray-200 animate-pulse px-12 py-2 rounded`}
+          ></span>
+        </div>
+      </td>
+    </tr>
+  );
+};
+
 interface ArticleEditorProps {
-  state: number;
+  article: Article;
 }
 
-const ArticleEditorRow = ({ state }: ArticleEditorProps) => {
+const ArticleEditorRow = ({ article }: ArticleEditorProps) => {
+  const { enqueueSnackbar } = useSnackbar();
+
   const colorState: any = {
     0: {
       color: 'bg-gray-200 text-gray-600',
@@ -62,33 +120,53 @@ const ArticleEditorRow = ({ state }: ArticleEditorProps) => {
     },
   };
 
+  const handleRow = () => {
+    if (
+      article.status === ArticleStatus.DRAFT ||
+      article.status === ArticleStatus.REJECTED
+    ) {
+      return Router.push(`/admin/editor/article/${article.articleId}`);
+    }
+    if (
+      article.status === ArticleStatus.POSTED ||
+      article.status === ArticleStatus.HIGHLIGHTED
+    ) {
+      return enqueueSnackbar('El articulo ya fue publicado', {
+        variant: 'info',
+      });
+    }
+    enqueueSnackbar('El articulo esta en espera de revisión', {
+      variant: 'info',
+    });
+  };
+
   return (
     <tr
       className="border-b border-gray-200 hover:bg-gray-100 cursor-pointer"
-      onClick={() => {
-        Router.push('/admin/editor/article/1');
-      }}
+      onClick={handleRow}
     >
       <td className="py-3 px-3 text-left whitespace-nowrap">
         <div className="flex items-center">
-          <span className="font-medium">El encebollado más grande...</span>
+          <span className="font-medium">{article.title}</span>
         </div>
       </td>
       <td className="py-3 px-3 text-left">
         <div className="flex items-center">
-          <span>Comida</span>
+          <span>{article.category && article.category.name}</span>
         </div>
       </td>
       <td className="hidden sm:block py-3 px-3 text-center">
         <div className="flex items-center justify-center">
-          <span>06/08/2021</span>
+          <span>{ControllerDate.parseDate(article.createdAt)}</span>
         </div>
       </td>
       <td className="py-3 px-3 text-center">
         <span
-          className={`${colorState[state].color} py-1 px-3 rounded-full text-xs`}
+          className={`${
+            colorState[article.status].color
+          } py-1 px-3 rounded-full text-xs`}
         >
-          {colorState[state].title}
+          {colorState[article.status].title}
         </span>
       </td>
     </tr>

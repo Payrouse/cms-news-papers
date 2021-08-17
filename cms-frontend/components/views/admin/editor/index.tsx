@@ -10,7 +10,8 @@ const Editor = ({ childRoute }: any) => {
   } else if ('editor/new' === childRoute) {
     return <NewArticle titleToolbar="Nuevo articulo" />;
   } else if (/^(editor\/article\/)/.test(childRoute)) {
-    return <EditArticle titleToolbar="Editar articulo" />;
+    let id = childRoute.split('/')[2];
+    return <EditArticle titleToolbar="Editar articulo" articleId={id} />;
   } else {
     return <div>No route found</div>;
   }

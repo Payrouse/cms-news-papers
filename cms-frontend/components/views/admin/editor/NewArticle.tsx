@@ -1,9 +1,17 @@
 import Link from 'next/link';
+import { useState } from 'react';
+import { useSnackbar } from 'notistack';
+import { FormControlLabel, Switch } from '@material-ui/core';
 import { SubmitHandler, useForm } from 'react-hook-form';
-import GalleryPhotos from '../../../gallery/GalleryPhoto';
 
+import useAllCategories from '../../../../hooks/data/useAllCategories';
+import { FetchApi } from '../../../../library/Http';
+import { ArticleValidation } from '../../../../library/Validations';
+import { ArticleStatus } from '../../../../models/article.model';
+import { ButtonType } from '../../../buttons/Button';
+import ButtonWithSpinner from '../../../buttons/ButtonWithSpinner';
+import GalleryPhotos from '../../../gallery/GalleryPhoto';
 import Input from '../../../inputs/Input';
-import MultilineInput from '../../../inputs/MultilineInput';
 import SelectInput from '../../../inputs/SelectInput';
 import MarkDownEditor from '../../../textEditor/MarkDownEditor';
 import Toolbar from '../../../toolbar/AdminToolbar';
@@ -14,21 +22,50 @@ type ArticleValues = {
   keywords: string;
   picture: string;
   body: string;
+  categoryId: string;
 
-  status: string;
-  category_id: string;
+  status: number;
 };
 
 const NewArticle = ({ titleToolbar }: any) => {
+  // hooks
+  const { enqueueSnackbar } = useSnackbar();
+  const { categories, isLoading, isError } = useAllCategories();
+  // states
+  const [draft, setDraft] = useState(true);
+  const [waiting, setWaiting] = useState(false);
+
   const {
     register,
     handleSubmit,
     formState: { errors },
     setValue,
+    reset,
   } = useForm<ArticleValues>();
 
-  const handleArticle: SubmitHandler<ArticleValues> = async (data) => {
+  const sendReviewArticle: SubmitHandler<ArticleValues> = async (data) => {
+    setWaiting(true);
+    data.status = draft ? ArticleStatus.DRAFT : ArticleStatus.WAIT;
     console.log(data);
+    const r = await FetchApi({ url: '/articles', method: 'POST', body: data });
+    if (r.ok) {
+      const msg = draft
+        ? 'Se ha guardado el articulo'
+        : 'Se ha enviado el articulo exitosamente';
+      enqueueSnackbar(msg, {
+        variant: 'success',
+      });
+      reset();
+    } else {
+      enqueueSnackbar(r.error.message, {
+        variant: 'error',
+      });
+    }
+    setWaiting(false);
+  };
+
+  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setDraft(event.target.checked);
   };
 
   return (
@@ -44,13 +81,13 @@ const NewArticle = ({ titleToolbar }: any) => {
         </div>
         <div className="mt-4 rounded shadow bg-white px-4 py-4 mb-4">
           <h2 className="text-lg font-bold">Redacción del articulo:</h2>
-          <form onSubmit={handleSubmit(handleArticle)}>
+          <form onSubmit={handleSubmit(sendReviewArticle)}>
             <Input
               name="title"
               label="Titular"
               placeholder="Soy el titular"
               register={register}
-              validations={{}}
+              validations={ArticleValidation.title}
               required={true}
               error={errors.title}
             />
@@ -59,63 +96,77 @@ const NewArticle = ({ titleToolbar }: any) => {
               label="Subtitulo"
               placeholder="Soy el subtitulo"
               register={register}
-              validations={{}}
+              validations={ArticleValidation.subtitle}
               required={true}
               error={errors.subtitle}
             />
-            <SelectInput
-              name="category_id"
-              label="Categoría"
-              register={register}
-              items={CATEGORIES}
-              keyValue="category_id"
-              keyName="name"
-              validations={{}}
-              required={true}
-              error={errors.category_id}
-            />
-            <Input
-              name="keywords"
-              label="Palabras claves"
-              placeholder="Soy las palabras claves"
-              register={register}
-              validations={{}}
-              required={true}
-              error={errors.keywords}
-            />
+            <div className="md:grid md:grid-cols-2">
+              {isLoading ? (
+                <div>Cargando categorías..</div>
+              ) : !isError && categories ? (
+                <SelectInput
+                  name="categoryId"
+                  label="Categoría"
+                  register={register}
+                  items={categories}
+                  keyValue="categoryId"
+                  keyName="name"
+                  validations={{
+                    required: 'Se debe seleccionar una categoría',
+                  }}
+                  required={true}
+                  error={errors.categoryId}
+                />
+              ) : (
+                <div className="mt-2 mx-2">Error al cargar las categorías</div>
+              )}
+              <Input
+                name="keywords"
+                label="Palabras claves"
+                placeholder="Soy las palabras claves"
+                register={register}
+                validations={ArticleValidation.keywords}
+                required={true}
+                error={errors.keywords}
+              />
+            </div>
             <GalleryPhotos
               name="picture"
-              defaultImg=""
+              defaultImg="http://atrilco.com/wp-content/uploads/2017/11/ef3-placeholder-image.jpg"
               register={register}
-              validations={{}}
+              validations={{ required: 'Se necesita una imagen del articulo' }}
               setValue={setValue}
               required={true}
               error={errors.picture}
             />
-            <MarkDownEditor />
-            {/* <MultilineInput
+            <MarkDownEditor
               name="body"
-              label="Contenido"
-              placeholder="Soy el contenido"
               register={register}
-              validations={{}}
-              required={true}
+              validations={ArticleValidation.body}
+              setValue={setValue}
               error={errors.body}
-            /> */}
+            />
 
-            <div className="flex justify-between mx-4 mt-4">
-              <button
-                className="bg-gray-500 hover:bg-gray-600 text-white rounded shadow text-center font-medium px-4 py-2"
-                type="button"
-              >
-                Guardar como borrador
-              </button>
-              <button
-                className="bg-blue-500 hover:bg-blue-600 text-white rounded shadow text-center font-medium px-4 py-2"
-                type="submit"
-              >
-                Enviar a revisión
-              </button>
+            <div className="border-t border-b mx-4 mt-4">
+              <p>Opciones:</p>
+              <FormControlLabel
+                value="start"
+                control={
+                  <Switch
+                    color="primary"
+                    checked={draft}
+                    onChange={handleChange}
+                  />
+                }
+                label="Borrador"
+                labelPlacement="start"
+              />
+            </div>
+
+            <div className="flex justify-between mx-4 mt-2">
+              <ButtonWithSpinner waiting={waiting} type={ButtonType.Submit}>
+                {draft ? 'Guardar como borrador' : 'Enviar a revisión'}
+              </ButtonWithSpinner>
             </div>
           </form>
         </div>
@@ -123,20 +174,5 @@ const NewArticle = ({ titleToolbar }: any) => {
     </>
   );
 };
-
-const CATEGORIES = [
-  {
-    category_id: '1',
-    name: 'Deporte',
-  },
-  {
-    category_id: '2',
-    name: 'Política',
-  },
-  {
-    category_id: '3',
-    name: 'Comida',
-  },
-];
 
 export default NewArticle;
