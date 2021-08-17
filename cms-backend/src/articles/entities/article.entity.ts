@@ -8,7 +8,7 @@ import {
   JoinColumn,
   ManyToOne,
 } from 'typeorm';
-import { Exclude } from 'class-transformer';
+import { Exclude, Expose } from 'class-transformer';
 
 import { Comment } from '../../comments/entities/comment.entity';
 import { Journalist } from '../../users/entities/journalist.entity';
@@ -44,7 +44,7 @@ export class Article {
   @Max(4)
   status: number;
 
-  @Exclude()
+  // @Exclude()
   @CreateDateColumn({
     name: 'created_at',
     type: 'timestamptz',
@@ -63,6 +63,7 @@ export class Article {
   @Column({
     name: 'published_at',
     type: 'timestamptz',
+    nullable: true,
   })
   publishedAt: Date;
 
@@ -83,9 +84,24 @@ export class Article {
   comments: Comment[];
 
   // article -> category
+  @Exclude()
   @ManyToOne(() => Category, (category) => category.articles, {
     nullable: false,
   })
   @JoinColumn({ name: 'category_id' })
-  categoryId: string;
+  categoryId: string | Category;
+
+  @Expose()
+  get category() {
+    if (this.categoryId) {
+      const category = this.categoryId.valueOf() as Category;
+      return {
+        name: category.name,
+        url: category.url,
+        description: category.description,
+        categoryId: category.categoryId,
+      };
+    }
+    return [];
+  }
 }

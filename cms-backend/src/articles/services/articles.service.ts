@@ -23,7 +23,9 @@ export class ArticlesService {
   }
 
   async findOne(articleId: string) {
-    const articles = await this.articleRepo.findOne(articleId);
+    const articles = await this.articleRepo.findOne(articleId, {
+      relations: ['categoryId'],
+    });
     if (!articles) {
       throw new NotFoundException(`Articulo #${articleId} no encontrado`);
     }
@@ -37,15 +39,15 @@ export class ArticlesService {
       take: 10,
     });
     if (!articlesRelated) {
-      throw new NotFoundException(`Articulos no encontrados`);
+      throw new NotFoundException(`Artículos no encontrados`);
     }
     return articlesRelated;
   }
 
   async findArticleHighlighted() {
-    const datenow = new Date();
-    const date24hAgo = datenow.getTime() - 86400000; // Número de días a restar
-    const startDate = new Date(datenow);
+    const dateNow = new Date();
+    const date24hAgo = dateNow.getTime() - 86400000; // Número de días a restar
+    const startDate = new Date(dateNow);
     const endDate = new Date(date24hAgo);
     const articleHighlighted = await this.articleRepo.find({
       where: {
@@ -73,15 +75,13 @@ export class ArticlesService {
     }
   }
 
-  async create(data: CreateArticleDto) {
+  async create(data: CreateArticleDto, userId: string) {
     const newArticle = this.articleRepo.create(data);
+    newArticle.journalistId = userId;
     try {
       return await this.articleRepo.save(newArticle);
     } catch (error) {
-      throw new HttpException(
-        'Error al crear el articulo',
-        HttpStatus.BAD_REQUEST,
-      );
+      throw new HttpException(error.message, HttpStatus.BAD_REQUEST);
     }
   }
 
@@ -104,5 +104,14 @@ export class ArticlesService {
       throw new NotFoundException(`Articulo no encontrado`);
     }
     return await this.articleRepo.delete(articleId);
+  }
+
+  async findAllByJournalist(journalistId: string) {
+    const articles = await this.articleRepo.find({
+      where: { journalistId },
+      relations: ['categoryId'],
+      order: { status: 'ASC' },
+    });
+    return articles;
   }
 }
