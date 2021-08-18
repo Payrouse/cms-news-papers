@@ -1,5 +1,13 @@
 import { Request } from 'express';
-import { Body, Controller, Get, Post, UseGuards, Req } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Get,
+  Post,
+  UseGuards,
+  Req,
+  Param,
+} from '@nestjs/common';
 
 // import { Public } from '../../auth/decorators/public.decorator';
 import { ApiKeyGuard } from 'src/auth/guards/api-key.guard';
@@ -11,6 +19,7 @@ import { UsersService } from './../services/users.service';
 import { RoleEnum } from './../../auth/models/roles.model';
 import { Roles } from './../../auth/decorators/roles.decorator';
 import { PayloadToken } from 'src/auth/models/token.model';
+import { Public } from 'src/auth/decorators/public.decorator';
 
 @UseGuards(ApiKeyGuard, JwtAuthGuard, RolesGuard)
 @Controller('users')
@@ -32,5 +41,11 @@ export class UsersController {
   getMe(@Req() req: Request) {
     const user = req.user as PayloadToken;
     return this.usersService.getUserByToken(user.sub);
+  }
+
+  @Public()
+  @Get(':userId')
+  getCategory(@Param('userId') id: string) {
+    return this.usersService.findById(id);
   }
 }

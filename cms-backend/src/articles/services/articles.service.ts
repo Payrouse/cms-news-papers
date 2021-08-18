@@ -22,14 +22,27 @@ export class ArticlesService {
     return articles;
   }
 
-  async findOne(articleId: string) {
-    const articles = await this.articleRepo.findOne(articleId, {
+  async findFeed() {
+    const articles = await this.articleRepo.find({
+      where: [
+        { status: ArticleStatus.POSTED },
+        { status: ArticleStatus.HIGHLIGHTED },
+      ],
       relations: ['categoryId'],
+      order: { publishedAt: 'DESC' },
     });
-    if (!articles) {
+    return articles;
+  }
+
+  async findOne(articleId: string) {
+    const article = await this.articleRepo.findOne(articleId, {
+      relations: ['categoryId'],
+      loadRelationIds: { relations: ['journalistId'] },
+    });
+    if (!article) {
       throw new NotFoundException(`Articulo #${articleId} no encontrado`);
     }
-    return articles;
+    return article;
   }
 
   async findArticlesRelated(categoryId: string) {
@@ -57,14 +70,22 @@ export class ArticlesService {
       order: { publishedAt: 'DESC' },
     });
     if (!articleHighlighted) {
-      throw new NotFoundException(`Articulos no encontrados`);
+      throw new NotFoundException(`Artículos no encontrados`);
     }
     return articleHighlighted;
   }
 
   async changeStatus(articleId: string, change: StatusArticleDto) {
     const article = await this.articleRepo.findOne(articleId);
-    this.articleRepo.merge(article, change);
+    let publishedAt = null;
+    if (
+      change.status === ArticleStatus.POSTED ||
+      change.status === ArticleStatus.HIGHLIGHTED
+    ) {
+      publishedAt = new Date();
+    }
+    this.articleRepo.merge(article, { ...change, publishedAt });
+
     try {
       return this.articleRepo.save(article);
     } catch (error) {
@@ -111,6 +132,29 @@ export class ArticlesService {
       where: { journalistId },
       relations: ['categoryId'],
       order: { status: 'ASC' },
+    });
+    return articles;
+  }
+
+  async findArticlesToReview() {
+    const articles = await this.articleRepo.find({
+      where: {
+        status: ArticleStatus.WAIT,
+      },
+      relations: ['categoryId', 'journalistId', 'journalistId.user'],
+      order: { updatedAt: 'ASC' },
+    });
+    return articles;
+  }
+
+  async findLastNews() {
+    const articles = await this.articleRepo.find({
+      where: [
+        { status: ArticleStatus.POSTED },
+        { status: ArticleStatus.HIGHLIGHTED },
+      ],
+      order: { publishedAt: 'DESC' },
+      take: 10,
     });
     return articles;
   }

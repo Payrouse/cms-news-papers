@@ -21,10 +21,10 @@ export class Article {
   @PrimaryGeneratedColumn('uuid', { name: 'article_id' })
   articleId: string;
 
-  @Column({ name: 'title', type: 'varchar', length: 24, unique: true })
+  @Column({ name: 'title', type: 'varchar', length: 60, unique: true })
   title: string;
 
-  @Column({ name: 'subtitle', type: 'varchar', length: 80 })
+  @Column({ name: 'subtitle', type: 'varchar', length: 100 })
   subtitle: string;
 
   @Column({ name: 'keywords', type: 'text' })
@@ -52,7 +52,7 @@ export class Article {
   })
   createdAt: Date;
 
-  @Exclude()
+  // @Exclude()
   @UpdateDateColumn({
     name: 'updated_at',
     type: 'timestamptz',
@@ -72,7 +72,7 @@ export class Article {
     nullable: false,
   })
   @JoinColumn({ name: 'journalist_id' })
-  journalistId: string;
+  journalistId: string | Journalist;
 
   // article -> publisher
   @ManyToOne(() => Publisher, (publisher) => publisher.articles)
@@ -103,5 +103,20 @@ export class Article {
       };
     }
     return [];
+  }
+
+  @Expose()
+  get author() {
+    if (this.journalistId) {
+      if (typeof this.journalistId === 'string') return null;
+      const journalist = this.journalistId.valueOf() as Journalist;
+      return {
+        firstName: journalist.user.firstName,
+        lastName: journalist.user.lastName,
+        avatar: journalist.user.avatar,
+        email: journalist.user.email,
+      };
+    }
+    return null;
   }
 }

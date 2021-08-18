@@ -43,10 +43,28 @@ export class ArticlesController {
     return this.articleService.findAllByJournalist(user.sub);
   }
 
+  @Roles(RoleEnum.ADMIN, RoleEnum.PUBLISHER)
+  @Get('/reviews')
+  getArticlesToReview() {
+    return this.articleService.findArticlesToReview();
+  }
+
   @Public()
-  @Get('highlighted')
+  @Get('/last-news')
+  getLastNews() {
+    return this.articleService.findLastNews();
+  }
+
+  @Public()
+  @Get('/highlighted')
   getHighlighted() {
     return this.articleService.findArticleHighlighted();
+  }
+
+  @Public()
+  @Get('/feed')
+  getFeedArticles() {
+    return this.articleService.findFeed();
   }
 
   @Public()
