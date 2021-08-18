@@ -6,7 +6,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { StoreType } from '../../redux/types';
 import { endUserLoading, getMe } from '../../redux/actions/userAction';
 import LayoutAdmin from '../../components/layouts/AdminLayout';
-import Dashboard from '../../components/views/admin/Dashboard';
+import Dashboard from '../../components/views/admin/dashboard';
 import LoadingAdmin from '../../components/views/loading/LoadingAdmin';
 import { Config } from '../../config';
 

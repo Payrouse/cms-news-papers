@@ -14,18 +14,6 @@
   /* width: 81vw; */
 }
 
-.main_user {
-  padding: 15px;
-  background: #fff;
-  border-top-left-radius: 4vh;
-  border-top-right-radius: 4vh;
-  height: 75vh;
-  box-shadow: 4px 4px 4px 4px rgba(0, 0, 0, 0.25);
-}
-.container_user_view {
-  padding: 4px 12px;
-}
-
 /* breakpoints 975px */
 @media (max-width: 975px) {
   .sidebar {

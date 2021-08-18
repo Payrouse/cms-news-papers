@@ -19,7 +19,7 @@ const Toolbar = ({ title }: ToolbarProps) => {
   const { loading, user } = useSelector((state: StoreType) => state.user);
 
   return (
-    <div className="relative">
+    <div className="relative z-10">
       <header className={styles.toolbar}>
         <div className="flex items-center relative">
           <div className={styles.burger_menu}>

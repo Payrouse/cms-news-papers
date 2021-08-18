@@ -8,7 +8,7 @@ import { endUserLoading, getMe } from '../../redux/actions/userAction';
 import LayoutAdmin from '../../components/layouts/AdminLayout';
 import Editor from '../../components/views/admin/editor';
 import Publish from '../../components/views/admin/publish';
-import Settings from '../../components/views/admin/Settings';
+import Settings from '../../components/views/admin/settings';
 import Users from '../../components/views/admin/Users';
 import LoadingAdmin from '../../components/views/loading/LoadingAdmin';
 import { Config } from '../../config';
