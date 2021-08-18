@@ -7,7 +7,8 @@ const Publish = ({ childRoute }: any) => {
   if ('publish' === childRoute) {
     return <ListReviewArticles titleToolbar="Revisión" />;
   } else if (/^(publish\/article\/)/.test(childRoute)) {
-    return <ReviewArticle titleToolbar="Revisar articulo" />;
+    let id = childRoute.split('/')[2];
+    return <ReviewArticle titleToolbar="Revisar articulo" articleId={id} />;
   } else {
     return <div>No route found</div>;
   }

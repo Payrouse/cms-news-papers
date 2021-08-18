@@ -1,6 +1,6 @@
 import * as types from '../types';
 
-interface UserAccount {
+export interface UserAccount {
   email: string;
   firstName: string;
   lastName: string;

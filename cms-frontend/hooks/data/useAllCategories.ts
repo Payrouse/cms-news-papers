@@ -1,7 +1,14 @@
 import useSWR from 'swr';
+import { Category } from '../../models/category.model';
 import { fetcher } from './fetcher';
 
-function useAllCategories() {
+interface HookAllCategories {
+  categories: Category[];
+  isLoading: boolean;
+  isError: any;
+}
+
+function useAllCategories(): HookAllCategories {
   const { data, error } = useSWR([`/categories`], fetcher);
   return {
     categories: data,

@@ -12,6 +12,7 @@ import {
   FormControlLabel,
   Switch,
   Button,
+  CircularProgress,
 } from '@material-ui/core';
 import { SubmitHandler, useForm, Controller } from 'react-hook-form';
 
@@ -68,7 +69,11 @@ const EditArticle = ({ titleToolbar, articleId }: any) => {
 };
 
 const LoadingArticle = () => {
-  return <div>Cargando...</div>;
+  return (
+    <div>
+      <CircularProgress />
+    </div>
+  );
 };
 
 const ErrorArticle = () => {

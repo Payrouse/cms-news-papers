@@ -1,5 +1,6 @@
 import Router from 'next/router';
 import { useSnackbar } from 'notistack';
+
 import useArticlesByJournalist from '../../hooks/data/useArticlesByJournalist';
 import { ControllerDate } from '../../library/Time';
 import { Article, ArticleStatus } from '../../models/article.model';
@@ -8,83 +9,94 @@ const ArticleEditorTable = () => {
   const { articles, isError, isLoading } = useArticlesByJournalist();
 
   return (
-    <div className="bg-white shadow-md rounded my-6 sm:w-full md:w-full">
-      <table className={'min-w-max w-full table-auto'}>
-        <thead>
-          <tr className="bg-gray-200 text-gray-600 uppercase text-sm leading-normal">
-            <th className="py-3 px-3 text-left">Titulo</th>
-            <th className="py-3 px-3 text-left">Categoría</th>
-            <th className="hidden sm:block py-3 px-3 text-center">Creado</th>
-            <th className="py-3 px-3 text-center">Estado</th>
-          </tr>
-        </thead>
-        <tbody className="text-gray-600 text-sm font-light">
-          {isLoading ? (
-            <PlaceholderRow />
-          ) : !isError && articles.length > 0 ? (
-            articles.map((article: Article, index: number) => {
-              return <ArticleEditorRow key={index} article={article} />;
-            })
-          ) : (
-            <tr className="border-b border-gray-200">
-              <td className="py-3 px-3 text-left whitespace-nowrap">
-                <div className="flex items-center">
-                  <span className="font-medium">
-                    {articles.length
-                      ? articles.length === 0
-                        ? 'No se encontraron artículos'
-                        : ''
-                      : 'Hubo un error, intente más tarde'}
-                  </span>
-                </div>
-              </td>
-              <td className="py-3 px-3 text-left">
-                <div className="flex items-center">
-                  <span className="bg-gray-200 px-12 py-2 rounded"></span>
-                </div>
-              </td>
-              <td className="hidden sm:block py-3 px-3 text-center">
-                <div className="flex justify-center">
-                  <span className="bg-gray-200 px-12 py-2 rounded"></span>
-                </div>
-              </td>
-              <td className="py-3 px-3 text-center">
-                <div className="flex justify-center">
-                  <span className={`bg-gray-200 px-12 py-2 rounded`}></span>
-                </div>
-              </td>
-            </tr>
-          )}
-        </tbody>
-      </table>
+    <div className="flex flex-col my-3">
+      <div className="-my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
+        <div className="py-2 align-middle inline-block min-w-full sm:px-6 lg:px-8">
+          <div className="shadow overflow-hidden border-b border-gray-200 sm:rounded-lg">
+            <table className="min-w-full divide-y divide-gray-200 table-auto">
+              <thead className="bg-gray-50">
+                <tr>
+                  <th
+                    scope="col"
+                    className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                  >
+                    Titulo
+                  </th>
+                  <th
+                    scope="col"
+                    className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                  >
+                    Categoría
+                  </th>
+                  <th
+                    scope="col"
+                    className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                  >
+                    Creado
+                  </th>
+                  <th
+                    scope="col"
+                    className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                  >
+                    Estado
+                  </th>
+                </tr>
+              </thead>
+              <tbody className="divide-y divide-gray-200">
+                {isLoading ? (
+                  <PlaceholderRow />
+                ) : !isError && articles.length > 0 ? (
+                  articles.map((articles: Article, index: number) => {
+                    return <ArticleEditorRow article={articles} key={index} />;
+                  })
+                ) : (
+                  <tr className="cursor-pointer bg-white hover:bg-gray-100">
+                    <td className="px-6 py-4">
+                      <div className="flex items-center">
+                        <span className="font-normal">
+                          {isError
+                            ? 'Hubo un error, intente más tarde'
+                            : articles.length == 0
+                            ? 'No hay artículos por revisar'
+                            : ''}
+                        </span>
+                      </div>
+                    </td>
+                    <td className="px-6 py-4 whitespace-nowrap">
+                      <div className="text-sm  bg-gray-200 px-12 py-2 rounded" />
+                      <div className="text-sm bg-gray-200 px-12 py-2 rounded mt-1" />
+                    </td>
+                    <td className="px-6 py-4 whitespace-nowrap">
+                      <span className="bg-gray-200 px-12 py-1 rounded" />
+                    </td>
+                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                      <div className="bg-gray-200 px-6 py-2 rounded" />
+                    </td>
+                  </tr>
+                )}
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
     </div>
   );
 };
 
 const PlaceholderRow = () => {
   return (
-    <tr className="border-b border-gray-200">
-      <td className="py-3 px-3 text-left whitespace-nowrap">
-        <div className="flex items-center">
-          <span className="font-medium bg-gray-200 animate-pulse px-20 py-2 rounded"></span>
-        </div>
+    <tr className=" bg-white hover:bg-gray-100">
+      <td className="px-6 py-4 whitespace-nowrap">
+        <div className="text-sm bg-gray-200 px-12 py-2 rounded animate-pulse" />
       </td>
-      <td className="py-3 px-3 text-left">
-        <div className="flex items-center">
-          <span className="bg-gray-200 animate-pulse px-12 py-2 rounded"></span>
-        </div>
+      <td className="px-6 py-4 whitespace-nowrap">
+        <span className="inline-flex text-xs bg-gray-200 px-12 py-2 rounded animate-pulse" />
       </td>
-      <td className="hidden sm:block py-3 px-3 text-center">
-        <div className="flex justify-center">
-          <span className="bg-gray-200 animate-pulse px-12 py-2 rounded"></span>
-        </div>
+      <td className="px-6 py-4 whitespace-nowrap">
+        <span className="inline-flex text-xs bg-gray-200 px-12 py-2 rounded animate-pulse" />
       </td>
-      <td className="py-3 px-3 text-center">
-        <div className="flex justify-center">
-          <span
-            className={` bg-gray-200 animate-pulse px-12 py-2 rounded`}
-          ></span>
-        </div>
+      <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+        <div className="bg-gray-200 px-12 py-2 rounded animate-pulse" />
       </td>
     </tr>
   );
@@ -133,34 +145,30 @@ const ArticleEditorRow = ({ article }: ArticleEditorProps) => {
     ) {
       return enqueueSnackbar('El articulo ya fue publicado', {
         variant: 'info',
+        preventDuplicate: false,
       });
     }
     enqueueSnackbar('El articulo esta en espera de revisión', {
       variant: 'info',
+      preventDuplicate: false,
     });
   };
 
   return (
     <tr
-      className="border-b border-gray-200 hover:bg-gray-100 cursor-pointer"
+      className="cursor-pointer bg-white hover:bg-gray-100"
       onClick={handleRow}
     >
-      <td className="py-3 px-3 text-left whitespace-nowrap">
-        <div className="flex items-center">
-          <span className="font-medium">{article.title}</span>
-        </div>
+      <td className="px-6 py-4">
+        <div className="text-sm text-black font-medium">{article.title}</div>
       </td>
-      <td className="py-3 px-3 text-left">
-        <div className="flex items-center">
-          <span>{article.category && article.category.name}</span>
-        </div>
+      <td className="px-6 py-4">
+        <div className="text-sm text-gray-500">{article.category?.name}</div>
       </td>
-      <td className="hidden sm:block py-3 px-3 text-center">
-        <div className="flex items-center justify-center">
-          <span>{ControllerDate.parseDate(article.createdAt)}</span>
-        </div>
+      <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+        <span>{ControllerDate.parseDate(article.createdAt)}</span>
       </td>
-      <td className="py-3 px-3 text-center">
+      <td className="px-6 py-4 whitespace-nowrap">
         <span
           className={`${
             colorState[article.status].color

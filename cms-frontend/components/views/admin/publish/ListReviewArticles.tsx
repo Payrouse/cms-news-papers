@@ -1,4 +1,3 @@
-import React from 'react';
 import ArticleReviewTable from '../../../tables/ArticleReviewTable';
 import Toolbar from '../../../toolbar/AdminToolbar';
 

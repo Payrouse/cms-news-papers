@@ -15,6 +15,14 @@ export interface Article {
   publisherId: string;
   feedback: string;
   category?: Category;
+  author?: Author;
+}
+
+interface Author {
+  firstName: string;
+  lastName: string;
+  avatar: string;
+  email: string;
 }
 
 export enum ArticleStatus {

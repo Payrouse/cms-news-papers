@@ -2,10 +2,16 @@ import Router from 'next/router';
 import { ReactNode } from 'react';
 import { Carousel } from 'react-responsive-carousel';
 import 'react-responsive-carousel/lib/styles/carousel.min.css';
+import { Article } from '../../models/article.model';
 
-const HomeCarousel = () => {
+interface HomeCarouselProps {
+  articles: any;
+}
+
+const HomeCarousel = ({ articles }: HomeCarouselProps) => {
   const handleItem = (index: number, item: ReactNode) => {
-    Router.push(`/news/${'comida-gratis'}`);
+    const parsedUrl = articles[index].replaceAll(' ', '_');
+    Router.push(`/news/${parsedUrl}`);
   };
 
   return (
@@ -17,18 +23,15 @@ const HomeCarousel = () => {
       showStatus={false}
       showThumbs={false}
     >
-      <ItemCarousel
-        img="https://www.elcomercio.com/wp-content/uploads/2021/08/E7t4CSgXoAgC1OF-scaled.jpg"
-        title="FIA mantiene la descalificación de Vettel en Hungría durante el Mundial de F1"
-      />
-      <ItemCarousel
-        img="https://www.elcomercio.com/wp-content/uploads/2021/08/obama.jpg"
-        title="Filtran fotos de la lujosa y multitudinaria fiesta que celebró Barack Obama por su 60 cumpleaños"
-      />
-      <ItemCarousel
-        img="https://www.elcomercio.com/wp-content/uploads/2021/08/pasesfalsos.jpg"
-        title="La policía italiana desbarata una trama de pases sanitarios falsos en grupos de Telegram"
-      />
+      {articles.map((article: Article, index: number) => {
+        return (
+          <ItemCarousel
+            key={index}
+            img={article.picture}
+            title={article.title}
+          />
+        );
+      })}
     </Carousel>
   );
 };
@@ -41,7 +44,7 @@ interface ItemCarouselProps {
 const ItemCarousel = ({ img, title }: ItemCarouselProps) => {
   return (
     <div className="cursor-pointer">
-      <img className="w-full h-96" src={img} alt="dasdas" />
+      <img className="w-full h-96 object-cover" src={img} alt={title} />
       <p className="bg-black bg-opacity-50 rounded-2xl absolute bottom-10 left-4 right-4 p-3 text-center text-white">
         {title}
       </p>

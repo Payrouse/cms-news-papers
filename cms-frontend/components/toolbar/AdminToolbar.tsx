@@ -1,14 +1,15 @@
 import Router from 'next/router';
+import Cookies from 'js-cookie';
 import { useState } from 'react';
 import { Menu, MenuItem } from '@material-ui/core';
 import { useDispatch, useSelector } from 'react-redux';
+import ArrowDropDownRoundedIcon from '@material-ui/icons/ArrowDropDownRounded';
 
 import { StoreType } from '../../redux/types';
-import styles from './Toolbar.module.css';
-import Slidebar from '../nav/SlideBar';
-import { Config } from '../../config';
-import Cookies from 'js-cookie';
 import { clearUser } from '../../redux/actions/userAction';
+import Slidebar from '../nav/SlideBar';
+import styles from './Toolbar.module.css';
+import { Config } from '../../config';
 
 interface ToolbarProps {
   title: string;
@@ -18,17 +19,19 @@ const Toolbar = ({ title }: ToolbarProps) => {
   const { loading, user } = useSelector((state: StoreType) => state.user);
 
   return (
-    <header className={styles.toolbar}>
-      <div className="flex items-center relative">
-        <div className={styles.burger_menu}>
-          <Slidebar />
+    <div className="relative">
+      <header className={styles.toolbar}>
+        <div className="flex items-center relative">
+          <div className={styles.burger_menu}>
+            <Slidebar />
+          </div>
+          <p className={styles.toolbar_title}>{title}</p>
         </div>
-        <p className={styles.toolbar_title}>{title}</p>
-      </div>
-      <div className="flex items-center">
-        <AdminMenu user={user} loading={loading} />
-      </div>
-    </header>
+        <div className="flex items-center">
+          <AdminMenu user={user} loading={loading} />
+        </div>
+      </header>
+    </div>
   );
 };
 
@@ -63,13 +66,9 @@ const AdminMenu = ({ user, loading }: any) => {
         aria-haspopup="true"
         onClick={handleClick}
       >
-        <img
-          className={`${
-            loading ? 'animate-pulse' : ''
-          } h-10 w-10 rounded-full object-cover`}
-          src={user && user.avatar}
-          alt="profile"
-        />
+        <div className="rounded-full bg-gray-400 bg-opacity-10 hover:bg-gray-500 hover:bg-opacity-10 p-1">
+          <ArrowDropDownRoundedIcon fontSize="large" />
+        </div>
       </button>
       <Menu
         id="admin-menu"
@@ -83,7 +82,7 @@ const AdminMenu = ({ user, loading }: any) => {
             goTo('/admin');
           }}
         >
-          Admin
+          Inicio
         </MenuItem>
         <MenuItem onClick={logout}>Cerrar sesión</MenuItem>
       </Menu>

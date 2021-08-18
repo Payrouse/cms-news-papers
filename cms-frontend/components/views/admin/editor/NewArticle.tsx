@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import Router from 'next/router';
 import { useState } from 'react';
 import { useSnackbar } from 'notistack';
 import { FormControlLabel, Switch } from '@material-ui/core';
@@ -56,6 +57,7 @@ const NewArticle = ({ titleToolbar }: any) => {
         variant: 'success',
       });
       reset();
+      Router.push('/admin/editor');
     } else {
       enqueueSnackbar(r.error.message, {
         variant: 'error',

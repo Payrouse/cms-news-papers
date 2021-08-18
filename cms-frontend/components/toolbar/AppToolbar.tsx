@@ -8,6 +8,7 @@ import { Menu, MenuItem } from '@material-ui/core';
 import { StoreType } from '../../redux/types';
 import { clearUser } from '../../redux/actions/userAction';
 import { Config } from '../../config';
+import { UserAccount } from '../../redux/reducers/userReducer';
 
 const AppToolbar = () => {
   const { isLogin, loading, user } = useSelector(
@@ -20,7 +21,7 @@ const AppToolbar = () => {
         <div className="flex justify-between">
           <Link href="/">
             <a>
-              <h1 className="text-4xl font-bold text-blue-600">El Mundo</h1>
+              <h1 className="text-4xl font-bold text-blue-600">El Planeta</h1>
             </a>
           </Link>
           <div className="h-10 w-10">
@@ -38,7 +39,11 @@ const AppToolbar = () => {
   );
 };
 
-const ProfileMenu = ({ user }: any) => {
+interface ProfileMenuProps {
+  user: UserAccount;
+}
+
+const ProfileMenu = ({ user }: ProfileMenuProps) => {
   const dispatch = useDispatch();
 
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
@@ -89,13 +94,15 @@ const ProfileMenu = ({ user }: any) => {
         >
           Perfil
         </MenuItem>
-        <MenuItem
-          onClick={() => {
-            goTo('/admin');
-          }}
-        >
-          Admin
-        </MenuItem>
+        {user.isAdministrative ? (
+          <MenuItem
+            onClick={() => {
+              goTo('/admin');
+            }}
+          >
+            Admin
+          </MenuItem>
+        ) : null}
         <MenuItem
           onClick={() => {
             goTo('/complaint');

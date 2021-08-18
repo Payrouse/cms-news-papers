@@ -81,8 +81,8 @@ export const ArticleValidation = {
   title: {
     required: 'Se necesita un titulo de articulo',
     maxLength: {
-      message: 'Debe tener máximo 24 caracteres',
-      value: 24,
+      message: 'Debe tener máximo 60 caracteres',
+      value: 60,
     },
     minLength: {
       message: 'Debe tener al menos 4 caracteres',
@@ -92,8 +92,8 @@ export const ArticleValidation = {
   subtitle: {
     required: 'Se necesita un subtitulo de articulo',
     maxLength: {
-      message: 'Debe tener máximo 80 caracteres',
-      value: 80,
+      message: 'Debe tener máximo 100 caracteres',
+      value: 100,
     },
     minLength: {
       message: 'Debe tener al menos 4 caracteres',
