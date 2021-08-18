@@ -13,6 +13,7 @@
     "@material-ui/icons": "^4.11.2",
     "@types/react-burger-menu": "^2.8.1",
     "@uiw/react-md-editor": "^3.4.11",
+    "dayjs": "^1.10.6",
     "js-cookie": "^3.0.0",
     "next": "11.0.1",
     "next-remove-imports": "^1.0.5",

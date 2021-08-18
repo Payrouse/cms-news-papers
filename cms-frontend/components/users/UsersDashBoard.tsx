@@ -56,7 +56,7 @@ function UsersDashBoard() {
   };
 
   return (
-    <div>
+    <div className="container-views custom-scroll">
       <div className="flex  my-4 content-center items-stretch md:items-center md:justify-evenly">
         <div className="flex content-center items-stretch md:items-center md:justify-center">
           <TextField

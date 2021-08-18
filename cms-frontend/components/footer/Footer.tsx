@@ -11,7 +11,7 @@ const Footer = () => {
             src={'/worldwide.svg'}
             alt="img"
           />
-          <p className={styles.footer_title}>El Mundo</p>
+          <p className={styles.footer_title}>El Planeta</p>
         </div>
       </div>
       <div className={styles.footer_info}>

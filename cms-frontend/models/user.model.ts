@@ -1,10 +1,17 @@
 export interface User {
   userName: string;
-  photoUrl: string;
-  name: string;
+  avatar: string;
+  firstName: string;
   lastName: string;
-  role: string[];
-  status: string;
+  role: number[];
   email: string;
-  createdAt: string;
+  createdAt: Date;
+  updatedAt: Date;
+}
+
+export enum UserRole {
+  ADMIN = 1,
+  PUBLISHER = 2,
+  JOURNALIST = 3,
+  USER = 4,
 }

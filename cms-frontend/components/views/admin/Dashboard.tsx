@@ -6,7 +6,7 @@ const Dashboard = (props: any) => {
   return (
     <>
       <Toolbar title={props.titleToolbar} />
-      <div className="container-views">
+      <div className="container-views custom-scroll">
         <h1>Dashboard</h1>
       </div>
     </>

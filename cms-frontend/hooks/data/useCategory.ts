@@ -1,7 +1,7 @@
 import useSWR from 'swr';
 import { fetcher } from './fetcher';
 
-function useUser(id: string) {
+function useCategory(id: string) {
   const { data, error } = useSWR([`/category/${id}`], fetcher);
   return {
     user: data,
@@ -10,4 +10,4 @@ function useUser(id: string) {
   };
 }
 
-export default useUser;
+export default useCategory;

@@ -1,4 +1,10 @@
-import { FormControl, InputLabel, MenuItem, Select } from '@material-ui/core';
+import {
+  FormControl,
+  FormHelperText,
+  InputLabel,
+  MenuItem,
+  Select,
+} from '@material-ui/core';
 import { UseFormRegister } from 'react-hook-form';
 
 interface SelectInputProps {
@@ -37,11 +43,12 @@ const SelectInput = ({
         required={required}
         disabled={disabled}
         fullWidth
+        error={error}
       >
-        <InputLabel id={name}>{label}</InputLabel>
+        <InputLabel id={name + '-label'}>{label}</InputLabel>
         <Select
-          labelId={name}
-          id={name}
+          labelId={name + '-label'}
+          id={name + '-id'}
           label={label}
           {...register(name, validations)}
         >
@@ -53,6 +60,7 @@ const SelectInput = ({
             );
           })}
         </Select>
+        <FormHelperText>{error?.message || ''}</FormHelperText>
       </FormControl>
     </div>
   );
