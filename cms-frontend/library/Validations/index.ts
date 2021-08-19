@@ -26,7 +26,7 @@ export const AuthValidation = {
       value: 4,
     },
     pattern: {
-      message: 'Debe ser un nombre de usuario valido',
+      message: 'Solo se permite letras minúsculas, números, punto o guión bajo ejm: (user_name, user.name)',
       value: REGEX_USERNAME,
     },
   },
