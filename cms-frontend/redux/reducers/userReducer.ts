@@ -1,13 +1,22 @@
 import * as types from '../types';
 
+export interface UserAccount {
+  email: string;
+  firstName: string;
+  lastName: string;
+  avatar: string;
+  roles: number[];
+  isAdministrative: boolean;
+}
+
 export interface UserStoreType {
-  user: any;
+  user: UserAccount;
   isLogin: boolean;
   loading: boolean;
 }
 
 const initialState: UserStoreType = {
-  user: {},
+  user: {} as UserAccount,
   isLogin: false,
   loading: true,
 };

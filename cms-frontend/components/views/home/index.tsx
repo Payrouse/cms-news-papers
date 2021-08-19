@@ -3,17 +3,18 @@ import { useSnackbar } from 'notistack';
 
 import HomeCarousel from '../../carousel/HomeCarousel';
 import HomeCategory from '../../categories/HomeCategory';
-import HomeNews from '../../news/HomeNews';
+import HomeNews, { HomeNewsPlaceholder } from '../../news/HomeNews';
 import LastNews from '../../news/LastNews';
+import useLastNews from '../../../hooks/data/useLastNews';
+import useFeedNews from '../../../hooks/data/useFeedNews';
+import useAllCategories from '../../../hooks/data/useAllCategories';
+import useHighlightsNews from '../../../hooks/data/useHighlightsNews';
 
 const Home = () => {
-  const [isLoading, setIsLoading] = useState(true);
-
-  useEffect(() => {
-    setTimeout(() => {
-      setIsLoading(false);
-    }, 3000);
-  }, []);
+  const { categories, isError, isLoading } = useAllCategories();
+  const { articles: lastNews, isLoading: loadingLastNews } = useLastNews();
+  const { articles: feedNews, isLoading: loadingFeed } = useFeedNews();
+  const { articles: highlights, isLoading: loadingHglt } = useHighlightsNews();
 
   return (
     <div className="flex justify-center">
@@ -36,7 +37,7 @@ const Home = () => {
                 </>
               ) : null}
               {!isLoading &&
-                CATEGORIES_LIST.map((category, index) => {
+                categories.map((category, index) => {
                   return (
                     <HomeCategory
                       key={index}
@@ -49,18 +50,18 @@ const Home = () => {
             <div className="hidden md:flex md:flex-col mt-2">
               <p className="ml-2 mb-1 font-medium">Ultimas noticias:</p>
               <div className="ml-2">
-                {isLoading ? (
+                {loadingLastNews ? (
                   <>
                     <div className="w-full h-7 animate-pulse bg-gray-200 rounded-md px-4 py-1 md:my-1" />
                     <div className="w-full h-7 animate-pulse bg-gray-200 rounded-md px-4 py-1 md:my-1" />
                   </>
                 ) : null}
-                {!isLoading &&
-                  LAST_NEWS_LIST.map((news, index) => {
+                {!loadingLastNews &&
+                  lastNews.map((news, index) => {
                     return (
                       <LastNews
                         key={index}
-                        time={news.time}
+                        time={news.publishedAt}
                         title={news.title}
                       />
                     );
@@ -69,14 +70,21 @@ const Home = () => {
             </div>
           </div>
           <div className="md:w-8/12 md:border-r pr-2">
-            <HomeCarousel />
+            {loadingHglt ? <div></div> : null}
+            {!loadingHglt && highlights.length > 0 ? (
+              <HomeCarousel articles={highlights} />
+            ) : null}
             <div className="mt-10 mb-10">
-              <HomeNews />
-              <HomeNews />
-              <HomeNews />
-              <HomeNews />
-              <HomeNews />
-              <HomeNews />
+              {loadingFeed ? (
+                <>
+                  <HomeNewsPlaceholder />
+                  <HomeNewsPlaceholder />
+                </>
+              ) : null}
+              {!loadingFeed &&
+                feedNews.map((news, index) => {
+                  return <HomeNews key={index} article={news} />;
+                })}
             </div>
           </div>
         </div>
@@ -84,63 +92,5 @@ const Home = () => {
     </div>
   );
 };
-
-const CATEGORIES_LIST = [
-  {
-    url: 'politica',
-    name: 'Política',
-  },
-  {
-    url: 'deporte',
-    name: 'Deporte',
-  },
-  {
-    url: 'educacion',
-    name: 'Educación',
-  },
-  {
-    url: 'comida',
-    name: 'Comida',
-  },
-  {
-    url: 'politica',
-    name: 'Política',
-  },
-  {
-    url: 'deporte',
-    name: 'Deporte',
-  },
-  {
-    url: 'educacion',
-    name: 'Educación',
-  },
-  {
-    url: 'comida',
-    name: 'Comida',
-  },
-];
-
-const LAST_NEWS_LIST = [
-  {
-    time: '10:00',
-    title:
-      'Conaie, Secretaría de Pueblos y Asamblea conmemoran el Día Internacional de los Pueblos Indígenas',
-  },
-  {
-    time: '10:05',
-    title:
-      'Filtran fotos de la lujosa y multitudinaria fiesta que celebró Barack Obama por su 60 cumpleaños',
-  },
-  {
-    time: '10:30',
-    title:
-      'FIA mantiene la descalificación de Vettel en Hungría durante el Mundial de F1',
-  },
-  {
-    time: '10:31',
-    title:
-      'La policía italiana desbarata una trama de pases sanitarios falsos en grupos de Telegram',
-  },
-];
 
 export default Home;

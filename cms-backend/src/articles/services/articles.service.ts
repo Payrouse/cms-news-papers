@@ -22,12 +22,27 @@ export class ArticlesService {
     return articles;
   }
 
+  async findFeed() {
+    const articles = await this.articleRepo.find({
+      where: [
+        { status: ArticleStatus.POSTED },
+        { status: ArticleStatus.HIGHLIGHTED },
+      ],
+      relations: ['categoryId'],
+      order: { publishedAt: 'DESC' },
+    });
+    return articles;
+  }
+
   async findOne(articleId: string) {
-    const articles = await this.articleRepo.findOne(articleId);
-    if (!articles) {
+    const article = await this.articleRepo.findOne(articleId, {
+      relations: ['categoryId'],
+      loadRelationIds: { relations: ['journalistId'] },
+    });
+    if (!article) {
       throw new NotFoundException(`Articulo #${articleId} no encontrado`);
     }
-    return articles;
+    return article;
   }
 
   async findOneByTitle(title: string) {
@@ -45,15 +60,15 @@ export class ArticlesService {
       take: 10,
     });
     if (!articlesRelated) {
-      throw new NotFoundException(`Articulos no encontrados`);
+      throw new NotFoundException(`Artículos no encontrados`);
     }
     return articlesRelated;
   }
 
   async findArticleHighlighted() {
-    const datenow = new Date();
-    const date24hAgo = datenow.getTime() - 86400000; // Número de días a restar
-    const startDate = new Date(datenow);
+    const dateNow = new Date();
+    const date24hAgo = dateNow.getTime() - 86400000; // Número de días a restar
+    const startDate = new Date(dateNow);
     const endDate = new Date(date24hAgo);
     const articleHighlighted = await this.articleRepo.find({
       where: {
@@ -63,14 +78,22 @@ export class ArticlesService {
       order: { publishedAt: 'DESC' },
     });
     if (!articleHighlighted) {
-      throw new NotFoundException(`Articulos no encontrados`);
+      throw new NotFoundException(`Artículos no encontrados`);
     }
     return articleHighlighted;
   }
 
   async changeStatus(articleId: string, change: StatusArticleDto) {
     const article = await this.articleRepo.findOne(articleId);
-    this.articleRepo.merge(article, change);
+    let publishedAt = null;
+    if (
+      change.status === ArticleStatus.POSTED ||
+      change.status === ArticleStatus.HIGHLIGHTED
+    ) {
+      publishedAt = new Date();
+    }
+    this.articleRepo.merge(article, { ...change, publishedAt });
+
     try {
       return this.articleRepo.save(article);
     } catch (error) {
@@ -81,15 +104,13 @@ export class ArticlesService {
     }
   }
 
-  async create(data: CreateArticleDto) {
+  async create(data: CreateArticleDto, userId: string) {
     const newArticle = this.articleRepo.create(data);
+    newArticle.journalistId = userId;
     try {
       return await this.articleRepo.save(newArticle);
     } catch (error) {
-      throw new HttpException(
-        'Error al crear el articulo',
-        HttpStatus.BAD_REQUEST,
-      );
+      throw new HttpException(error.message, HttpStatus.BAD_REQUEST);
     }
   }
 
@@ -112,5 +133,37 @@ export class ArticlesService {
       throw new NotFoundException(`Articulo no encontrado`);
     }
     return await this.articleRepo.delete(articleId);
+  }
+
+  async findAllByJournalist(journalistId: string) {
+    const articles = await this.articleRepo.find({
+      where: { journalistId },
+      relations: ['categoryId'],
+      order: { status: 'ASC' },
+    });
+    return articles;
+  }
+
+  async findArticlesToReview() {
+    const articles = await this.articleRepo.find({
+      where: {
+        status: ArticleStatus.WAIT,
+      },
+      relations: ['categoryId', 'journalistId', 'journalistId.user'],
+      order: { updatedAt: 'ASC' },
+    });
+    return articles;
+  }
+
+  async findLastNews() {
+    const articles = await this.articleRepo.find({
+      where: [
+        { status: ArticleStatus.POSTED },
+        { status: ArticleStatus.HIGHLIGHTED },
+      ],
+      order: { publishedAt: 'DESC' },
+      take: 10,
+    });
+    return articles;
   }
 }

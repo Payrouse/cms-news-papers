@@ -1,7 +1,3 @@
-import { Roles } from './../../auth/decorators/roles.decorator';
-import { RoleEnum } from './../../auth/models/roles.model';
-import { ApiKeyGuard } from './../../auth/guards/api-key.guard';
-import { StatusArticleDto } from './../dtos/articles.dto';
 import {
   Controller,
   Get,
@@ -12,13 +8,21 @@ import {
   Param,
   Query,
   UseGuards,
+  Req,
 } from '@nestjs/common';
+import { Request } from 'express';
+
+import { Roles } from './../../auth/decorators/roles.decorator';
+import { RoleEnum } from './../../auth/models/roles.model';
+import { ApiKeyGuard } from './../../auth/guards/api-key.guard';
+import { StatusArticleDto } from './../dtos/articles.dto';
 
 import { CreateArticleDto, UpdateArticleDto } from '../dtos/articles.dto';
 import { ArticlesService } from './../services/articles.service';
 import { JwtAuthGuard } from 'src/auth/guards/jwt-auth.guard';
 import { RolesGuard } from 'src/auth/guards/roles.guard';
 import { Public } from 'src/auth/decorators/public.decorator';
+import { PayloadToken } from 'src/auth/models/token.model';
 
 @UseGuards(ApiKeyGuard, JwtAuthGuard, RolesGuard)
 @Controller('articles')
@@ -27,14 +31,40 @@ export class ArticlesController {
 
   @Roles(RoleEnum.ADMIN, RoleEnum.JOURNALIST)
   @Post()
-  create(@Body() payload: CreateArticleDto) {
-    return this.articleService.create(payload);
+  create(@Req() req: Request, @Body() payload: CreateArticleDto) {
+    const user = req.user as PayloadToken;
+    return this.articleService.create(payload, user.sub);
+  }
+
+  @Roles(RoleEnum.ADMIN, RoleEnum.JOURNALIST)
+  @Get('/journalist')
+  getByJournalist(@Req() req: Request) {
+    const user = req.user as PayloadToken;
+    return this.articleService.findAllByJournalist(user.sub);
+  }
+
+  @Roles(RoleEnum.ADMIN, RoleEnum.PUBLISHER)
+  @Get('/reviews')
+  getArticlesToReview() {
+    return this.articleService.findArticlesToReview();
   }
 
   @Public()
-  @Get('highlighted')
+  @Get('/last-news')
+  getLastNews() {
+    return this.articleService.findLastNews();
+  }
+
+  @Public()
+  @Get('/highlighted')
   getHighlighted() {
     return this.articleService.findArticleHighlighted();
+  }
+
+  @Public()
+  @Get('/feed')
+  getFeedArticles() {
+    return this.articleService.findFeed();
   }
 
   @Public()
@@ -72,7 +102,7 @@ export class ArticlesController {
 
   @Public()
   @Get(':articleId')
-  getCategorie(@Param('articleId') id: string) {
+  getCategory(@Param('articleId') id: string) {
     return this.articleService.findOne(id);
   }
 

@@ -1,31 +1,43 @@
 import Router from 'next/router';
+import Cookies from 'js-cookie';
 import { useState } from 'react';
 import { Menu, MenuItem } from '@material-ui/core';
+import { useDispatch, useSelector } from 'react-redux';
+import ArrowDropDownRoundedIcon from '@material-ui/icons/ArrowDropDownRounded';
 
-import styles from './Toolbar.module.css';
+import { StoreType } from '../../redux/types';
+import { clearUser } from '../../redux/actions/userAction';
 import Slidebar from '../nav/SlideBar';
+import styles from './Toolbar.module.css';
+import { Config } from '../../config';
 
 interface ToolbarProps {
   title: string;
 }
 
 const Toolbar = ({ title }: ToolbarProps) => {
+  const { loading, user } = useSelector((state: StoreType) => state.user);
+
   return (
-    <header className={styles.toolbar}>
-      <div className="flex items-center relative">
-        <div className={styles.burger_menu}>
-          <Slidebar />
+    <div className="relative">
+      <header className={styles.toolbar}>
+        <div className="flex items-center relative">
+          <div className={styles.burger_menu}>
+            <Slidebar />
+          </div>
+          <p className={styles.toolbar_title}>{title}</p>
         </div>
-        <p className={styles.toolbar_title}>{title}</p>
-      </div>
-      <div className="flex items-center">
-        <AdminMenu />
-      </div>
-    </header>
+        <div className="flex items-center">
+          <AdminMenu user={user} loading={loading} />
+        </div>
+      </header>
+    </div>
   );
 };
 
-const AdminMenu = () => {
+const AdminMenu = ({ user, loading }: any) => {
+  const dispatch = useDispatch();
+
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
 
   const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
@@ -41,6 +53,12 @@ const AdminMenu = () => {
     Router.push(url);
   };
 
+  const logout = () => {
+    handleClose();
+    Cookies.remove(Config.cookieName);
+    dispatch(clearUser());
+  };
+
   return (
     <>
       <button
@@ -48,13 +66,9 @@ const AdminMenu = () => {
         aria-haspopup="true"
         onClick={handleClick}
       >
-        <img
-          className="h-10 w-10 rounded-full object-cover"
-          src={
-            'https://imagenes.milenio.com/YONeZ5-2cQu0TH_W2iPiQ_FkzbM=/958x596/https://www.milenio.com/uploads/media/2018/12/25/quieran-comprar-cachorro-acudir-criaderos.jpg'
-          }
-          alt="profile"
-        />
+        <div className="rounded-full bg-gray-400 bg-opacity-10 hover:bg-gray-500 hover:bg-opacity-10 p-1">
+          <ArrowDropDownRoundedIcon fontSize="large" />
+        </div>
       </button>
       <Menu
         id="admin-menu"
@@ -68,15 +82,9 @@ const AdminMenu = () => {
             goTo('/admin');
           }}
         >
-          Admin
+          Inicio
         </MenuItem>
-        <MenuItem
-          onClick={() => {
-            goTo('/');
-          }}
-        >
-          Cerrar sesión
-        </MenuItem>
+        <MenuItem onClick={logout}>Cerrar sesión</MenuItem>
       </Menu>
     </>
   );

@@ -1,8 +1,15 @@
 import useSWR from 'swr';
+import { User } from '../../models/user.model';
 import { fetcher } from './fetcher';
 
-function useUser(uid: string) {
-  const { data, error } = useSWR([`/user/${uid}`], fetcher);
+interface HookUser {
+  user: User;
+  isLoading: boolean;
+  isError: any;
+}
+
+function useUser(uid: string): HookUser {
+  const { data, error } = useSWR([`/users/${uid}`], fetcher);
   return {
     user: data,
     isLoading: !error && !data,

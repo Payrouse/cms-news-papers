@@ -11,7 +11,8 @@ const REGEX_EMAIL =
 
 const REGEX_PHONE = /^[0-9\-\+]{10}$/;
 
-const REGEX_USERNAME = /^(?=.{4,20}$)(?![_.])(?!.*[_.]{2})[a-z0-9._]+(?<![_.])$/;
+const REGEX_USERNAME =
+  /^(?=.{4,20}$)(?![_.])(?!.*[_.]{2})[a-z0-9._]+(?<![_.])$/;
 
 export const AuthValidation = {
   userName: {
@@ -76,6 +77,49 @@ export const AuthValidation = {
   },
 };
 
+export const ArticleValidation = {
+  title: {
+    required: 'Se necesita un titulo de articulo',
+    maxLength: {
+      message: 'Debe tener máximo 60 caracteres',
+      value: 60,
+    },
+    minLength: {
+      message: 'Debe tener al menos 4 caracteres',
+      value: 4,
+    },
+  },
+  subtitle: {
+    required: 'Se necesita un subtitulo de articulo',
+    maxLength: {
+      message: 'Debe tener máximo 100 caracteres',
+      value: 100,
+    },
+    minLength: {
+      message: 'Debe tener al menos 4 caracteres',
+      value: 4,
+    },
+  },
+  keywords: {
+    required: 'Se necesitan un palabras claves del articulo',
+    maxLength: {
+      message: 'Debe tener máximo 100 caracteres',
+      value: 100,
+    },
+    minLength: {
+      message: 'Debe tener al menos 1 caracteres',
+      value: 1,
+    },
+  },
+  body: {
+    required: 'Se necesitan un cuerpo del articulo',
+    minLength: {
+      message: 'Debe tener al menos 20 caracteres',
+      value: 20,
+    },
+  },
+};
+
 export const ProductValidation = {
   product_name: {
     required: 'Se necesita un nombre de producto',
@@ -88,14 +132,14 @@ export const ProductValidation = {
       value: 3,
     },
   },
-//   unit_price: {
-//     required: 'Se necesita un precio',
-//     validate: (value) => Number(value) > 0,
-//     pattern: {
-//       message: 'Debe ser un valor númerico eg: 100, 99.99, 1000',
-//       value: REGEX_PRICE,
-//     },
-//   },
+  //   unit_price: {
+  //     required: 'Se necesita un precio',
+  //     validate: (value) => Number(value) > 0,
+  //     pattern: {
+  //       message: 'Debe ser un valor númerico eg: 100, 99.99, 1000',
+  //       value: REGEX_PRICE,
+  //     },
+  //   },
   units_in_stock: {
     required: 'Se necesita un stock',
     min: { message: 'Debe existir al menos 1 producto en stock', value: 1 },
