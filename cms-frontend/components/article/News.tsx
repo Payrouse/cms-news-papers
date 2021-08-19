@@ -1,4 +1,6 @@
 const News = () => {
+  
+
   return (
     <div>
       <h2 className="items-start font-bold text-3xl">

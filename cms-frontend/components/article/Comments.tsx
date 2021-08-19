@@ -4,17 +4,25 @@ import ForumIcon from '@material-ui/icons/Forum';
 
 import AddComment from './AddComment';
 import ReplyComment from './ReplyComment';
+import { StoreType } from '../../redux/types';
+import { useSelector } from 'react-redux';
+import { useSnackbar } from 'notistack';
 
 const Comments = () => {
   const [canReply, setCanReply] = useState(false);
   const [showComments, setShowComments] = useState(false);
-  const [isLogin, setIsLogin] = useState(false);
+  const { enqueueSnackbar } = useSnackbar();
+
+  const {isLogin, loading, user } = useSelector(
+    (state: StoreType) => state.user,);
 
   const showReplyComment = () => {
     if (isLogin) {
       setCanReply(!canReply);
     } else {
-      alert('Por favor ingrese a su cuenta ');
+      enqueueSnackbar('Por favor logee a su cuenta', {
+        variant: 'info',
+      });
     }
   };
 

@@ -2,10 +2,15 @@ import AddComment from '../../article/AddComment';
 import Comments from '../../article/Comments';
 import News from '../../article/News';
 import NewsRelated from '../../article/NewsRelated';
-import { useState } from 'react';
+import { StoreType } from '../../../redux/types';
+import { useSelector } from 'react-redux';
 
 const Article = () => {
-  const [isLogin, setIsLogin] = useState(false);
+  const {isLogin, loading, user } = useSelector(
+    (state: StoreType) => state.user,);
+
+    
+
   return (
     <div className="flex justify-center">
       <div className="md:w-8/12 w-screen px-10 mb-10 ">
