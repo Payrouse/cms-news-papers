@@ -4,9 +4,11 @@ import { Request } from 'express';
 
 import { User } from './../../users/entities/user.entity';
 import { UsersService } from './../../users/services/users.service';
-import { CreateUserDto } from 'src/users/dtos/user.dto';
+import { ChangePasswordDto, CreateUserDto } from 'src/users/dtos/user.dto';
 import { AuthService } from './../services/auth.service';
 import { ApiKeyGuard } from './../guards/api-key.guard';
+import { PayloadToken } from '../models/token.model';
+import { JwtAuthGuard } from '../guards/jwt-auth.guard';
 
 @UseGuards(ApiKeyGuard)
 @Controller('auth')
@@ -26,5 +28,12 @@ export class AuthController {
   @Post('register')
   register(@Body() payload: CreateUserDto) {
     return this.usersService.registerUser(payload);
+  }
+
+  @UseGuards(JwtAuthGuard)
+  @Post('change-pwd')
+  changePassword(@Req() req: Request, @Body() payload: ChangePasswordDto) {
+    const user = req.user as PayloadToken;
+    return this.usersService.updatePassword(user.sub, payload);
   }
 }

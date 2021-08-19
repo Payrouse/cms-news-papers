@@ -55,7 +55,7 @@ const CustomPreview = (props: any) => {
       },
       () => {
         uploadTask.snapshot.ref.getDownloadURL().then((downloadURL) => {
-          callbackUrl('avatar', downloadURL);
+          callbackUrl(downloadURL);
         });
       },
     );
@@ -89,13 +89,10 @@ const CustomPreview = (props: any) => {
   );
 };
 
-const UploaderToGallery = ({
+const UploaderAutoSubmit = ({
   container,
   stgRef,
   label,
-  name,
-  register,
-  required,
   callbackUrl,
   error,
   minHeight,
@@ -172,9 +169,8 @@ const UploaderToGallery = ({
               : {},
         }}
       />
-      <input className="hidden" {...register(name, required)} />
     </div>
   );
 };
 
-export default UploaderToGallery;
+export default UploaderAutoSubmit;

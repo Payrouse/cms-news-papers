@@ -33,4 +33,14 @@ export class CreateUserDto {
   readonly avatar: string;
 }
 
+export class ChangePasswordDto {
+  @IsString()
+  @IsNotEmpty()
+  readonly oldPassword: string;
+
+  @IsString()
+  @IsNotEmpty()
+  readonly newPassword: string;
+}
+
 export class UpdateUserDto extends PartialType(CreateUserDto) {}
