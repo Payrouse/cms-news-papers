@@ -6,12 +6,6 @@ import {
   TextField,
 } from '@material-ui/core';
 import Link from 'next/link';
-<<<<<<< HEAD
-import { SubmitHandler, useForm } from 'react-hook-form';
-import News from '../../../article/News';
-import GalleryPhotos from '../../../gallery/GalleryPhoto';
-import MultilineInput from '../../../inputs/MultilineInput';
-=======
 import Router from 'next/router';
 import { useSnackbar } from 'notistack';
 import { useState } from 'react';
@@ -22,8 +16,7 @@ import { FetchApi } from '../../../../library/Http';
 import { Article, ArticleStatus } from '../../../../models/article.model';
 import { ButtonType } from '../../../buttons/Button';
 import ButtonWithSpinner from '../../../buttons/ButtonWithSpinner';
-import News from '../../../comments/News';
->>>>>>> f604e27ce22f99ec24cd03ef2f982f0c800f4722
+import News from '../../../article/News';
 import Toolbar from '../../../toolbar/AdminToolbar';
 
 const ReviewArticle = ({ titleToolbar, articleId }: any) => {

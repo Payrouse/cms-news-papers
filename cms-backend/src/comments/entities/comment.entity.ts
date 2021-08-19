@@ -10,6 +10,7 @@ import {
 
 import { User } from 'src/users/entities/user.entity';
 import { Article } from './../../articles/entities/article.entity';
+import { Exclude, Expose } from 'class-transformer';
 
 @Entity({ name: 'comments' })
 export class Comment {
@@ -31,17 +32,31 @@ export class Comment {
     nullable: true,
   })
   @JoinColumn({ name: 'comment_root_id' })
-  commentRoot: Comment;
+  commentRoot: string | Comment;
 
   // user -> comment (FK)
+  @Exclude()
   @ManyToOne(() => User, (user) => user.comments, {
     nullable: false,
   })
   @JoinColumn({ name: 'user_id' })
-  userId: User;
+  userId: User | string;
 
   // article -> comment (FK)
   @ManyToOne(() => Article, (article) => article.comments)
   @JoinColumn({ name: 'article_id' })
   articleId: string;
+
+  @Expose()
+  get user() {
+    if (this.userId) {
+      if (typeof this.userId === 'string') return null;
+      const user = this.userId.valueOf() as User;
+      return {
+        fullName: user.firstName + ' ' + user.lastName,
+        avatar: user.avatar,
+      };
+    }
+    return null;
+  }
 }

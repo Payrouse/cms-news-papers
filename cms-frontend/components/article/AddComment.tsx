@@ -1,13 +1,46 @@
 import { Button, TextField } from '@material-ui/core';
+import { useSnackbar } from 'notistack';
 import { useForm, SubmitHandler } from 'react-hook-form';
+import { useSelector } from 'react-redux';
+import { FetchApi } from '../../library/Http';
+import { StoreType } from '../../redux/types';
 
 type FormData = {
-  comment: string;
+  body: string;
+  userId: string;
+  articleId: string;
 };
 
-const AddComment = () => {
+const AddComment = ({ userId, articleId, commentRoot }: any) => {
+  const { isLogin, loading, user } = useSelector(
+    (state: StoreType) => state.user,
+  );
   const { register, handleSubmit } = useForm();
-  const onSubmit: SubmitHandler<FormData> = (data) => console.log(data);
+  const { enqueueSnackbar } = useSnackbar();
+  const onSubmit: SubmitHandler<FormData> = async (data) => {
+    console.log(data);
+    data.articleId = articleId;
+    data.userId = userId;
+
+    let body: any = data;
+    if (commentRoot) body.commentRoot = commentRoot;
+    const r = await FetchApi({
+      url: '/comments',
+      method: 'POST',
+      body,
+    });
+
+    if (r.ok) {
+      enqueueSnackbar('Comentario agregado exitosamente', {
+        variant: 'success',
+      });
+    } else {
+      enqueueSnackbar(r.error.message, {
+        variant: 'error',
+      });
+    }
+  };
+
   return (
     <form
       className="mb-2 mt-1 px-2 flex flex-row items-center  shadow"
@@ -15,13 +48,11 @@ const AddComment = () => {
     >
       <img
         className="flex w-11 h-11 rounded-full items-stretch border mr-2"
-        src={
-          'https://www.tiendanimal.es/articulos/wp-content/uploads/2018/01/que-necesita-un-gato.jpg'
-        }
+        src={user.avatar}
         alt="imagen de la noticia"
       />
       <TextField
-        {...register('commet', { minLength: 10, maxLength: 50 })}
+        {...register('body', { minLength: 10, maxLength: 50 })}
         id="filled-margin-none"
         placeholder="Escribe tu comentario..."
         variant="outlined"
@@ -33,7 +64,6 @@ const AddComment = () => {
       <Button variant="contained" color="primary" type="submit">
         Enviar
       </Button>
-    
     </form>
   );
 };

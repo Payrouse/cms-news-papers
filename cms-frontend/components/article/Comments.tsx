@@ -7,14 +7,20 @@ import ReplyComment from './ReplyComment';
 import { StoreType } from '../../redux/types';
 import { useSelector } from 'react-redux';
 import { useSnackbar } from 'notistack';
-
-const Comments = () => {
+import { Comment } from '../../models/comment.model';
+import { ControllerDate } from '../../library/Time';
+import useRepliesByComment from '../../hooks/data/useRepliesByComment';
+interface CommentsProps {
+  comment: Comment;
+}
+const Comments = ({ comment }: CommentsProps) => {
   const [canReply, setCanReply] = useState(false);
   const [showComments, setShowComments] = useState(false);
   const { enqueueSnackbar } = useSnackbar();
 
-  const {isLogin, loading, user } = useSelector(
-    (state: StoreType) => state.user,);
+  const { isLogin, loading, user } = useSelector(
+    (state: StoreType) => state.user,
+  );
 
   const showReplyComment = () => {
     if (isLogin) {
@@ -31,32 +37,16 @@ const Comments = () => {
       <div className="flex flex-row items-center">
         <img
           className="flex w-11 h-11 rounded-full items-stretch mr-2 border"
-          src={
-            'https://estaticos-cdn.elperiodico.com/clip/9a36bb77-0c88-4b3c-a7dc-f3d41dd85987_alta-libre-aspect-ratio_default_0.jpg'
-          }
+          src={comment.user.avatar}
           alt="imagen de la noticia"
         />
         <div className="flex flex-col">
-          <p>Juan Pepe Loro</p>
-          <p className="italic">Hace 1 mes</p>
+          <p>{comment.user.fullName}</p>
+          <p className="italic">{ControllerDate.timeAgo(comment.createdAt)}</p>
         </div>
       </div>
       <div className="text-justify px-2 pt-2">
-        <p>
-          Tokio acogió la ceremonia de clausura de los JJ.OO. el 8 de agosto del
-          2021. Foto: EFE Martha Córdova, desde Tokio El deporte ecuatoriano
-          jamás olvidará los Juegos Olímpicos de Tokio 2020, aunque se
-          realizaron en el 2021. Fue la edición de mejor cosecha: dos medallas
-          de oro, una de plata y siete diplomas olímpicos. La noche de este
-          domingo 8 de agosto del 2021, madrugada para el territorio
-          ecuatoriano, se realizó la Ceremonia de Clausura, donde el país del
-          sol naciente despidió a los 15 000 deportistas que llegaron para
-          competir durante 18 días. Para este evento, claro está, que solo
-          acudió una parte pues la mayoría de atletas ya retornó a sus países,
-          por protocolos sanitarios para prevenir el covid-19. Uno o dos días
-          después de su competencia fueron autorizados los atletas en permanecer
-          en territorio japonés.
-        </p>
+        <p>{comment.body}</p>
       </div>
       <div className="flex my-2">
         <button
@@ -78,8 +68,35 @@ const Comments = () => {
           {showComments ? 'Ocultar respuestas' : 'Ver respuestas'}
         </button>
       </div>
-      {canReply ? <AddComment /> : null}
-      {showComments ? <ReplyComment /> : null}
+      {canReply ? (
+        <AddComment
+          userId={'a5cd7b9a-398a-46a6-88ad-f883ae74f033'}
+          commentRoot={comment.commentId}
+          articleId={comment.articleId}
+        />
+      ) : null}
+      {showComments ? <ListCommentsReplies commentRoot={comment.commentId}/> : null}
+    </div>
+  );
+};
+
+const ListCommentsReplies = ({ commentRoot }: any) => {
+  const { comments, isError, isLoading } = useRepliesByComment(commentRoot);
+  return (
+    <div>
+      <div>
+        {isLoading ? (
+          <div>Cargando...</div>
+        ) : !isError && comments.length > 0 ? (
+          <>
+            {comments.map((comment: any, index: number) => {
+              return <ReplyComment comment={comment} key={index} />;
+            })}
+          </>
+        ) : (
+          <div> No existen Comentarios </div>
+        )}
+      </div>
     </div>
   );
 };

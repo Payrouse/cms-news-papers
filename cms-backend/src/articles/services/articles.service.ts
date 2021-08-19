@@ -46,7 +46,12 @@ export class ArticlesService {
   }
 
   async findOneByTitle(title: string) {
-    const articles = await this.articleRepo.findOne(title);
+    const titleParse: string = title.split('_').join(' ');
+    const articles = await this.articleRepo.findOne({
+      where: { title: titleParse },
+      relations: ['categoryId'],
+      loadRelationIds: { relations: ['journalistId'] },
+    });
     if (!articles) {
       throw new NotFoundException(`Articulo #${title} no encontrado`);
     }
