@@ -5,8 +5,12 @@ interface NewsRelatedProps {
 }
 
 const NewsRelated = ({ article }: NewsRelatedProps) => {
+  const getUrl = () => {
+    return article.title.replaceAll(' ', '_');
+  };
+
   return (
-    <Link href="/news/playas">
+    <Link href={`/news/${getUrl()}`}>
       <a className="my-2">
         <div className="flex flex-col items-center px-2 relative">
           <img

@@ -7,6 +7,7 @@ import { useSelector } from 'react-redux';
 import useArticleByTitle from '../../../hooks/data/useArticleByTitle';
 import useCommentsByArticle from '../../../hooks/data/useCommentsByArticle';
 import useNewsRelated from '../../../hooks/data/useNewsRelated';
+import LoadingComponent from '../loading/LoadingComponent';
 
 const Article = ({ route }: any) => {
   const { isLogin, loading, user } = useSelector(
@@ -14,11 +15,14 @@ const Article = ({ route }: any) => {
   );
   const { article, isError, isLoading } = useArticleByTitle(route);
 
-  console.log('article-->', article);
   return (
     <div className="flex justify-center">
       {isLoading ? (
-        <div>Cargando...</div>
+        <LoadingComponent
+          height="h-96"
+          message="Cargando articulo..."
+          my="my-32"
+        />
       ) : !isError && article ? (
         <div className="md:w-8/12 w-screen px-10 mb-10 ">
           <News article={article} />
@@ -42,7 +46,7 @@ const Article = ({ route }: any) => {
           </div>
         </div>
       ) : (
-        <div>No existe el articulo</div>
+        <div className="h-96 my-32 flex justify-center items-center">No existe el articulo</div>
       )}
     </div>
   );
@@ -53,7 +57,7 @@ const ListComments = ({ articleId }: any) => {
   return (
     <div>
       {isLoading ? (
-        <div>Cargando...</div>
+        <LoadingComponent height="h-32" message="Cargando comentarios..." />
       ) : !isError && comments.length > 0 ? (
         <>
           {comments.map((comment: any, index: number) => {
@@ -61,19 +65,21 @@ const ListComments = ({ articleId }: any) => {
           })}
         </>
       ) : (
-        <div> No existen Comentarios </div>
+        <div>No existen Comentarios</div>
       )}
     </div>
   );
 };
 
-const ListNewsRelated = ({categoryId}:any) => {
-  const {news, isLoading, isError}=useNewsRelated(categoryId)
-  console.log("CategoryId--->",categoryId)
-  return(
+const ListNewsRelated = ({ categoryId }: any) => {
+  const { news, isLoading, isError } = useNewsRelated(categoryId);
+  return (
     <div>
       {isLoading ? (
-        <div>Cargando...</div>
+        <LoadingComponent
+          height="h-32"
+          message="Cargando noticias relacionadas..."
+        />
       ) : !isError && news.length > 0 ? (
         <>
           {news.map((news: any, index: number) => {
@@ -84,6 +90,6 @@ const ListNewsRelated = ({categoryId}:any) => {
         <div> No existen noticias relacionadas </div>
       )}
     </div>
-  )
-}
+  );
+};
 export default Article;

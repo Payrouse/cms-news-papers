@@ -10,6 +10,7 @@ import { useSnackbar } from 'notistack';
 import { Comment } from '../../models/comment.model';
 import { ControllerDate } from '../../library/Time';
 import useRepliesByComment from '../../hooks/data/useRepliesByComment';
+import LoadingComponent from '../views/loading/LoadingComponent';
 interface CommentsProps {
   comment: Comment;
 }
@@ -70,12 +71,14 @@ const Comments = ({ comment }: CommentsProps) => {
       </div>
       {canReply ? (
         <AddComment
-          userId={'a5cd7b9a-398a-46a6-88ad-f883ae74f033'}
+          userId={user.sub}
           commentRoot={comment.commentId}
           articleId={comment.articleId}
         />
       ) : null}
-      {showComments ? <ListCommentsReplies commentRoot={comment.commentId}/> : null}
+      {showComments ? (
+        <ListCommentsReplies commentRoot={comment.commentId} />
+      ) : null}
     </div>
   );
 };
@@ -86,7 +89,7 @@ const ListCommentsReplies = ({ commentRoot }: any) => {
     <div>
       <div>
         {isLoading ? (
-          <div>Cargando...</div>
+          <LoadingComponent height="h-32" message="Cargando respuestas..." />
         ) : !isError && comments.length > 0 ? (
           <>
             {comments.map((comment: any, index: number) => {
@@ -94,7 +97,7 @@ const ListCommentsReplies = ({ commentRoot }: any) => {
             })}
           </>
         ) : (
-          <div> No existen Comentarios </div>
+          <div>No existen respuestas</div>
         )}
       </div>
     </div>

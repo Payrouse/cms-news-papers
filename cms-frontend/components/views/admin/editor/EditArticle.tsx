@@ -112,7 +112,6 @@ const EditArticleForm = ({ article, categories }: EditArticleFormProps) => {
 
   const handleUpdateArticle: SubmitHandler<ArticleValues> = async (data) => {
     setWaiting(true);
-    console.log(data);
     data.status = draft ? ArticleStatus.DRAFT : ArticleStatus.WAIT;
     const r = await FetchApi({
       url: `/articles/${article.articleId}`,

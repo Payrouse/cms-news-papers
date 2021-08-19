@@ -18,7 +18,6 @@ const AddComment = ({ userId, articleId, commentRoot }: any) => {
   const { register, handleSubmit } = useForm();
   const { enqueueSnackbar } = useSnackbar();
   const onSubmit: SubmitHandler<FormData> = async (data) => {
-    console.log(data);
     data.articleId = articleId;
     data.userId = userId;
 
@@ -31,7 +30,7 @@ const AddComment = ({ userId, articleId, commentRoot }: any) => {
     });
 
     if (r.ok) {
-      enqueueSnackbar('Comentario agregado exitosamente', {
+      enqueueSnackbar('Comentario agregado', {
         variant: 'success',
       });
     } else {
@@ -43,7 +42,7 @@ const AddComment = ({ userId, articleId, commentRoot }: any) => {
 
   return (
     <form
-      className="mb-2 mt-1 px-2 flex flex-row items-center  shadow"
+      className="mb-2 mt-1 px-2 flex flex-row items-center"
       onSubmit={handleSubmit(onSubmit)}
     >
       <img
@@ -61,9 +60,11 @@ const AddComment = ({ userId, articleId, commentRoot }: any) => {
         multiline
         fullWidth
       />
-      <Button variant="contained" color="primary" type="submit">
-        Enviar
-      </Button>
+      <div className="ml-2">
+        <Button variant="contained" color="primary" type="submit">
+          Enviar
+        </Button>
+      </div>
     </form>
   );
 };
