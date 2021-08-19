@@ -7,6 +7,7 @@ import {
   UseGuards,
   Req,
   Param,
+  Put,
 } from '@nestjs/common';
 
 // import { Public } from '../../auth/decorators/public.decorator';
@@ -14,7 +15,7 @@ import { ApiKeyGuard } from 'src/auth/guards/api-key.guard';
 import { JwtAuthGuard } from './../../auth/guards/jwt-auth.guard';
 import { RolesGuard } from './../../auth/guards/roles.guard';
 
-import { CreateUserDto } from '../dtos/user.dto';
+import { CreateUserDto, UpdateUserDto } from '../dtos/user.dto';
 import { UsersService } from './../services/users.service';
 import { RoleEnum } from './../../auth/models/roles.model';
 import { Roles } from './../../auth/decorators/roles.decorator';
@@ -45,7 +46,12 @@ export class UsersController {
 
   @Public()
   @Get(':userId')
-  getCategory(@Param('userId') id: string) {
+  getUser(@Param('userId') id: string) {
     return this.usersService.findById(id);
+  }
+
+  @Put(':userId')
+  updateUser(@Param('userId') id: string, @Body() payload: UpdateUserDto) {
+    return this.usersService.update(id, payload);
   }
 }

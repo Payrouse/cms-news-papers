@@ -1,10 +1,19 @@
-import { HttpStatus, Injectable, HttpException } from '@nestjs/common';
+import {
+  HttpStatus,
+  Injectable,
+  HttpException,
+  NotFoundException,
+} from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Connection, Repository } from 'typeorm';
 import * as bcrypt from 'bcrypt';
 
 import { User } from '../entities/user.entity';
-import { CreateUserDto } from './../dtos/user.dto';
+import {
+  ChangePasswordDto,
+  CreateUserDto,
+  UpdateUserDto,
+} from './../dtos/user.dto';
 import { UserToRole } from '../entities/userToRole.entity';
 import { Role } from './../entities/role.entity';
 import { RoleEnum } from 'src/auth/models/roles.model';
@@ -49,6 +58,19 @@ export class UsersService {
     newUser.password = hashPassword;
 
     return await this.userRepo.save(newUser);
+  }
+
+  async update(userId: string, change: UpdateUserDto) {
+    const user = await this.userRepo.findOne(userId);
+    this.userRepo.merge(user, change);
+    try {
+      return this.userRepo.save(user);
+    } catch (error) {
+      throw new HttpException(
+        'Error al actualizar el usuario',
+        HttpStatus.BAD_REQUEST,
+      );
+    }
   }
 
   async registerUser(data: CreateUserDto) {
@@ -97,7 +119,7 @@ export class UsersService {
     const user = await this.userRepo.findOne({
       where: { userId: id },
     });
-    const { email, firstName, lastName, avatar } = user;
+    const { email, firstName, lastName, avatar, userId } = user;
     const roles = await user.userToRoles;
     // TODO: change roles to array string
     const listRoles = roles.map((role) => role.roleId);
@@ -105,6 +127,7 @@ export class UsersService {
 
     return {
       user: {
+        sub: userId,
         email,
         firstName,
         lastName,
@@ -113,6 +136,30 @@ export class UsersService {
         isAdministrative,
       },
     };
+  }
+
+  async updatePassword(userId: string, data: ChangePasswordDto) {
+    const user = await this.userRepo.findOne(userId);
+    if (user) {
+      const isMatch = await bcrypt.compare(data.oldPassword, user.password);
+      if (!isMatch) {
+        throw new HttpException(
+          'Contraseña actual no es correcta',
+          HttpStatus.BAD_REQUEST,
+        );
+      }
+      const hashPassword = await bcrypt.hash(data.newPassword, 10);
+      user.password = hashPassword;
+      try {
+        return this.userRepo.save(user);
+      } catch (error) {
+        throw new HttpException(
+          'Error al actualizar la contraseña',
+          HttpStatus.BAD_REQUEST,
+        );
+      }
+    }
+    throw new NotFoundException('El usuario no existe o ha sido eliminado');
   }
 }
 

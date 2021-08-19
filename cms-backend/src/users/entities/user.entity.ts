@@ -47,7 +47,7 @@ export class User {
   })
   avatar: string;
 
-  @Exclude()
+  // @Exclude()
   @CreateDateColumn({
     name: 'created_at',
     type: 'timestamptz',
@@ -55,7 +55,7 @@ export class User {
   })
   createdAt: Date;
 
-  @Exclude()
+  // @Exclude()
   @UpdateDateColumn({
     name: 'updated_at',
     type: 'timestamptz',

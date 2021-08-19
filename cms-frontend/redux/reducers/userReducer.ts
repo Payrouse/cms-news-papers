@@ -1,6 +1,7 @@
 import * as types from '../types';
 
 export interface UserAccount {
+  sub: string;
   email: string;
   firstName: string;
   lastName: string;

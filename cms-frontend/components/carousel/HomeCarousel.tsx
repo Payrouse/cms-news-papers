@@ -10,7 +10,7 @@ interface HomeCarouselProps {
 
 const HomeCarousel = ({ articles }: HomeCarouselProps) => {
   const handleItem = (index: number, item: ReactNode) => {
-    const parsedUrl = articles[index].replaceAll(' ', '_');
+    const parsedUrl = articles[index].title.replaceAll(' ', '_');
     Router.push(`/news/${parsedUrl}`);
   };
 

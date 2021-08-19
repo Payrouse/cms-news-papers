@@ -15,7 +15,7 @@ const ButtonWithSpinner = ({
     <button
       onClick={onClick}
       type={type}
-      className={`${height} ${width} rounded shadow text-center font-bold px-1 py-2
+      className={`${height} ${width} rounded shadow text-center font-bold px-2 py-2
       ${waiting ? waitingColor : normalColor}`}
     >
       <div className="flex justify-center">

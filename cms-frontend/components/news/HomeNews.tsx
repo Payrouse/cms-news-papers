@@ -8,9 +8,6 @@ interface HomeNewsProps {
 }
 
 const HomeNews = ({ article }: HomeNewsProps) => {
-
-  console.log(article);
-  
   const handleNews = () => {
     const parsedUrl = article.title.replaceAll(' ', '_');
     Router.push(`/news/${parsedUrl}`);

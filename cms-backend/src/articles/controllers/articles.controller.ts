@@ -74,9 +74,9 @@ export class ArticlesController {
   }
 
   @Public()
-  @Post('related')
-  getArticlesRelated(@Body() payload: any) {
-    return this.articleService.findArticlesRelated(payload.categoryId);
+  @Get('/related/:categoryId')
+  getArticlesRelated(@Param('categoryId') categoryId: string) {
+    return this.articleService.findArticlesRelated(categoryId);
   }
 
   @Roles(RoleEnum.ADMIN, RoleEnum.PUBLISHER)
@@ -104,5 +104,11 @@ export class ArticlesController {
   @Get(':articleId')
   getCategory(@Param('articleId') id: string) {
     return this.articleService.findOne(id);
+  }
+
+  @Public()
+  @Get('/title/:title')
+  getArticleTitle(@Param('title') title: string) {
+    return this.articleService.findOneByTitle(title);
   }
 }

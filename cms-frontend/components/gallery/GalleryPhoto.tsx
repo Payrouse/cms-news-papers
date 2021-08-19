@@ -1,6 +1,8 @@
-import { TextField } from '@material-ui/core';
+import { Dialog, TextField } from '@material-ui/core';
 import { useEffect, useState } from 'react';
 import { UseFormRegister } from 'react-hook-form';
+import UploaderAutoSubmit from '../uploader/UploadAutoSubmit';
+import UploaderToGallery from '../uploader/UploadToGallery';
 
 const API_KEY_PIXABAY = '17449699-11f01ceaece73a51d8b58564b';
 
@@ -35,6 +37,12 @@ const GalleryPhotos = ({
   });
   const [showGallery, setShowGallery] = useState(false);
   const [query, setQuery] = useState('');
+  const [openModal, setOpenModal] = useState(false);
+
+  const handleCloseModal = () => {
+    // setValue('avatar', '');
+    setOpenModal(false);
+  };
 
   const handleSelect = (url: string) => {
     setImgSelected(url);
@@ -58,70 +66,113 @@ const GalleryPhotos = ({
   };
 
   return (
-    <div className={container || 'pt-3 px-4 mb-6 md:mb-0'}>
-      <label className=" font-bold mb-2">Foto del articulo</label>
-      <div className="w-full flex justify-center">
-        <img
-          className="h-60 w-auto rounded object-contain"
-          src={imgSelected}
-          alt="imagen de la noticia"
-        />
-      </div>
-      <div className="flex justify-between mt-2">
-        <label className="font-bold mb-2">Galería</label>
-        <button
-          type="button"
-          className="ml-2 mb-2 border rounded px-1"
-          onClick={() => {
-            setShowGallery(!showGallery);
-          }}
-        >
-          {showGallery ? 'Ocultar galería' : 'Mostrar galería'}
-        </button>
-      </div>
-      <div className={`${showGallery ? '' : 'hidden'}`}>
-        <TextField
-          id="query-input"
-          placeholder="Buscar foto..."
-          variant="outlined"
-          value={query}
-          onChange={onChange}
-          size="small"
-          fullWidth
-        />
-        <div className="border-2 border-gray-300 rounded-md max-h-60 overflow-y-auto py-1">
-          <div className="w-full flex flex-wrap">
-            {stateRequest.loading ? (
-              <div className="h-60 w-full flex justify-center items-center">
-                loading...
-              </div>
-            ) : listImages.length > 0 ? (
-              listImages.map((photo, index) => {
-                return (
-                  <Photo
-                    key={index}
-                    index={index}
-                    photo={photo}
-                    selected={imgSelected}
-                    handleSelect={handleSelect}
-                  />
-                );
-              })
-            ) : (
-              <div className="h-60 w-full flex justify-center items-center">
-                Lista vacía
-              </div>
-            )}
+    <>
+      <div className={container || 'pt-3 px-4 mb-6 md:mb-0'}>
+        <label className=" font-bold mb-2">Foto del articulo</label>
+        <div className="w-full flex justify-center">
+          <img
+            className="h-60 w-auto rounded object-contain border cursor-pointer"
+            src={imgSelected}
+            alt="imagen de la noticia"
+            onClick={() => setOpenModal(true)}
+          />
+        </div>
+        <div className="flex justify-between mt-2">
+          <label className="font-bold mb-2">Galería</label>
+          <button
+            type="button"
+            className="ml-2 mb-2 border rounded px-1"
+            onClick={() => {
+              setShowGallery(!showGallery);
+            }}
+          >
+            {showGallery ? 'Ocultar galería' : 'Mostrar galería'}
+          </button>
+        </div>
+        <div className={`${showGallery ? '' : 'hidden'}`}>
+          <TextField
+            id="query-input"
+            placeholder="Buscar foto..."
+            variant="outlined"
+            value={query}
+            onChange={onChange}
+            size="small"
+            fullWidth
+          />
+          <div className="border-2 border-gray-300 rounded-md max-h-60 overflow-y-auto py-1">
+            <div className="w-full flex flex-wrap">
+              {stateRequest.loading ? (
+                <div className="h-60 w-full flex justify-center items-center">
+                  loading...
+                </div>
+              ) : listImages.length > 0 ? (
+                listImages.map((photo, index) => {
+                  return (
+                    <Photo
+                      key={index}
+                      index={index}
+                      photo={photo}
+                      selected={imgSelected}
+                      handleSelect={handleSelect}
+                    />
+                  );
+                })
+              ) : (
+                <div className="h-60 w-full flex justify-center items-center">
+                  Lista vacía
+                </div>
+              )}
+            </div>
           </div>
         </div>
+        <input className="hidden" type="url" {...register(name, validations)} />
+        {error && (
+          <small className="ml-2 block tracking-wide text-grey-darker text-red-500 text-xs font-semibold mb-1">
+            {error.message}
+          </small>
+        )}
       </div>
-      <input className="hidden" type="url" {...register(name, validations)} />
-      {error && (
-        <small className="ml-2 block tracking-wide text-grey-darker text-red-500 text-xs font-semibold mb-1">
-          {error.message}
-        </small>
-      )}
-    </div>
+      <Dialog
+        fullWidth
+        open={openModal}
+        onClose={handleCloseModal}
+        aria-labelledby="alert-dialog-title"
+        aria-describedby="alert-dialog-description"
+      >
+        <div className="p-6">
+          <div>
+            <p id="alert-dialog-title" className="title text-lg font-semibold">
+              Subir foto del articulo
+            </p>
+            <p
+              id="alert-dialog-description"
+              className="text-sm font-medium leading-5 text-gray-500 mt-2"
+            >
+              Recuerda que la foto del articulo debe ser de buena resolución
+            </p>
+          </div>
+          <div className="mt-6">
+            <div className="w-full">
+              <UploaderAutoSubmit
+                container="w-full"
+                stgRef={`news/pictures`}
+                label="Seleccione o arrastre una foto"
+                callbackUrl={handleSelect}
+              />
+            </div>
+          </div>
+          <div className="flex justify-end gap-4 mt-6">
+            <button
+              type="button"
+              onClick={handleCloseModal}
+              className="flex justify-center items-center px-2 py-2 border border-gray-700 bg-gray-700 rounded-md shadow-sm text-sm font-medium text-white hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+            >
+              Cerrar
+            </button>
+          </div>
+        </div>
+      </Dialog>
+    </>
   );
 };
 
