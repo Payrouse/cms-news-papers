@@ -1,31 +1,89 @@
-import AddComment from '../../comments/AddComment';
-import Comments from '../../comments/Comments';
-import News from '../../comments/News';
-import NewsRelated from '../../comments/NewsRelated';
+import AddComment from '../../article/AddComment';
+import Comments from '../../article/Comments';
+import News from '../../article/News';
+import NewsRelated from '../../article/NewsRelated';
+import { StoreType } from '../../../redux/types';
+import { useSelector } from 'react-redux';
+import useArticleByTitle from '../../../hooks/data/useArticleByTitle';
+import useCommentsByArticle from '../../../hooks/data/useCommentsByArticle';
+import useNewsRelated from '../../../hooks/data/useNewsRelated';
 
-const Article = () => {
+const Article = ({ route }: any) => {
+  const { isLogin, loading, user } = useSelector(
+    (state: StoreType) => state.user,
+  );
+  const { article, isError, isLoading } = useArticleByTitle(route);
+
+  console.log('article-->', article);
   return (
     <div className="flex justify-center">
-      <div className="md:w-8/12 w-screen px-10 mb-10 ">
-        <News />
-        <div className="mt-5">
-          <p className="font-bold">Comentarios:</p>
-          <AddComment />
-        </div>
-        <div className="px-2">
-          <Comments />
-          <Comments />
-        </div>
-        <div className="mt-5">
-          <h3 className="font-bold text-3xl">Noticias Relacionadas</h3>
-          <div className="flex flex-col md:grid md:grid-cols-2 gap-1">
-            <NewsRelated />
-            <NewsRelated />
-            <NewsRelated />
+      {isLoading ? (
+        <div>Cargando...</div>
+      ) : !isError && article ? (
+        <div className="md:w-8/12 w-screen px-10 mb-10 ">
+          <News article={article} />
+          <div className="mt-5">
+            <p className="font-bold">Comentarios:</p>
+            {isLogin ? (
+              <AddComment
+                userId={'a5cd7b9a-398a-46a6-88ad-f883ae74f033'}
+                articleId={article.articleId}
+              />
+            ) : null}
+          </div>
+          <div className="px-2">
+            <ListComments articleId={article.articleId} />
+          </div>
+          <div className="mt-5">
+            <h3 className="font-bold text-3xl">Noticias Relacionadas</h3>
+            <div className="flex flex-col md:grid md:grid-cols-2 gap-1">
+              <ListNewsRelated categoryId={article.category?.categoryId} />
+            </div>
           </div>
         </div>
-      </div>
+      ) : (
+        <div>No existe el articulo</div>
+      )}
     </div>
   );
 };
+
+const ListComments = ({ articleId }: any) => {
+  const { comments, isError, isLoading } = useCommentsByArticle(articleId);
+  return (
+    <div>
+      {isLoading ? (
+        <div>Cargando...</div>
+      ) : !isError && comments.length > 0 ? (
+        <>
+          {comments.map((comment: any, index: number) => {
+            return <Comments comment={comment} key={index} />;
+          })}
+        </>
+      ) : (
+        <div> No existen Comentarios </div>
+      )}
+    </div>
+  );
+};
+
+const ListNewsRelated = ({categoryId}:any) => {
+  const {news, isLoading, isError}=useNewsRelated(categoryId)
+  console.log("CategoryId--->",categoryId)
+  return(
+    <div>
+      {isLoading ? (
+        <div>Cargando...</div>
+      ) : !isError && news.length > 0 ? (
+        <>
+          {news.map((news: any, index: number) => {
+            return <NewsRelated article={news} key={index} />;
+          })}
+        </>
+      ) : (
+        <div> No existen noticias relacionadas </div>
+      )}
+    </div>
+  )
+}
 export default Article;

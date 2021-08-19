@@ -16,7 +16,7 @@ import { FetchApi } from '../../../../library/Http';
 import { Article, ArticleStatus } from '../../../../models/article.model';
 import { ButtonType } from '../../../buttons/Button';
 import ButtonWithSpinner from '../../../buttons/ButtonWithSpinner';
-import News from '../../../comments/News';
+import News from '../../../article/News';
 import Toolbar from '../../../toolbar/AdminToolbar';
 
 const ReviewArticle = ({ titleToolbar, articleId }: any) => {
