@@ -7,7 +7,7 @@ import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Config } from '../../config';
 import { FetchApi } from '../../library/Http';
-import { ROLE_OPTIONS, UserRole, userStatus } from '../../models/user.model';
+import { ROLE_OPTIONS, UserRoleForShow, userStatus } from '../../models/user.model';
 import { getMe, endUserLoading } from '../../redux/actions/userAction';
 import { StoreType } from '../../redux/types';
 import { Color } from '../../utils/assets/Color';
@@ -97,7 +97,7 @@ function UsersTable(users: User[]) {
                       className="flex w-full items-stretch md:items-center md:justify-between"
                       key={rol}
                     >
-                      <h3>{UserRole[rol]}</h3>
+                      <h3>{UserRoleForShow[rol]}</h3>
                       <Button
                         style={{ backgroundColor: '#c50e29', borderRadius: 5 }}
                       >
@@ -116,7 +116,7 @@ function UsersTable(users: User[]) {
                 >
                   {ROLE_OPTIONS.map((n) => {
                     if (!user.role.includes(n)) {
-                      return <MenuItem value={n}>{UserRole[n]}</MenuItem>;
+                      return <MenuItem value={n}>{UserRoleForShow[n]}</MenuItem>;
                     }
                   })}
                 </Select>
@@ -199,7 +199,7 @@ function UsersTable(users: User[]) {
           <div className="text-sm text-gray-900">{`${user.name} ${user.lastName}`}</div>
         </td>
         <td className="w-1/4 px-6 py-4 text-sm text-gray-500">
-          {user.role.map((rol) => UserRole[rol] + ' ')}
+          {user.role.map((rol) => UserRoleForShow[rol] + ' ')}
         </td>
         <td className="px-6 py-4 whitespace-nowrap">
           <span className="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">
