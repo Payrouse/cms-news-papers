@@ -27,7 +27,7 @@ const Comments = ({ comment }: CommentsProps) => {
     if (isLogin) {
       setCanReply(!canReply);
     } else {
-      enqueueSnackbar('Por favor logee a su cuenta', {
+      enqueueSnackbar('Debe iniciar sesión para comentar', {
         variant: 'info',
       });
     }

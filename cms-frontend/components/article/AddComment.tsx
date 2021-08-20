@@ -15,7 +15,7 @@ const AddComment = ({ userId, articleId, commentRoot }: any) => {
   const { isLogin, loading, user } = useSelector(
     (state: StoreType) => state.user,
   );
-  const { register, handleSubmit } = useForm();
+  const { register, handleSubmit, reset } = useForm();
   const { enqueueSnackbar } = useSnackbar();
   const onSubmit: SubmitHandler<FormData> = async (data) => {
     data.articleId = articleId;
@@ -30,6 +30,7 @@ const AddComment = ({ userId, articleId, commentRoot }: any) => {
     });
 
     if (r.ok) {
+      reset();
       enqueueSnackbar('Comentario agregado', {
         variant: 'success',
       });

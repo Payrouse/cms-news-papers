@@ -81,7 +81,7 @@ const GalleryPhotos = ({
           <label className="font-bold mb-2">Galería</label>
           <button
             type="button"
-            className="ml-2 mb-2 border rounded px-1"
+            className="bg-indigo-500 text-white active:bg-indigo-600 text-xs font-bold uppercase px-3 py-1 rounded outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
             onClick={() => {
               setShowGallery(!showGallery);
             }}
