@@ -24,11 +24,6 @@ const AppToolbar = () => {
               <h1 className="text-4xl font-bold text-blue-600">El Planeta</h1>
             </a>
           </Link>
-          <Link href="/complaints">
-            <a>
-            <h3 className= "text-black hover:underline">Denuncias Ciudananas</h3>
-            </a>
-          </Link>
           <div className="h-10 w-10">
             {loading ? (
               <div className="bg-gray-200 border h-10 w-10 rounded-full animate-pulse" />
@@ -115,6 +110,13 @@ const ProfileMenu = ({ user }: ProfileMenuProps) => {
         >
           Hacer Denuncia ciudadana
         </MenuItem>
+        <MenuItem
+          onClick={() => {
+            goTo('/complaints');
+          }}
+        >
+          Denuncias Ciudadanas
+        </MenuItem>
         <MenuItem onClick={logout}>Cerrar sesión</MenuItem>
       </Menu>
     </>
@@ -170,6 +172,13 @@ const NotUserMenu = () => {
           }}
         >
           Registrarse
+        </MenuItem>
+        <MenuItem
+          onClick={() => {
+            goTo('/complaints');
+          }}
+        >
+          Denuncias Ciudadanas
         </MenuItem>
       </Menu>
     </>
