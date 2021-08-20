@@ -20,3 +20,5 @@ export enum userStatus{
   Activo = 0,
   Baneado = 1,
 }
+
+export const ROLE_OPTIONS: number[] = [2,3] 
