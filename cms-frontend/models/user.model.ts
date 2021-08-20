@@ -10,8 +10,13 @@ export interface User {
 }
 
 export enum UserRole {
-  ADMIN = 1,
-  PUBLISHER = 2,
-  JOURNALIST = 3,
-  USER = 4,
+  Administrador = 1,
+  Publicador = 2,
+  Periodista = 3,
+  Usuario = 4,
+}
+
+export enum userStatus{
+  Activo = 0,
+  Baneado = 1,
 }

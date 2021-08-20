@@ -22,7 +22,7 @@ export class ComplaintsService {
     return this.complaintRepo.find();
   }
 
-  findPublished() {
+  async findPublished() {
     return this.complaintRepo.find({ status: ComplaintStatus.PUBLIC });
   }
 
@@ -51,7 +51,7 @@ export class ComplaintsService {
       await transaction.release();
     }
 
-    return 'Complaint Created Successfully';
+    return {detail: 'Complaint Created Successfully'};
   }
 
   async changeComplaintStatus(

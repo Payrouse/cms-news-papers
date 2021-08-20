@@ -17,6 +17,8 @@ import {
 import { UserToRole } from '../entities/userToRole.entity';
 import { Role } from './../entities/role.entity';
 import { RoleEnum } from 'src/auth/models/roles.model';
+import { UserInformation } from './ResponseHelpers';
+
 
 @Injectable()
 export class UsersService {
@@ -28,8 +30,34 @@ export class UsersService {
     private connection: Connection,
   ) {}
 
-  findAll() {
-    return this.userRepo.find();
+  async getUserRoles (userId: string){
+    let roles = await this.userToRoleRepo.find({where:{userId}})
+    let userRoles = roles.map(rol => rol.roleId)
+    return userRoles
+  }
+
+  async findAll() {
+    const users = await this.userRepo.find();
+    const res = users.map(async(user):Promise<UserInformation> => {
+      let userRoles = await this.getUserRoles(user.userId)
+      return{
+        userId: user.userId,
+        userName: user.userName,
+        name: user.firstName,
+        lastName: user.lastName,
+        email: user.email,
+        photoUrl: user.avatar,
+        createdAt: new Date(user.createdAt).toISOString().replace('T',' ').replace('Z',''),
+        status: 0,
+        role: userRoles
+      }
+    })
+
+    if(!res){
+      throw new Error("Something went wrong")
+    }
+
+    return Promise.all(res)
   }
 
   findByEmail(email: string) {

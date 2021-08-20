@@ -37,7 +37,8 @@ export const FetchApi = async ({
         return { ok: r.ok, error: data };
       }
     })
-    .catch((e) => {
+    .catch((e) => {    
+       
       return {
         ok: false,
         error: {

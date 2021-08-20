@@ -29,7 +29,7 @@ export class UsersController {
 
   @Roles(RoleEnum.ADMIN)
   @Get()
-  getUsers() {
+  async getUsers() { 
     return this.usersService.findAll();
   }
 

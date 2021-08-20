@@ -23,7 +23,7 @@ export class Complaint {
 
   @Column({ name: 'description', type: 'text' })
   description: string;
-
+  
   @Exclude()
   @CreateDateColumn({
     name: 'created_at',
@@ -32,7 +32,6 @@ export class Complaint {
   })
   createdAt: Date;
 
-  @Exclude()
   @UpdateDateColumn({
     name: 'updated_at',
     type: 'timestamptz',
@@ -40,6 +39,7 @@ export class Complaint {
   })
   updatedAt: Date;
 
+  @Exclude()
   @Column({ name: 'status', type: 'smallint' })
   status: number;
 

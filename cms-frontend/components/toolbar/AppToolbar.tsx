@@ -18,10 +18,15 @@ const AppToolbar = () => {
   return (
     <header className="bg-white border-b shadow flex justify-center">
       <div className="md:w-4/5 w-full px-2 py-2">
-        <div className="flex justify-between">
+        <div className="flex items-stretch md:items-center md:justify-between">
           <Link href="/">
             <a>
               <h1 className="text-4xl font-bold text-blue-600">El Planeta</h1>
+            </a>
+          </Link>
+          <Link href="/complaints">
+            <a>
+            <h3 className= "text-black hover:underline">Denuncias Ciudananas</h3>
             </a>
           </Link>
           <div className="h-10 w-10">
@@ -108,7 +113,7 @@ const ProfileMenu = ({ user }: ProfileMenuProps) => {
             goTo('/complaint');
           }}
         >
-          Denuncia ciudadana
+          Hacer Denuncia ciudadana
         </MenuItem>
         <MenuItem onClick={logout}>Cerrar sesión</MenuItem>
       </Menu>
