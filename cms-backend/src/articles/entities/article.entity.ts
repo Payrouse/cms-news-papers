@@ -21,10 +21,10 @@ export class Article {
   @PrimaryGeneratedColumn('uuid', { name: 'article_id' })
   articleId: string;
 
-  @Column({ name: 'title', type: 'varchar', length: 60, unique: true })
+  @Column({ name: 'title', type: 'text', unique: true })
   title: string;
 
-  @Column({ name: 'subtitle', type: 'varchar', length: 100 })
+  @Column({ name: 'subtitle', type: 'text' })
   subtitle: string;
 
   @Column({ name: 'keywords', type: 'text' })

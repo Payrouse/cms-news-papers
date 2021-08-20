@@ -29,24 +29,25 @@ const Article = ({ route }: any) => {
           <div className="mt-5">
             <p className="font-bold">Comentarios:</p>
             {isLogin ? (
-              <AddComment
-                userId={'a5cd7b9a-398a-46a6-88ad-f883ae74f033'}
-                articleId={article.articleId}
-              />
-            ) : null}
+              <AddComment userId={user.sub} articleId={article.articleId} />
+            ) : (
+              <div className="flex border rounded py-2 pl-2 text-center">Debe iniciar sesión para comentar</div>
+            )}
           </div>
           <div className="px-2">
             <ListComments articleId={article.articleId} />
           </div>
           <div className="mt-5">
             <h3 className="font-bold text-3xl">Noticias Relacionadas</h3>
-            <div className="flex flex-col md:grid md:grid-cols-2 gap-1">
+            <div >
               <ListNewsRelated categoryId={article.category?.categoryId} />
             </div>
           </div>
         </div>
       ) : (
-        <div className="h-96 my-32 flex justify-center items-center">No existe el articulo</div>
+        <div className="h-96 my-32 flex justify-center items-center">
+          No existe el articulo
+        </div>
       )}
     </div>
   );
@@ -74,7 +75,7 @@ const ListComments = ({ articleId }: any) => {
 const ListNewsRelated = ({ categoryId }: any) => {
   const { news, isLoading, isError } = useNewsRelated(categoryId);
   return (
-    <div>
+    <div className="flex flex-col md:grid md:grid-cols-2 gap-1">
       {isLoading ? (
         <LoadingComponent
           height="h-32"
