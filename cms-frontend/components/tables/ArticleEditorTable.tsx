@@ -50,14 +50,14 @@ const ArticleEditorTable = () => {
                     return <ArticleEditorRow article={articles} key={index} />;
                   })
                 ) : (
-                  <tr className="cursor-pointer bg-white hover:bg-gray-100">
+                  <tr className="bg-white">
                     <td className="px-6 py-4">
                       <div className="flex items-center">
                         <span className="font-normal">
                           {isError
                             ? 'Hubo un error, intente más tarde'
                             : articles.length == 0
-                            ? 'No hay artículos por revisar'
+                            ? 'No hay artículos redactados'
                             : ''}
                         </span>
                       </div>

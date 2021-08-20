@@ -1,4 +1,13 @@
+import { useSelector } from 'react-redux';
+import { StoreType } from '../../../../redux/types';
+import { OnlyAdmin } from '../../../../utils/Roles';
+import IconPath from '../../../../utils/svg/IconPath';
+
 const HeaderStats = () => {
+  const { isLogin, loading, user } = useSelector(
+    (state: StoreType) => state.user,
+  );
+
   return (
     <>
       {/* Header */}
@@ -8,52 +17,104 @@ const HeaderStats = () => {
             {/* Card stats */}
             <div className="flex flex-wrap">
               <div className="w-full lg:w-6/12 xl:w-3/12 px-4">
-                <CardStats
-                  statSubtitle="TRAFFIC"
-                  statTitle="350,897"
-                  statArrow="up"
-                  statPercent="3.48"
-                  statPercentColor="text-green-500"
-                  statDescripiron="Since last month"
-                  statIconName="far fa-chart-bar"
-                  statIconColor="bg-red-500"
-                />
+                {OnlyAdmin(user && user.roles) ? (
+                  <CardStats
+                    statSubtitle="Trafico"
+                    statTitle="10,506"
+                    statArrow="up"
+                    statPercent="3.48"
+                    statPercentColor="text-green-500"
+                    statDescription="Último mes"
+                    statIconName={IconPath.trendUp}
+                    statIconColor="bg-red-500"
+                  />
+                ) : (
+                  <CardStats
+                    statSubtitle="Artículos publicados"
+                    statTitle="10"
+                    statArrow="up"
+                    statPercent=""
+                    statPercentColor=""
+                    statDescription=""
+                    statIconName={IconPath.world}
+                    statIconColor="bg-red-500"
+                  />
+                )}
               </div>
               <div className="w-full lg:w-6/12 xl:w-3/12 px-4">
-                <CardStats
-                  statSubtitle="NEW USERS"
-                  statTitle="2,356"
-                  statArrow="down"
-                  statPercent="3.48"
-                  statPercentColor="text-red-500"
-                  statDescripiron="Since last week"
-                  statIconName="fas fa-chart-pie"
-                  statIconColor="bg-yellow-500"
-                />
+                {OnlyAdmin(user && user.roles) ? (
+                  <CardStats
+                    statSubtitle="Nuevos usuarios"
+                    statTitle="31"
+                    statArrow="down"
+                    statPercent="3.48"
+                    statPercentColor="text-red-500"
+                    statDescription="Última semana"
+                    statIconName={IconPath.users}
+                    statIconColor="bg-yellow-500"
+                  />
+                ) : (
+                  <CardStats
+                    statSubtitle="Artículos pendientes"
+                    statTitle="1"
+                    statArrow="up"
+                    statPercent=""
+                    statPercentColor="text-red-500"
+                    statDescription=""
+                    statIconName={IconPath.checkList}
+                    statIconColor="bg-yellow-500"
+                  />
+                )}
               </div>
               <div className="w-full lg:w-6/12 xl:w-3/12 px-4">
-                <CardStats
-                  statSubtitle="SALES"
-                  statTitle="924"
-                  statArrow="down"
-                  statPercent="1.10"
-                  statPercentColor="text-orange-500"
-                  statDescripiron="Since yesterday"
-                  statIconName="fas fa-users"
-                  statIconColor="bg-pink-500"
-                />
+                {OnlyAdmin(user && user.roles) ? (
+                  <CardStats
+                    statSubtitle="Categorías"
+                    statTitle="5"
+                    statArrow=""
+                    statPercent=""
+                    statPercentColor=""
+                    statDescription=""
+                    statIconName={IconPath.other}
+                    statIconColor="bg-pink-500"
+                  />
+                ) : (
+                  <CardStats
+                    statSubtitle="Visitas de artículos"
+                    statTitle="924"
+                    statArrow="down"
+                    statPercent="1.10"
+                    statPercentColor="text-orange-500"
+                    statDescription="Desde ayer"
+                    statIconName={IconPath.users}
+                    statIconColor="bg-pink-500"
+                  />
+                )}
               </div>
               <div className="w-full lg:w-6/12 xl:w-3/12 px-4">
-                <CardStats
-                  statSubtitle="PERFORMANCE"
-                  statTitle="49,65%"
-                  statArrow="up"
-                  statPercent="12"
-                  statPercentColor="text-green-500"
-                  statDescripiron="Since last month"
-                  statIconName="fas fa-percent"
-                  statIconColor="bg-blue-500"
-                />
+                {OnlyAdmin(user && user.roles) ? (
+                  <CardStats
+                    statSubtitle="Denuncias"
+                    statTitle="50"
+                    statArrow="up"
+                    statPercent="12"
+                    statPercentColor="text-green-500"
+                    statDescription="Último mes"
+                    statIconName={IconPath.complaint}
+                    statIconColor="bg-blue-500"
+                  />
+                ) : (
+                  <CardStats
+                    statSubtitle="Interacción en comentarios"
+                    statTitle="49,65%"
+                    statArrow="up"
+                    statPercent="12"
+                    statPercentColor="text-green-500"
+                    statDescription="Último mes"
+                    statIconName={IconPath.other}
+                    statIconColor="bg-blue-500"
+                  />
+                )}
               </div>
             </div>
           </div>
@@ -69,7 +130,7 @@ const CardStats = ({
   statArrow,
   statPercent,
   statPercentColor,
-  statDescripiron,
+  statDescription,
   statIconName,
   statIconColor,
 }: any) => {
@@ -93,7 +154,10 @@ const CardStats = ({
                   statIconColor
                 }
               >
-                <i className={statIconName}></i>
+                {/* <i className={statIconName}></i> */}
+                <svg viewBox="0 0 24 24">
+                  <path fill="currentColor" d={statIconName} />
+                </svg>
               </div>
             </div>
           </div>
@@ -108,9 +172,9 @@ const CardStats = ({
                     : ''
                 }
               ></i>{' '}
-              {statPercent}%
+              {statPercent ? `${statPercent}%` : ''}
             </span>
-            <span className="whitespace-no-wrap">{statDescripiron}</span>
+            <span className="whitespace-no-wrap">{statDescription}</span>
           </p>
         </div>
       </div>

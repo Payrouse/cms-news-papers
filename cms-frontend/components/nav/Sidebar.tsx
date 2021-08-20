@@ -2,6 +2,7 @@ import Link from 'next/link';
 import { useSelector } from 'react-redux';
 import { UserRole } from '../../models/user.model';
 import { StoreType } from '../../redux/types';
+import { OnlyAdmin, OnlyJournalist, OnlyPublisher } from '../../utils/Roles';
 
 import IconPath from '../../utils/svg/IconPath';
 import styles from './NavBar.module.css';
@@ -51,7 +52,8 @@ const SideBar = ({ option }: any) => {
   const getTitle = () => {
     if (user && user.roles.includes(UserRole.ADMIN)) return 'Admin';
 
-    if (user && user.roles.includes(UserRole.PUBLISHER)) return 'Jefe de publicación';
+    if (user && user.roles.includes(UserRole.PUBLISHER))
+      return 'Jefe de publicación';
 
     if (user && user.roles.includes(UserRole.JOURNALIST)) return 'Periodista';
 
@@ -69,7 +71,9 @@ const SideBar = ({ option }: any) => {
           />
           <p className="text-white font-bold text-center text-lg">{`${user.firstName} ${user.lastName}`}</p>
           <p className="text-white font-bold text-center">{`${user.email}`}</p>
-          <h2 className="text-white font-bold italic text-center text-sm">{getTitle()}</h2>
+          <h2 className="text-white font-bold italic text-center text-sm">
+            {getTitle()}
+          </h2>
         </header>
         <div>
           <ul className={styles.nav}>
@@ -80,27 +84,33 @@ const SideBar = ({ option }: any) => {
               name="Inicio"
               colors={getNavItemColor()}
             />
-            <NavItem
-              active={option && option[0] === 'editor'}
-              icon={IconPath.typeWriter}
-              toUrl="/editor"
-              name="Redacción"
-              colors={getNavItemColor()}
-            />
-            <NavItem
-              active={option && option[0] === 'publish'}
-              icon={IconPath.publish}
-              toUrl="/publish"
-              name="Revisión"
-              colors={getNavItemColor()}
-            />
-            <NavItem
-              active={option && option[0] === 'users'}
-              icon={IconPath.users}
-              toUrl="/users"
-              name="Usuarios"
-              colors={getNavItemColor()}
-            />
+            {OnlyJournalist(user && user.roles) ? (
+              <NavItem
+                active={option && option[0] === 'editor'}
+                icon={IconPath.typeWriter}
+                toUrl="/editor"
+                name="Redacción"
+                colors={getNavItemColor()}
+              />
+            ) : null}
+            {OnlyPublisher(user && user.roles) ? (
+              <NavItem
+                active={option && option[0] === 'publish'}
+                icon={IconPath.publish}
+                toUrl="/publish"
+                name="Revisión"
+                colors={getNavItemColor()}
+              />
+            ) : null}
+            {OnlyAdmin(user && user.roles) ? (
+              <NavItem
+                active={option && option[0] === 'users'}
+                icon={IconPath.users}
+                toUrl="/users"
+                name="Usuarios"
+                colors={getNavItemColor()}
+              />
+            ) : null}
             <NavItem
               active={option && option[0] === 'settings'}
               icon={IconPath.settings}
